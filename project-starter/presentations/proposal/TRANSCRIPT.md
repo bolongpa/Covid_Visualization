@@ -57,5 +57,10 @@ Team members:
     * The unemployment rate files are separated by states, so we need to combine them together into a file.
     *   Extract important policies regarding Covid, such as lockdown policy.
 
-## Slide 10
-
+## Slide 10, Timeline
+* 9/28  Project proposal
+* 10/12 Finished data collection and preprocessing
+* 10/19 Scatch our website design and finalize visualization thoughts
+* 11/9  Test and improve the first version of our visualization website
+* 11/16 Second version of our visualization website
+* 11/23 Deploy our website and final presentation
