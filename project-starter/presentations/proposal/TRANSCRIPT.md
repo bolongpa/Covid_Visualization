@@ -30,15 +30,15 @@ User will get the picture of how COVID-19 and the following policy actions are i
 
 ## Slide 5, Related Works and Examples
 We found a line chart that visualize [the U.S. unemployment rate history since year 1929](https://howmuch.net/articles/timeline-united-states-unemployment-history) with important events pointed out on the timeline.
-There is also a visualization of [the global rate of unemployment](https://ourworldindata.org/grapher/unemployment-rate?time=earliest..2017) on a world map.
-Finally, we also found a bar chart of [weekly unemployment insurance claimed](https://usafacts.org/visualizations/weekly-unemployment-claims/).
+There is also a world map visualization of [the global rate of unemployment](https://ourworldindata.org/grapher/unemployment-rate?time=earliest..2017).
+Finally, we also found a bar chart of [the weekly unemployment insurance claimed](https://usafacts.org/visualizations/weekly-unemployment-claims/).
 
 ## Slide 6, Features and Challenges
 The data visualization will connect the data with map. When user click the map, the information of that state will show up. Besides, the color of states will be painted based on the value of give category. In addition, line bar charts  will also be used to compare number of COVID-19 cases with unemployment rate. Last, user can specify the time range, then the difference of unemployment will be returned as a sorted bar charts so that we can know which states suffer the most during that period.
 As we do not have the experience with map plot, it might be the biggest challenge when building the project.
 
 ## Slide 7, Risks
-In this project, we wish to find out how COVID-19 affects the job market of each state in the US. However, we know that every state has its own demographic composition and the COVID-19 downturn may have different affect among different groups of workers. Without including the demographic information, it is hard for user to tackle the true causes of why a state has smaller/larger impact on unemployment rate than other states. It will make our plots complicated though, if we decide to include all necessary information for users to explore.
+In this project, we wish to find out how COVID-19 affects the job market of each state in the US. However, we know that every state has its own demographic composition and the COVID-19 downturn may have different affects among different groups of workers. Without including the demographic information, it is hard for user to tackle the true causes of why a state has smaller/larger impact on unemployment rate than other states. It will make our plots too dense and complicated though, if we decide to include all necessary information.
 
 ## Slide 8, Dataset and Tool
 We will use the COVID-19 data sources from [CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data) and unemployment rate by state from [US Local Area Unemployment Statistics](https://www.bls.gov/lau/).
