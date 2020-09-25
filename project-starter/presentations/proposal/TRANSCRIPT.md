@@ -34,14 +34,14 @@ Team members:
 - Bar chart of weekly unemployment insurance claimed.
 
 ## Slide 6
-
-## Slide 7
 * Important features and designs
     * Connect the data with map. When user click the map, the information of that state will show up. Besides, the color of states will be painted based on the value of give category.
     * Line bar charts that compare number of Covid cases with unemployment rate.
     * User can specify the time range, then the difference of unemployment will be returned as a sorted bar charts so that we can know which states suffer the most during that period.
 * Challenges
     * As we do not have the experience with map plot, it might be the biggest challenge when building the project.
+## Slide 7
+
 ## Slide 8
 * We will use the following data sources:
     * Covid Data:  [CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data)
