@@ -52,9 +52,11 @@ Second, the unemployment rate files are separated by states, so we need to combi
 Last, extract important policies regarding Covid, such as lockdown policy, from the news.
 
 ## Slide 10, Timeline
-9/28  Project proposal
-10/12 Finished data collection and preprocessing
-10/19 Scatch our website design and finalize visualization thoughts
-11/9  Test and improve the first version of our visualization website
-11/16 Second version of our visualization website
-11/23 Deploy our website and final presentation
+| Date | Milestone |
+|:---:|:---|
+|9/28  |Project proposal |
+|10/12 |Finished data collection and preprocessing |
+|10/19 |Scatch our website design and finalize visualization thoughts |
+|11/9  |Test and improve the first version of our visualization website |
+|11/16 |Second version of our visualization website |
+|11/23 |Deploy our website and final presentation |
