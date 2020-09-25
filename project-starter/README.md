@@ -35,10 +35,10 @@ __🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.
 
 ## Proposal presentation
 
-- [Amar Nath Jha](mailto:jhaa@usc.edu) responsible for transcript of "Story and Goal"
-- [Bolong Pan](mailto:bolongpa@usc.edu) responsible for sozi slides
-- [Che Pai Kung](mailto:chepaiku@usc.edu) responsible for transcript of "Features", "Dataset and Tool", "Data Preprocessing"
-- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) responsible for transcript of "Introduction", "Others Work and Example", "Timeline"
+- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for transcript of "Story and Goal"
+- [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for sozi slides
+- [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for transcript of "Features", "Dataset and Tool", "Data Preprocessing"
+- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for transcript of "Introduction", "Others Work and Example", "Timeline"
 
 ## Final presentation
 
