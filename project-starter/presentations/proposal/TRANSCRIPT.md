@@ -50,13 +50,10 @@ Team members:
     Since we think that policy also affects the society a lot, such as lockdown policy, so we will also specify the important policies in the graph.
 
     * COVID-19 policy actions by state: [US Government Response to Coronavirus](https://www.usa.gov/coronavirus)
-* Tools:
-    * JavaScript/Jquery/D3
-    * Inkscape
-    * Python
+* In this project, we will mainly use JavaScript to build the website, including JQuery and D3 and Inkscape to plot the graphs. In addition, we will use Python to do data collection and preprocessing.
 ## Slide 9
-* Data Preprocessing:
-    * Covid Data is separated by date, to make is easier to retrieve data, we will group them into a file or at least by month.
+* Some data preprocessing is needed so that it will be more convenient to do the visualizations for the later steps. These include: 
+    * Covid Data is separated by date, we will group them into a file or at least by month.
     * The unemployment rate files are separated by states, so we need to combine them together into a file.
     *   Extract important policies regarding Covid, such as lockdown policy.
 
