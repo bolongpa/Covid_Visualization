@@ -33,16 +33,18 @@ Team members:
 - Visualization of the global rate of unemployment on a world map.
 - Bar chart of weekly unemployment insurance claimed.
 
-## Slide 6
+## Slide 6, Features and Challenges
 * Important features and designs
     * Connect the data with map. When user click the map, the information of that state will show up. Besides, the color of states will be painted based on the value of give category.
     * Line bar charts that compare number of Covid cases with unemployment rate.
     * User can specify the time range, then the difference of unemployment will be returned as a sorted bar charts so that we can know which states suffer the most during that period.
 * Challenges
     * As we do not have the experience with map plot, it might be the biggest challenge when building the project.
-## Slide 7
+## Slide 7, Risks
+In this project, we wish to find how Covid affects the job market of each state in US. However, people of different ages and different job fields may be affected differently. For example, the customer service related field is suffered more than Amazon. Therefore, it may be possible to find a state that doesn't be affected by Covid at all while some states experiences huge increase in unemployment rate. 
 
-## Slide 8
+
+## Slide 8, Dataset and Tool
 * We will use the following data sources:
     * Covid Data:  [CSSEGISandData/COVID-19](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data)
     * Unemployment rate by state: [US Local Area Unemployment Statistics](https://www.bls.gov/lau/)
@@ -51,11 +53,11 @@ Team members:
 
     * COVID-19 policy actions by state: [US Government Response to Coronavirus](https://www.usa.gov/coronavirus)
 * In this project, we will mainly use JavaScript to build the website, including JQuery and D3 and Inkscape to plot the graphs. In addition, we will use Python to do data collection and preprocessing.
-## Slide 9
-* Some data preprocessing is needed so that it will be more convenient to do the visualizations for the later steps. These include: 
-    * Covid Data is separated by date, we will group them into a file or at least by month.
-    * The unemployment rate files are separated by states, so we need to combine them together into a file.
-    *   Extract important policies regarding Covid, such as lockdown policy.
+## Slide 9, Data preprocessing
+Some data preprocessing is needed so that it will be more convenient to do the visualizations for the later steps. These include: 
+* Covid Data is separated by date, we will group them into a file or at least by month.
+* The unemployment rate files are separated by states, so we need to combine them together into a file.
+*   Extract important policies regarding Covid, such as lockdown policy.
 
 ## Slide 10
 
