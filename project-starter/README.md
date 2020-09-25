@@ -2,14 +2,14 @@
 
 ## Team
 
-Team name:
+Team name: NinjaV
 
 Team members:
 
-- Tommy Trojan <tommy@usc.edu>
--
--
--
+- Amar Nath Jha <jhaa@usc.edu>
+- Bolong Pan <bolongpa@usc.edu>
+- Che Pai Kung <chepaiku@usc.edu>
+- Yo Shuan Liu <yoshuanl@usc.edu>
 
 ---
 
@@ -35,10 +35,10 @@ __🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.
 
 ## Proposal presentation
 
-- [Tommy Trojan](mailto:tommy@usc.edu) did this and that...
--
--
--
+- [Amar Nath Jha](mailto:jhaa@usc.edu) responsible for transcript of "Story and Goal"
+- [Bolong Pan](mailto:bolongpa@usc.edu) responsible for sozi slides
+- [Che Pai Kung](mailto:chepaiku@usc.edu) responsible for transcript of "Features", "Dataset and Tool", "Data Preprocessing"
+- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) responsible for transcript of "Introduction", "Others Work and Example", "Timeline"
 
 ## Final presentation
 
