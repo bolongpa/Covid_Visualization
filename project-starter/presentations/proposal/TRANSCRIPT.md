@@ -22,11 +22,18 @@ We will visualize the yearly unemployment rate between 2010-2019 and the monthly
 This project addresses to those who want to get an idea of the U.S. unemployment history and the influence of COVID-19 downturn among all states.
 User will get the picture of how COVID-19 and the following policy actions are impacting the U.S. labor market after exploring our website.
 
-## Slide 2
+## Slide 2, How to narate a story with the data 
+Any great story means visualization and detail. It takes the small additions of those details to build a picture in someone’s mind to truly make the story complete. The same goes for analytics and data. Data is just a collection of numbers until you turn it into a story.
+Showing reports and dashboards can be overwhelming without adding a narrative to the data. Therefore, any great insight explains what happened, why it is important and how you can use it to turn it into something actionable with the help of visualization.
+Data visualization is using data and statistics in creative ways to show patterns and draw conclusions about a hypothesis, or prove theories, that can help the organisation to make logical decisions and drive the business.
 
-## Slide 3
+## Slide 3, Motivation
+The motivation behind this visualization is to geographically show the various parameters associated with COVID-19 datasets such as unemployment, unemployment rate by state etc. As we all are aware of the fact that, unemployment is a major concern across the globe and this project aims to visualize different metrics and trends which will help improve the unemployement rate using visualization. The dataset associated with the project is sufficiently detailed and could be used to identify the metrics and trends in the COVID-19 case.
 
-## Slide 4
+## Slide 4, Goal
+By the end of our project all individuals will be able to visualize the data and will be able to perform exploratory data analysis for COVID-19 dataset.
+We will be able to build a dashboard on how the infographics are useful to visualize huge sets of data and how to manage those datasets.
+Moreover, we will learn how data visualization is helpful to find the relationships between the parameters.
 
 ## Slide 5, Related Works and Examples
 We found a line chart that visualize [the U.S. unemployment rate history since year 1929](https://howmuch.net/articles/timeline-united-states-unemployment-history) with important events pointed out on the timeline.
