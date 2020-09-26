@@ -18,12 +18,33 @@ Team members:
 ---
 
 ## Slide 1
+* What is your visualization about?
+    * Yearly unemployment rate between 2010-2019
+    * Monthly unemployment rate in 2020 (see the impact of COVID)
+* Who is it addressed to?
+    * Those who want to get an idea of the US labor market before/after COVID breaks out.
+    * Policy maker who seeks to increase the employment rate.
+* Who is it addressed to?
+    * We need to know how COVID-19 and the following policy actions are impacting the U.S. labor market.
 
 ## Slide 2
+* Story with data
+    * Data is just a collection of numbers until you turn it into a story. 
+    * Showing reports and dashboards can be overwhelming without adding a narrative to the data. 
+    * Any great insight explains what happened, why it is important and how you can use it to turn it into something actionable. 
+    * Data visualization is using data and statistics in creative ways to show patterns and draw conclusions about a hypothesis, or prove theories, that can help drive decisions in the organisation           
 
 ## Slide 3
+* Motivation
+    * The motivation behind this visualization is to geographically show the various parameters associated with COVID-19 datasets such as unemployment, unemployment rate by state etc.
+    * Additionally, unemployment is a major concern across the globe and this project aims to visualize different metrics and trends. 
+    * The dataset associated with the project is sufficiently detailed and could be used to identify the metrics and trends in the COVID-19 case.
 
 ## Slide 4
+* Goal
+    * By the end of our project all individuals will be able to visualize the data and will be able to perform exploratory data analysis
+    * Would be able to build a dashboard on how the infographics are useful to visualize huge sets of data 
+    * How data visualization is helpful to find the relationships between the parameters.
 
 ## Slide 5
 
