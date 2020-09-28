@@ -617,6 +617,72 @@
       "layerProperties": {
         "layer1": {
           "link": false,
+          "referenceElementId": "image137",
+          "outlineElementId": "",
+          "transitionTimingFunction": "linear",
+          "transitionRelativeZoom": 0,
+          "transitionPathId": ""
+        },
+        "__sozi_auto__": {
+          "link": false,
+          "referenceElementId": "",
+          "outlineElementId": "",
+          "transitionTimingFunction": "linear",
+          "transitionRelativeZoom": 0,
+          "transitionPathId": ""
+        }
+      },
+      "cameraStates": {
+        "layer1": {
+          "cx": 237.62759143460428,
+          "cy": 326.4241409628515,
+          "width": 122.98680166578657,
+          "height": 92.24010124933993,
+          "opacity": 1,
+          "angle": 0,
+          "clipped": true,
+          "clipXOffset": 0,
+          "clipYOffset": 0,
+          "clipWidthFactor": 0.9991568296795778,
+          "clipHeightFactor": 0.9991568296795789
+        },
+        "__sozi_auto__": {
+          "cx": 237.62759143460428,
+          "cy": 326.4241409628515,
+          "width": 122.98680166578657,
+          "height": 92.24010124933993,
+          "opacity": 1,
+          "angle": 0,
+          "clipped": true,
+          "clipXOffset": 0,
+          "clipYOffset": 0,
+          "clipWidthFactor": 0.9991568296795778,
+          "clipHeightFactor": 0.9991568296795789
+        }
+      },
+      "cameraOffsets": {
+        "layer1": {
+          "deltaX": -4.460940059536341,
+          "deltaY": -3.5167159707422684,
+          "widthFactor": 0.8526181714750876,
+          "heightFactor": 0.9062811124812361,
+          "deltaAngle": 0
+        }
+      }
+    },
+    {
+      "frameId": "frame2102",
+      "title": "frame11",
+      "titleLevel": 0,
+      "notes": "",
+      "timeoutMs": 20000,
+      "timeoutEnable": true,
+      "transitionDurationMs": 1000,
+      "showInFrameList": true,
+      "showFrameNumber": true,
+      "layerProperties": {
+        "layer1": {
+          "link": false,
           "referenceElementId": "path209",
           "outlineElementId": "",
           "transitionTimingFunction": "linear",
@@ -634,38 +700,38 @@
       },
       "cameraStates": {
         "layer1": {
-          "cx": 156.42019519032527,
-          "cy": 430.4378842072215,
-          "width": 268.4647640626146,
-          "height": 201.34857304696098,
+          "cx": 147.65867545936234,
+          "cy": 509.95281049627977,
+          "width": 295.98240237903315,
+          "height": 221.98680178427486,
           "opacity": 1,
           "angle": 0,
           "clipped": true,
           "clipXOffset": 0,
           "clipYOffset": 0,
-          "clipWidthFactor": 0.999156829679578,
-          "clipHeightFactor": 0.9991568296795793
+          "clipWidthFactor": 0.9991568296795769,
+          "clipHeightFactor": 0.9991568296795782
         },
         "__sozi_auto__": {
-          "cx": 156.42019519032527,
-          "cy": 430.4378842072215,
-          "width": 268.4647640626146,
-          "height": 201.34857304696098,
+          "cx": 151.8696739945186,
+          "cy": 449.5952055158111,
+          "width": 295.98240237903315,
+          "height": 221.98680178427486,
           "opacity": 1,
           "angle": 0,
           "clipped": true,
           "clipXOffset": 0,
           "clipYOffset": 0,
-          "clipWidthFactor": 0.999156829679578,
-          "clipHeightFactor": 0.9991568296795793
+          "clipWidthFactor": 0.9991568296795769,
+          "clipHeightFactor": 0.9991568296795782
         }
       },
       "cameraOffsets": {
         "layer1": {
-          "deltaX": 10.529448120012773,
-          "deltaY": 2.8538387970652366,
-          "widthFactor": 1.7795948424639776,
-          "heightFactor": 24.024462333057144,
+          "deltaX": 5.9789269242060925,
+          "deltaY": 22.011160105654767,
+          "widthFactor": 1.962003313816539,
+          "heightFactor": 26.486969722195546,
           "deltaAngle": 0
         }
       }
@@ -673,7 +739,7 @@
   ],
   "elementsToHide": [],
   "selectedFrames": [
-    "frame5476"
+    "frame2102"
   ],
   "selectedLayers": [
     "layer1",
