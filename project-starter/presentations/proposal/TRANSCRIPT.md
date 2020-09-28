@@ -38,9 +38,8 @@ How to use the dataset to improve the unemployement rate and the labor. How indi
 Moreover, we will learn how data visualization is helpful to find the relationships between the parameters.
 
 ## Slide 5, Related Works and Examples
-We found a line chart that visualize [the U.S. unemployment rate history since year 1929](https://howmuch.net/articles/timeline-united-states-unemployment-history) with important events pointed out on the timeline.
-There is also a world map visualization of [the global rate of unemployment](https://ourworldindata.org/grapher/unemployment-rate?time=earliest..2017).
-Finally, we also found a bar chart of [the weekly unemployment insurance claimed](https://usafacts.org/visualizations/weekly-unemployment-claims/).
+We found a line chart that visualizes [the U.S. unemployment rate history since year 1929](https://howmuch.net/articles/timeline-united-states-unemployment-history) with important events pointed out on the timeline, we will use the similiar approach to visualize our data.
+There is also a world map visualization of [the global rate of unemployment](https://ourworldindata.org/grapher/unemployment-rate?time=earliest..2017) that is equipped with a slide bar that allows user to interact with the map and see the year-over-year trend of unemployment rate.
 
 ## Slide 6, Features and Challenges
 The data visualization will connect the data with map. When user click the map, the information of that state will show up. Besides, the color of states will be painted based on the value of give category. In addition, line bar charts  will also be used to compare number of COVID-19 cases with unemployment rate. Last, user can specify the time range, then the difference of unemployment will be returned as a sorted bar charts so that we can know which states suffer the most during that period.
