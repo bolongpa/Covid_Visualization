@@ -2,7 +2,12 @@ Problem statement:
 Andy: - the visualization tech helps researchers to identify how covid-19 pandemic inmapcted the unimployment rate more easily.
       
 Novelty:
+The unique part of our project is that we not only focus on how the unemployment rate changes over the pandemic months, but also how the U.S. labor market is recovering from the COVID-19 impact. In order to achieve our purpose, we will visualize:
+1. the confirmed cases of COVID-19
+2. the unemployment rate
+3. the number of job openings (data Source: https://www.bls.gov/news.release/jolts.t01.htm)
 
+We wish to provide users the insight into the current U.S. labor market through our visualization, and eventually the idea of how the U.S. labor market would go in the near future.
 
 Technicalities:
 In US Local Area Unemployment Statistics, there are several columns in the file and the data started from 2010. For the main purpose of our project, we will mainly focus on the unemployment, year and period(month) columns. In addition, we only focus on the data that was after 2020 or 2019. 
