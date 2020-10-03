@@ -4,5 +4,8 @@ Andy: - the visualization tech helps researchers to identify how covid-19 pandem
 Novelty:
 
 
-Technicalityies:
+Technicalities:
+In US Local Area Unemployment Statistics, there are several columns in the file and the data started from 2010. For the main purpose of our project, we will mainly focus on the unemployment, year and period(month) columns. In addition, we only focus on the data that was after 2020 or 2019. 
+Regarding COVID-19 dataset, there are columns representing the confirmed, deaths and recovered. Currently, we are planning to concentrate on the confirmed cases, but we will keep other columns for future reference. Besides, we will only get the data from US.
+For both datasets, the files are separated by the state or by date. As we plan to draw the time series chart and compare the data between months, we think it will be easier if we can group the data into a file for each dataset or at least by state or by month.
 
