@@ -53,11 +53,15 @@ We will use the COVID-19 data sources from [CSSEGISandData/COVID-19](https://git
 
 Since we think that policy also affects the society a lot, such as lockdown policy, so we will also specify the important policies in the graph. The information will be from [US Government Response to Coronavirus](https://www.usa.gov/coronavirus)
 In this project, we will mainly use JavaScript to build the website, including JQuery and D3 and Inkscape to plot the graphs. In addition, we will use Python to do data collection and preprocessing.
+
 ## Slide 9, Data preprocessing
-Some data preprocessing is needed so that it will be more convenient to do the visualizations for the later steps. These include: 
-First, COVID-19 data are separated by date, we will group them into a file or at least by month.
-Second, the unemployment rate files are separated by states, so we need to combine them together into a file.
-Last, extract important policies regarding COVID-19, such as lockdown policy, from the news.
+In US Local Area Unemployment Statistics, there are several columns in the file and the data started from 2010. For the main purpose of our project, we will mainly focus on the unemployment, year and period(month) columns. In addition, we only focus on the data that was after 2020 or 2019. 
+Regarding COVID-19 dataset, there are columns representing the confirmed, deaths and recovered. Currently, we are planning to concentrate on the confirmed cases, but we will keep other columns for future reference. Besides, we will only get the data from US.
+For both datasets, the files are separated by the state or by date. As we plan to draw the time series chart and compare the data between months, we think it will be easier if we can group the data into a file for each dataset or at least by state or by month.
+
+For both datasets, the files are separated by the state or by date. As we plan to draw the time series chart and compare the data between months, we think it will be easier if we can group the data into a file for each dataset or at least by state or by month. These include: 
+
+
 
 ## Slide 10, Timeline
 | Date | Milestone |
