@@ -1,5 +1,5 @@
 Problem statement:
-- the visualization tech helps researchers to identify how covid-19 pandemic inmapcted the unimployment rate more easily.
+- The data visualization technology helps researchers to identify how covid-19 pandemic impacted the unemployment rate.
       
 Novelty:
 The unique part of our project is that we not only focus on how the unemployment rate changes over the pandemic months, but also how the U.S. labor market is recovering from the COVID-19 impact. In order to achieve our purpose, we will visualize:
