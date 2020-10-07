@@ -18,7 +18,7 @@ Team members:
 ---
 
 ## Slide 1, Introduction
-Our project aims to provide an overview on how the COVID-19 effected the U.S. labor market, and whether or not it is recovering from the impact of COVID-19. 
+Our project aims to provide an overview on how the COVID-19 effected the U.S. labor market, and whether or not it is recovering from the impact of COVID-19. The data visualization technology can help researchers to identify how covid-19 pandemic impacted the unemployment rate with more ease. Otherwise, it can be difficult to recognize some latent information like what potentially impacted the unemployment rate in a state.
 
 The unique part of our project is that we not only focus on the trend of unemployment rate over the pandemic months, but also try to answer the question: "Are lost jobs coming back?". In order to achieve our purpose, we will visualize below information together in our project:
 1. The confirmed cases of COVID-19
