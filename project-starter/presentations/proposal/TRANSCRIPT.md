@@ -18,9 +18,15 @@ Team members:
 ---
 
 ## Slide 1, Introduction
-We will visualize the yearly unemployment rate between 2010-2019 and the monthly unemployment rate along with monthly the COVID-19 confirmed cases in 2020 among all states in the U.S.
+Our project aims to provide an overview on how the COVID-19 effected the U.S. labor market, and whether or not it is recovering from the impact of COVID-19. 
+
+The unique part of our project is that we not only focus on the trend of unemployment rate over the pandemic months, but also try to answer the question: "Are lost jobs coming back?". In order to achieve our purpose, we will visualize below information together in our project:
+1. The confirmed cases of COVID-19
+2. The unemployment rate
+3. The number of job openings (data Source: https://www.bls.gov/news.release/jolts.t01.htm)
+
 This project addresses to those who want to get an idea of the U.S. unemployment history and the influence of COVID-19 downturn among all states.
-User will get the picture of how COVID-19 and the following policy actions are impacting the U.S. labor market after exploring our website.
+And we wish to provide users the insight into the current U.S. labor market through our visualization, and eventually the idea of how the U.S. labor market would go in the near future.
 
 ## Slide 2, How to narrate a story with the data 
 Any great story means visualization and detail. It takes the small additions of those details to build a picture in someone’s mind to truly make the story complete. The same goes for analytics and data. 
