@@ -1,4 +1,4 @@
-State	Year	Period	labor force participation rate	employment-population ratio	labor force	employment	unemployment	unemployment rate
+State,Year,Period,labor force participation rate,employment-population ratio,labor force,employment,unemployment,unemployment rate
 Alabama	2019	Jan	58.1	56	2237931	2158471	79460	3.6
 Alabama	2019	Feb	58	56	2238155	2160923	77232	3.5
 Alabama	2019	Mar	58	56.1	2237126	2162757	74369	3.3
