@@ -1,0 +1,14 @@
+.ChartBox {
+    margin: 0px 20px;
+}
+
+.LineChart {
+    width: 960px;
+    height: 500px;
+    border: solid 1px #eee;
+    border-bottom: solid 1px #ccc;
+}
+
+button {
+    margin: 5px
+}
