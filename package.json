@@ -1,0 +1,24 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "sozi presentations",
+  "main": "index.js",
+  "scripts": {
+    "proposal-pdf": "node_modules/sozi-export/cli/sozi-to-pdf.js -o proposal/presentation.pdf -r 15 proposal/presentation.sozi.html",
+    "final-pdf": "node_modules/sozi-export/cli/sozi-to-pdf.js -o final/presentation.pdf -r 15 final/presentation.sozi.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "dependencies": {
+    "sozi-export": "^20.4.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DSCI-554/project-ninjav.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DSCI-554/project-ninjav/issues"
+  },
+  "homepage": "https://github.com/DSCI-554/project-ninjav#readme"
+}
