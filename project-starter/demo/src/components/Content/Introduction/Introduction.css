@@ -1,4 +1,19 @@
 .Introduction {
     margin: auto;
-    width: 50%;
+    margin-top: 1rem;
+    width: 70%;
+    height: 600px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid grey;
+}
+
+.Mapbox {
+    margin: auto;
+    margin-top: 1rem;
+    width: 70%;
+    height: 300px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid green;
 }

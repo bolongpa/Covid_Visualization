@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 
-import classes from './Introduction.css';
+import './Introduction.css';
 
 class Introduction extends Component {
 
-    render () {
+    render() {
         return (
-            <div className={classes.Introduction}>
-                <p>Introduction here</p>
+            <div>
+                <h1>Title</h1>
+                <div className="Mapbox">
+                    <p>Mapbox here</p>
+                </div>
+                <div className="Introduction">
+                    <p>Introduction here</p>
+                </div>
             </div>
+
         );
     }
 }
