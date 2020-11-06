@@ -9,6 +9,8 @@ To see our current work, type below commands in your targeted local folder:
 
 * Then,
 
+  ```cd project-starter/demo```
+
   ```npm install```
 
   ```npm run start```
