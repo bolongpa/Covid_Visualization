@@ -32,15 +32,15 @@ const BarChart = (props) => {
         .scale(y)
         .ticks(5, 'd');
 
-
+    // switch the color of bar chart
     useEffect(() => {
         const svgElement = d3.select(chartRef.current)
         svgElement.selectAll('.bar')
             .attr('fill', barColor);
     }, [barColor]) // useEffect dependency list: useEffect will run after mount and whenever any of these variables change.
 
+    // draw the initial bar chart
     useEffect(() => {
-        console.log(props.barColor)
         const svgElement = d3.select(chartRef.current).append('svg')
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
@@ -67,12 +67,13 @@ const BarChart = (props) => {
             .attr('width', x.bandwidth())
             .attr('height', d => height - y(d.users))
             .attr('fill', barColor);
-    }, []); // this ensures this effect only run once (after mount)
+        // eslint-disable-next-line
+    }, []); // empty dependency array ensures this effect only run once (after mount)
 
 
     return (
         <div className={classes.BarChart}>
-            <p>Bar chart learned from: <a href="https://bl.ocks.org/d3noob/8952219" target="_blank">https://bl.ocks.org/d3noob/8952219</a></p>
+            <p>Bar chart learned from: <a href="https://bl.ocks.org/d3noob/8952219" target="_blank" rel="noreferrer">https://bl.ocks.org/d3noob/8952219</a></p>
             <h1>{chartTitle}</h1>
             <button onClick={() => props.resetTitleHandler("bar")}>Reset Title</button>
             <button onClick={props.switchColorHandler}>SwitchColor</button>
