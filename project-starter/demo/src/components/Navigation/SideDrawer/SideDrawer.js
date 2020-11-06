@@ -2,20 +2,20 @@ import React, { Fragment } from 'react';
 
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
-import './SideDrawer.css'; 
+import classes from './SideDrawer.module.css'; 
 import Backdrop from '../../UI/Backdrop/Backdrop';
 
 const sideDrawer = (props) => {
-    let attachedClasses = ["SideDrawer", "Close"];
+    let attachedClasses = [classes.SideDrawer, classes.Close];
     if (props.open) {
-        attachedClasses = ["SideDrawer", "Open"];
+        attachedClasses = [classes.SideDrawer, classes.Open];
     }
 
     return (
         <Fragment>
             <Backdrop show={props.open} clicked={props.sideDrawerClosed}/>
             <div className={attachedClasses.join(' ')}>
-                <div className="Logo">
+                <div className={classes.Logo}>
                     <Logo/>
                 </div>
                 <nav>

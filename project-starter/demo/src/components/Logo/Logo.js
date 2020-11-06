@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from './Logo.css';
+import classes from './Logo.module.css';
 import ninjaLogo from '../../assets/images/ninja-logo.png';
 
 const logo = () => (

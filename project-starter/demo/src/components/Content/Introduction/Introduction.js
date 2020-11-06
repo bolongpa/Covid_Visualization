@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './Introduction.css';
+import classes from './Introduction.module.css';
 
 class Introduction extends Component {
 
@@ -8,10 +8,10 @@ class Introduction extends Component {
         return (
             <div>
                 <h1>Title</h1>
-                <div className="Mapbox">
+                <div className={classes.Mapbox}>
                     <p>Mapbox here</p>
                 </div>
-                <div className="Introduction">
+                <div className={classes.Introduction}>
                     <p>Introduction here</p>
                 </div>
             </div>
