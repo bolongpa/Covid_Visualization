@@ -1,7 +1,7 @@
-import { format } from 'd3';
+//import { format } from 'd3';
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
-import * as d3 from 'd3';
+//import * as d3 from 'd3';
 import D3map from '../../components/Map/D3map.js';
 import "react-datepicker/dist/react-datepicker.css";
 class Map extends Component {

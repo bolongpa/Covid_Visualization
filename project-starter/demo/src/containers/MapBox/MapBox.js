@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 import * as d3 from 'd3';
 import mapboxgl from 'mapbox-gl';
 import classes from './MapBox.module.css';
 import * as covid from '../../assets/data/time_series_covid19_confirmed_US.csv';
-import { data } from 'autoprefixer';
+//import { data } from 'autoprefixer';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";  
 import "react-datepicker/src/stylesheets/datepicker.scss";

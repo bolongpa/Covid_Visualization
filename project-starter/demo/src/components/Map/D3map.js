@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import us from "../../assets/data/counties-albers-10m.json";
 import unemploy from "../../assets/data/unemployment.csv";
