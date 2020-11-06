@@ -239,14 +239,14 @@ var svg = d3.select(this.legend).append("svg")
                <button onClick={this.changeDateHandler}>enter</button>
               </div>
               <div className={classes.commands}>
-                <span class={classes.filter} ref={this.RefFilter} id="all" onClick={function(e){self.toggleFilter("#all"); self.filter(10000)}}>All</span>
-                <span class={classes.filter} ref={this.RefFilter}  id="top10" onClick={function(e){self.toggleFilter("#top10"); self.filter(10)}}>Filter top 10 by number of cases</span>
-                <span class={classes.filter} ref={this.RefFilter} id="top20" onClick={function(e){self.toggleFilter("#top20"); self.filter(20)}}>Filter top 20 by number of cases</span>
+                <span className={classes.filter} ref={this.RefFilter} id="all" onClick={function(e){self.toggleFilter("#all"); self.filter(10000)}}>All</span>
+                <span className={classes.filter} ref={this.RefFilter}  id="top10" onClick={function(e){self.toggleFilter("#top10"); self.filter(10)}}>Filter top 10 by number of cases</span>
+                <span className={classes.filter} ref={this.RefFilter} id="top20" onClick={function(e){self.toggleFilter("#top20"); self.filter(20)}}>Filter top 20 by number of cases</span>
               </div>
               <div>
               <div ref={el => this.mapContainer = el} className={classes.mapContainer}/>
               
-              <div class={classes.legend} ref={e=>this.legend=e} ></div>
+              <div className={classes.legend} ref={e=>this.legend=e} ></div>
               </div>
         </div>
       );
