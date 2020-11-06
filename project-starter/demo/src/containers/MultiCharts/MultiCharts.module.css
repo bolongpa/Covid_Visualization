@@ -3,7 +3,8 @@
 }
 
 .MyDatePicker {
-    height: 350px; 
+    margin: 5px;
+    height: 300px; 
     display: inline-block;
 }
 
