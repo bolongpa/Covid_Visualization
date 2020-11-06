@@ -32,11 +32,12 @@ const BubbleChart = (props) => {
             .attr("cy", d => d[1])
             .attr("r", d => d[2])
             .attr("fill", (d, i) => color[i])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dataset]);
     
     return (
         <div className={classes.BubbleChart}>
-            <p>Bubble chart learned from: <a href="https://wattenberger.com/blog/react-and-d3" target="_blank">https://wattenberger.com/blog/react-and-d3</a></p>
+            <p>Bubble chart learned from: <a href="https://wattenberger.com/blog/react-and-d3" target="_blank" rel="noreferrer">https://wattenberger.com/blog/react-and-d3</a></p>
             <h1>{chartTitle}</h1>
             <button onClick={() => props.resetTitleHandler("bubble")}>Reset Title</button>
             <div ref={chartRef}/>
