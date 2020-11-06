@@ -90,7 +90,7 @@ const D3map = (props) => {
 
 
         })
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [start, end])
 
     useEffect(() => {
@@ -175,10 +175,8 @@ const D3map = (props) => {
                 .attr('y', d => -2 * radius(d))
                 .attr('dy', '1.3em')
                 .text(d3.format('.1s'));
-
-
-
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
