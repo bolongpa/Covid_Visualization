@@ -28,15 +28,17 @@ class MapBox extends Component {
     popupInfo: null,
     df: [],
     startDate: new Date("2020/1/22"),
-    endDate: new Date("2020/11/1")
+    endDate: new Date("2020/11/1"),
+    m:1
   };
 
   map = null
   RefFilter = React.createRef()
   current = this.state.df
   m = 1
+  legend_radius = null
 
-  loadData() {
+  async loadData() {
     d3.csv(covid, dd => {
       var self = this
       const timeFormat = d3.timeFormat('%m/%d/%y')
@@ -61,32 +63,12 @@ class MapBox extends Component {
       .then(d => {
         this.setState({ df: { "type": "FeatureCollection", "features": d } })
         this.draw()
+        console.log("lod",this.m)
       })
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.loadData()
-    var svg = d3.select(this.legend).append("svg")
-    const legend = svg.append('g')
-      .attr('None', 'red')
-      .attr('transform', 'translate(15,30)')
-      .attr('text-anchor', 'middle')
-      .style('font', '10px sans-serif')
-      .selectAll('g')
-      .data([20, 50, 150])
-      .join('g');
-
-    legend.append('circle')
-      .attr('fill', 'none')
-      .attr('stroke', 'brown')
-      .attr('cy', d => 5)
-      .attr('r', (d, i) => 6 * i);
-
-    legend.append('text')
-      .attr('y', (d, i) => -2 * 5 * i)
-      .attr('dy', '1.3em')
-      .text(d3.format('.1s'));
-
   }
 
   changeDateHandler = () => {
@@ -124,8 +106,8 @@ class MapBox extends Component {
           data: this.state.df
         });
 
-        this.m = d3.max(this.state.df.features.map(d => d.properties.value))
-        console.log("m", this.m)
+        this.setState({m:d3.max(this.state.df.features.map(d => d.properties.value))})
+        var m_city = this.state.df.features.filter(d=>d.properties.value==this.state.m)[0]
 
 
         this.map.addLayer({
@@ -134,13 +116,22 @@ class MapBox extends Component {
           "source": "mapdata",
           "layout": {},
           "paint": {
-            "circle-radius": ["/", ['to-number', ['get', 'value'], 1], this.m / 80],
-            "circle-color": "blue",
+            "circle-radius": ["/", ['to-number', ['get', 'value'], 1], this.state.m / 100],
+            "circle-color": "DarkRed",
             "circle-opacity": 0.8
           }
 
         });
-
+        var format = d3.format('.1s')
+        const timeFormat = d3.timeFormat('%m/%d/%Y')
+        // d3.select(this.legend).select("text").text("hello! The highest number of covid case is around "+format(this.state.m)+" in "+m_city.properties.state+" "+m_city.properties.county)
+        var legend = d3.select(this.legend).select("text")
+        legend.select(".tspan1").attr("x",0).attr("dy", "0em")
+        .text("From "+timeFormat(this.state.startDate)+" to "+timeFormat(this.state.endDate))
+        legend.select(".tspan2").attr("x",0).attr("dy", "1.5em")
+        .text("The highest increase of covid cases was around "+format(this.state.m)+" in "+m_city.properties.state+"-"+m_city.properties.county)
+        this.toggleFilter("#all")
+      
 
 
 
@@ -157,7 +148,14 @@ class MapBox extends Component {
         type: 'geojson',
         data: self.state.df
       });
-      self.m = d3.max(self.state.df.features.map(d => d.properties.value))
+      self.setState({m:d3.max(self.state.df.features.map(d => d.properties.value))})
+      // self.m = d3.max(self.state.df.features.map(d => d.properties.value))
+      console.log("drawlayer_m",self.state.m)
+      var m_city = self.state.df.features.filter(d=>d.properties.value==self.state.m)[0]
+      console.log(m_city)
+
+      var covid_data = self.state.df.features.map(d => d.properties.value)
+      console.log("dd",[d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.15),d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.5),d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.985)])
 
       map.addLayer({
         "id": "polygon",
@@ -165,12 +163,29 @@ class MapBox extends Component {
         "source": "mapdata",
         "layout": {},
         "paint": {
-          "circle-radius": ["/", ['to-number', ['get', 'value'], 1], self.m / 80],
-          "circle-color": "blue",
-          "circle-opacity": 0.8
+        "circle-radius": ["/", ['to-number', ['get', 'value'], 1], self.state.m / 100],
+        "circle-color": "DarkRed",
+        "circle-opacity": 0.7,
+        // 'fill-color': [ 'interpolate', ['linear'], ["/", ['to-number', ['get', 'value'], 1], self.state.m / 40000], 0, '#F2F12D', 10000, '#E6B71E', 20000, '#DA9C20', 30000, '#B86B25', 40000, '#8B4225'],  //OK - interpolate color proportional to AREA property with a factor of 0.5
+        // 'fill-opacity': 0.8,
         }
 
       });
+  
+    var svg = d3.select(self.legend).append("svg").attr("width","500").attr("height","50")
+    var format = d3.format('.1s')
+    const timeFormat = d3.timeFormat('%m/%d/%Y')
+    const legend = svg.append('g').append('text')
+      legend.attr('None', 'red')
+      .attr('transform', 'translate(0,10)')
+      // .attr('text-anchor', 'middle')
+      .style('font', '14px sans-serif')
+      
+      legend.append("tspan").attr("x",0).attr("dy", "0em").attr("class","tspan1")
+      .text("From "+timeFormat(self.state.startDate)+" to "+timeFormat(self.state.endDate))
+      legend.append("tspan").attr("x",0).attr("dy", "1.5em").attr("class","tspan2")
+      .text("The highest increase of covid cases was around "+format(self.state.m)+" in "+m_city.properties.state+"-"+m_city.properties.county)
+    
     })
   };
 
@@ -191,7 +206,7 @@ class MapBox extends Component {
   }
   toggleFilter(id) {
 
-    d3.selectAll(this.RefFilter)
+    d3.selectAll("span")
       .style('background-color', '#FFF0F5');
 
     d3.select(id)
@@ -217,9 +232,11 @@ class MapBox extends Component {
       "source": "mapdata",
       "layout": {},
       "paint": {
-        "circle-radius": ["/", ['to-number', ['get', 'value'], 1], this.m / 80],
-        "circle-color": "blue",
-        "circle-opacity": 0.7
+        "circle-radius": ["/", ['to-number', ['get', 'value'], 1], this.state.m / 100],
+        "circle-color": "DarkRed",
+        "circle-opacity": 0.7,
+        // 'fill-color': [ 'interpolate', ['linear'], ['*', ['get', 'value'], 0.5], 0, '#F2F12D', 10000, '#E6B71E', 20000, '#DA9C20', 30000, '#B86B25', 40000, '#8B4225'],  //OK - interpolate color proportional to AREA property with a factor of 0.5
+        // 'fill-opacity': 0.8,
       }
 
     });
@@ -246,10 +263,19 @@ class MapBox extends Component {
           <span className={classes.filter} ref={this.RefFilter} id="top10" onClick={function (e) { self.toggleFilter("#top10"); self.filter(10) }}>Filter top 10 by number of cases</span>
           <span className={classes.filter} ref={this.RefFilter} id="top20" onClick={function (e) { self.toggleFilter("#top20"); self.filter(20) }}>Filter top 20 by number of cases</span>
         </div>
-        <div>
-          <div ref={el => this.mapContainer = el} className={classes.mapContainer} />
+        <div className={classes.mapContainer}>
+          <div ref={el => this.mapContainer = el} style={{position: "relative",height: "inherit",width: "inherit"}}  />
+          <div class={classes.legend } ref={e => this.legend = e}>
+            <h4>Info</h4>
+            {/* <div><span style={{backgroundColor:"#8B4225"}} className={classes.span}></span>40,000</div>
+            <div><span style={{backgroundColor:"#B86B25"}} className={classes.span}></span>30,000</div>
+            <div><span style={{backgroundColor:"#DA9C20"}} className={classes.span}></span>20,000</div>
+            <div><span style={{backgroundColor: "#E6B71E"}} className={classes.span}></span>10,000</div>
+            <div><span style={{backgroundColor: "#F2F12D"}} className={classes.span}></span>0</div> */}
+        </div>
 
-          <div className={classes.legend} ref={e => this.legend = e} ></div>
+          {/* <div className={classes.legend} ref={e => this.legend = e} ></div> */}
+          {console.log("final",this.state.m)}
         </div>
       </div>
     );

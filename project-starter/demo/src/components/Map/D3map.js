@@ -9,7 +9,7 @@ import { feature, mesh } from "topojson-client";
 var monthmap = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" }
 var start = new Date("2020/1/1")
 var end = new Date("2020/8/1")
-const colorscale = d3.scaleSequential().domain([-2, 2]).interpolator(d3.interpolateRdBu)
+const colorscale = d3.scaleSequential().domain([-5, 5]).interpolator(d3.interpolateRdBu)
 const timeFormat = d3.timeFormat('%m/%d/%y')
 
 const D3map = (props) => {
@@ -54,43 +54,46 @@ const D3map = (props) => {
         files.forEach(url => promises.push(d3.csv(url))); //🚧  store two promises
         // console.log(promises)
 
-        Promise.all(promises).then(function (values) {
+        Promise.all(promises).then(function(values) {
 
-            var unemploy_data = values[0]
-            var covid_data = values[1]
+                var unemploy_data = values[0]
+                var covid_data = values[1]
 
-            covid_data = CovidDataPreprocess(covid_data)
-            var radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([5, 50])
+                covid_data = CovidDataPreprocess(covid_data)
+                var radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([5, 25])
 
 
 
-            const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
-            var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
-            var new_us = feature(us, us.objects.states).features
-            // console.log("newus",new_us)
-            new_us.forEach(function (dd) { dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name]; dd.properties.covid = covid_data[dd.properties.name] })
-            console.log("new", new_us)
+                const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
+                var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
+                var new_us = feature(us, us.objects.states).features
+                    // console.log("newus",new_us)
+                new_us.forEach(function(dd) {
+                    dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
+                    dd.properties.covid = covid_data[dd.properties.name]
+                })
+                console.log("new", new_us)
 
-            new_us.forEach(function (d) {
-                d3.select("#" + d.properties.name).transition().attr("fill", d => colorscale(d.properties.unemploy)).attr('r', d => radius(d.properties.covid))
+                new_us.forEach(function(d) {
+                    d3.select("#" + d.properties.name).transition().attr("fill", d => colorscale(d.properties.unemploy)).attr('r', d => radius(d.properties.covid))
+                })
+
+                const legend = d3.select("#legend")
+                console.log([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
+                legend.selectAll("circle").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
+                    .attr('cy', d => -radius(d))
+                    .attr('r', radius);
+
+                legend.selectAll("text").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
+                    .attr('y', d => -2 * radius(d))
+                    .attr('dy', '1.3em')
+                    .text(d => d3.format('.1s')(d))
+
+
+
+
             })
-
-            const legend = d3.select("#legend")
-            console.log([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
-            legend.selectAll("circle").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
-                .attr('cy', d => -radius(d))
-                .attr('r', radius);
-
-            legend.selectAll("text").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
-                .attr('y', d => -2 * radius(d))
-                .attr('dy', '1.3em')
-                .text(d => d3.format('.1s')(d))
-
-
-
-
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [start, end])
 
     useEffect(() => {
@@ -123,60 +126,78 @@ const D3map = (props) => {
         files.forEach(url => promises.push(d3.csv(url))); //🚧  store two promises
         console.log(promises)
 
-        Promise.all(promises).then(function (values) {
+        Promise.all(promises).then(function(values) {
 
-            var unemploy_data = values[0]
-            var covid_data = values[1]
+                var unemploy_data = values[0]
+                var covid_data = values[1]
 
-            covid_data = CovidDataPreprocess(covid_data)
-            // console.log(Object.keys(covid_data))
+                covid_data = CovidDataPreprocess(covid_data)
+                    // console.log(Object.keys(covid_data))
 
-            // var radius = d3.scaleSqrt([0, d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.985)], [5, 40]);
-            var radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([5, 50])
+                // var radius = d3.scaleSqrt([0, d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.985)], [5, 40]);
+                var radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([5, 25])
 
-            const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
-            var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
-            var new_us = feature(us, us.objects.states).features
-            // console.log("newus",new_us)
-            new_us.forEach(function (dd) { dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name]; dd.properties.covid = covid_data[dd.properties.name] })
-            console.log("new", new_us)
+                const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
+                var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
+                var new_us = feature(us, us.objects.states).features
+                    // console.log("newus",new_us)
+                new_us.forEach(function(dd) {
+                    dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
+                    dd.properties.covid = covid_data[dd.properties.name]
+                })
+                console.log("new", new_us)
 
-            svg.append('g')
-                .selectAll("circle")
-                .data(feature(us, us.objects.states).features)
-                .enter()
-                .append("circle")
-                .attr("id", d => d.properties.name)
-                .attr('transform', d => `translate(${path.centroid(d)})`)
-                .attr('r', d => radius(d.properties.covid))
-                .attr("fill", d => colorscale(d.properties.unemploy))
-                .attr('fill-opacity', 0.7)
-                .attr('stroke', '#fff')
-                .attr('stroke-width', 0.5)
+                svg.append("g")
+                    .attr('class', 'countries')
+                    .selectAll("path")
+                    .data(feature(us, us.objects.states).features) //🚧  use us features
+                    .join("path")
+                    .attr("id", d => d.properties.name)
+                    .attr("stroke", "#333")
+                    .attr("fill", d => colorscale(d.properties.unemploy)) //🚧  fill color based on value whose key is id
+                    .on("click", function(e, d) {
+                        console.log(d.id)
+                    })
+                    .attr("d", path)
+                    .append("title")
 
-            const legend = svg.append('g')
-                .attr('fill', '#777')
-                .attr('transform', 'translate(910,608)')
-                .attr('text-anchor', 'middle')
-                .style('font', '10px sans-serif')
-                .attr("id", "legend")
-                .selectAll('g')
-                .data([2000, 100000, 700000])
-                .join('g')
-                ;
+                svg.append('g')
+                    .selectAll("circle")
+                    .data(feature(us, us.objects.states).features)
+                    .enter()
+                    .append("circle")
+                    .attr("id", d => d.properties.name)
+                    .attr('transform', d => `translate(${path.centroid(d)})`)
+                    .attr('r', d => radius(d.properties.covid))
+                    .attr("fill", "none")
+                    // .attr('fill-opacity', 0.7)
+                    .attr('stroke', 'black')
+                    .attr('stroke-width', 0.5)
 
-            legend.append('circle')
-                .attr('fill', 'none')
-                .attr('stroke', 'red')
-                .attr('cy', d => -radius(d))
-                .attr('r', radius);
 
-            legend.append('text')
-                .attr('y', d => -2 * radius(d))
-                .attr('dy', '1.3em')
-                .text(d3.format('.1s'));
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
+                const legend = svg.append('g')
+                    .attr('fill', '#777')
+                    .attr('transform', 'translate(910,608)')
+                    .attr('text-anchor', 'middle')
+                    .style('font', '10px sans-serif')
+                    .attr("id", "legend")
+                    .selectAll('g')
+                    .data([2000, 100000, 700000])
+                    .join('g');
+
+                legend.append('circle')
+                    .attr('fill', 'none')
+                    .attr('stroke', 'red')
+                    .attr('cy', d => -radius(d))
+                    .attr('r', radius);
+
+                legend.append('text')
+                    .attr('y', d => -2 * radius(d))
+                    .attr('dy', '1.3em')
+                    .text(d3.format('.1s'));
+            })
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -184,9 +205,8 @@ const D3map = (props) => {
 
 
 
-    return (
-        <React.Fragment>
-            <div ref={svgRef} />
+    return ( <React.Fragment>
+        <div ref = { svgRef }/> 
         </React.Fragment>
     )
 }
