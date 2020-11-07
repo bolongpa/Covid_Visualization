@@ -147,7 +147,27 @@ const D3map = (props) => {
                 })
                 console.log("new", new_us)
 
+                var r = [5,2,0,-2,-5]
+                var yscale = d3.scaleBand().domain(r).range([0, 300]).paddingInner(0).paddingOuter(0)
+                var yaxis = d3.axisTop(yscale);
+
+                var axis_g = svg.append('g').attr('transform', 'translate(' + 450 + "," + 0 + ')')
+                axis_g.call(yaxis).select(".domain").remove();
+                
+                r = [-5,-2,0,2,5]
+                
+                axis_g.selectAll("rect")
+                    .data(r)
+                    .enter()
+                    .append("rect")
+                    .attr("x", d=>yscale(d))
+                    .attr("y", 0)
+                    .attr("width", yscale.bandwidth())
+                    .attr("height", 8)
+                    .attr("fill", d => colorscale(d))
+
                 svg.append("g")
+                    .attr("width",900)
                     .attr('class', 'countries')
                     .selectAll("path")
                     .data(feature(us, us.objects.states).features) //🚧  use us features
