@@ -6,6 +6,8 @@ import * as d3 from 'd3';
 import classes from './BarChart.module.css';
 
 const BarChart = (props) => {
+    const bar_width = 30;
+    var bar_num = 52;
     var time = props.time;
     var time_year = time.getYear() + 1900;
     var time_month = time.getMonth() + 1;
@@ -23,6 +25,101 @@ const BarChart = (props) => {
     var dataurl = {'covid':covid_data, 'unemployment':unemploy_data};
     var dataset = dataurl[chosenDataset];
 
+
+    // function to draw
+    function draw(data, filter) {
+        if (filter === 'top') {
+            data = topten(data);
+            bar_num = 10;
+        } else if (filter === 'bottom') {
+            data = bottomten(data);
+            bar_num = 10;
+        }
+
+        var margin = { top: 50, left: 50, bottom: 50, right: 50 },
+            width = 850 - margin.left - margin.right,
+            height = bar_num*bar_width - margin.top - margin.bottom;
+
+        var x = d3.scaleBand();
+        var y = d3.scaleLinear();
+
+        x.domain(data.map(d => d.state))
+            .range([10, height])
+            .paddingInner(0.2);
+
+        y.domain([0, d3.max(data, d => d.rate)])
+            .range([0, width]);
+
+        const svg = d3.select(chartRef.current).append('svg')
+            .attr('width', width + margin.left + margin.right)
+            .attr('height', height + margin.top + margin.bottom)
+            .append('g')
+            .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+        svg.selectAll('.bar')
+            .data(data)
+            .enter()
+            .append('rect')
+            .attr('class', 'bar')
+            .attr('x', d => 0)
+            .attr('y', d => x(d.state))
+            .attr('width', d =>  y(d.rate))
+            .attr('height', x.bandwidth())
+            .attr('fill', 'steelblue');
+
+        svg.selectAll('.name')
+            .data(data)
+            .enter()
+            .append('text')
+            .text(d => statemap[d.state])
+            .attr('text-anchor', 'middle')
+            .attr('class', 'name')
+            .attr('x', d => -20)
+            .attr('y', d => x(d.state)+15);
+
+        var xAxis = d3.axisLeft()
+            .scale(d3.scaleLinear().range([0, height]))  // adding outer padding to scaleBand
+            .ticks(0)
+            .tickSize(0)
+            .tickFormat('');
+
+        svg.append('g')
+            .attr('class', 'axis')
+            .attr('transform', 'translate(0,' + height + ')')
+            .call(xAxis);
+
+        var yAxis = d3.axisTop()
+            .scale(y)
+            .ticks(5, 'd');
+
+        svg.append('g')
+            .attr('class', 'axis')
+            .call(yAxis);
+
+        svg.append('text')
+            .attr('x', -40)
+            .attr('y', 0)
+            .attr('class', 'xlabel')
+            .append('tspan').text('State')
+        
+        svg.append('text')
+            .attr('x', width-30)
+            .attr('y', -15)
+            .attr('class', 'ylabel')
+            .append('tspan').text('Rate')
+
+        function topten(data) {
+            return data.sort(function (a, b) {return d3.descending(a.rate, b.rate)}).slice(0, 10);
+        }
+        function bottomten(data) {
+            return data.sort(function (a, b) {return d3.ascending(a.rate, b.rate)}).slice(0, 10);
+        }
+    }
+
+
+    
+
+    // draw chart
     useEffect(() => {
         d3.csv(dataset, d=>{
             if (d.Year == time_year.toString() && d.Period == monthmap[time_month]) {
@@ -33,105 +130,11 @@ const BarChart = (props) => {
                     rate:+d.unemploymentrate
                 };
             };
-            
         }).then(data=>{
             console.log(filter);
-            if (filter === 'top') {
-                data = topten(data);
-            } else if (filter === 'bottom') {
-                data = bottomten(data);
-            }
-            
-            var margin = { top: 50, left: 50, bottom: 50, right: 50 },
-                width = 1900 - margin.left - margin.right,
-                height = 350 - margin.top - margin.bottom;
-
-            var x = d3.scaleBand();
-            var y = d3.scaleLinear();
-
-            x.domain(data.map(d => d.state))
-                .range([10, width])
-                .paddingInner(0.2);
-
-            y.domain([0, d3.max(data, d => d.rate)])
-                .range([height, 0]);
-
-            const svg = d3.select(chartRef.current).append('svg')
-                .attr('width', width + margin.left + margin.right)
-                .attr('height', height + margin.top + margin.bottom)
-                .append('g')
-                .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
-
-
-            svg.selectAll('.bar')
-                .data(data)
-                .enter()
-                .append('rect')
-                .attr('class', 'bar')
-                .attr('x', d => x(d.state))
-                .attr('y', d => y(d.rate))
-                .attr('width', x.bandwidth())
-                .attr('height', d => height - y(d.rate))
-                .attr('fill', 'steelblue');
-
-            svg.selectAll('.name')
-                .data(data)
-                .enter()
-                .append('text')
-                .text(d => statemap[d.state])
-                .attr('text-anchor', 'middle')
-                .attr('class', 'name')
-                .attr('x', d => x(d.state) + x.bandwidth() / 2)
-                .attr('y', d => height + 15);
-
-            var xAxis = d3.axisBottom()
-                .scale(d3.scaleLinear().range([0, width+10]))  // adding outer padding to scaleBand
-                .ticks(0)
-                .tickSize(0)
-                .tickFormat('');
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(0,' + height + ')')
-                .call(xAxis);
-
-            var yAxis = d3.axisLeft()
-                .scale(y)
-                .ticks(5, 'd');
-
-            svg.append('g')
-                .attr('class', 'axis')
-                .call(yAxis);
-
-            svg.append('text')
-                .attr('x', width /2)
-                .attr('y', height + 35)
-                .attr('class', 'xlabel')
-                .append('tspan').text('state')
-            
-            svg.append('text')
-                .attr('x', - height / 2)
-                .attr('y', - margin.left * 0.7)
-                .attr('transform', 'rotate(-90)')
-                .attr('class', 'ylabel')
-                .append('tspan').text('rate')
-            
-
-
-
-
-            function topten(data) {
-                return data.sort(function (a, b) {return d3.descending(a.rate, b.rate)}).slice(0, 10);
-            }
-            function bottomten(data) {
-                return data.sort(function (a, b) {return d3.ascending(a.rate, b.rate)}).slice(0, 10);
-            }
+            draw(data, filter);
         })
-    });
-
-    
-
-   
+    }, [filter]);
 
 
     return (

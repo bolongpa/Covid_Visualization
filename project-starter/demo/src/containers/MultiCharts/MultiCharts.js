@@ -50,22 +50,21 @@ class MultiCharts extends Component {
         chartUI: {
             bar: {
                 title: 'Bar Chart',
-                filter:'all'
+                filter:'top'
             }
         }
     }
 
     switchFilterHandler = (newfilter) => {
-        console.log("switch filter!", newfilter)
         this.setState({
             chartUI: {
-                ...this.state.chartUI,
+                ...this.bar_state.chartUI,
                 bar: {
-                    ...this.state.chartUI.bar,
+                    ...this.bar_state.chartUI.bar,
                     filter: newfilter
-                }
+                },
             }
-        })
+        });
     }
     
     /////////////////////////////////////////////////////////////////////
