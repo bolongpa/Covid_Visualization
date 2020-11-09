@@ -4,10 +4,16 @@ import * as d3 from 'd3';
 
 import classes from './MultiCharts.module.css';
 import BubbleChart from '../../components/BubbleChart/BubbleChart';
-import BarChart from '../../components/BarChart/BarChart';
+import BarChart from '../../components/Bar/BarChart';
 import * as inputData from '../../assets/data/newUsers.json';
 //import "../../../node_modules/react-datepicker/dist/react-datepicker.css"
 import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
+
+/////////////////////////for_bar_chart///////////////////////////////
+/////////////////////////////////////////////////////////////////////
+import unemploy_data from "../../assets/data/unemployment.csv";
+import covid_data from "../../assets/data/time_series_covid19_confirmed_US.csv";
+/////////////////////////////////////////////////////////////////////
 
 
 class MultiCharts extends Component {
@@ -35,6 +41,35 @@ class MultiCharts extends Component {
         }
     }
 
+    /////////////////////////for_bar_chart///////////////////////////////
+    bar_state = {
+        time: new Date('2020/1/1'),
+        chosenDataset: 'unemployment',
+        unemploy_data: unemploy_data,
+        covid_data:covid_data,
+        chartUI: {
+            bar: {
+                title: 'Bar Chart',
+                filter:'all'
+            }
+        }
+    }
+
+    switchFilterHandler = (newfilter) => {
+        console.log("switch filter!", newfilter)
+        this.setState({
+            chartUI: {
+                ...this.state.chartUI,
+                bar: {
+                    ...this.state.chartUI.bar,
+                    filter: newfilter
+                }
+            }
+        })
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    
     // for button playground
     resetBtnColorHandler = () => {
         d3.selectAll('span').style('background-color', '#eee').style('color', 'black');
@@ -140,12 +175,17 @@ class MultiCharts extends Component {
                     title={this.state.chartUI.bubble.title}
                     resetTitleHandler={this.resetTitleHandler} />
                 <br />
+                
                 <BarChart
-                    inputData={this.state.barData}
-                    title={this.state.chartUI.bar.title}
+                    time={this.bar_state.time}
+                    chosenDataset={this.bar_state.chosenDataset}
+                    unemploy_data={this.bar_state.unemploy_data}
+                    covid_data={this .bar_state.covid_data}
+                    title={this.bar_state.chartUI.bar.title}
+                    filter={this.bar_state.chartUI.bar.filter}
+
                     resetTitleHandler={this.resetTitleHandler}
-                    barColor={this.state.chartUI.bar.color}
-                    switchColorHandler={this.switchBarColorHandler} />
+                    switchFilterHandler={this.switchFilterHandler} />
             </div>
         );
     }
