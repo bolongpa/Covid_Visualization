@@ -11,7 +11,7 @@ var start = new Date("2020/1/1")
 var end = new Date("2020/8/1")
 const colorscale = d3.scaleSequential().domain([-5, 5]).interpolator(d3.interpolateRdBu)
 const timeFormat = d3.timeFormat('%m/%d/%y')
-
+var radius
 const D3map = (props) => {
     const svgRef = useRef()
     start = props.startMonth
@@ -31,6 +31,7 @@ const D3map = (props) => {
     }
 
     function CovidDataPreprocess(covid_data) {
+
         var new_end = new Date(end.getYear() - 100 + 2000, end.getMonth() + 1, 0)
         var new_start = timeFormat(start).replaceAll("/0", "/")[0] == "0" ? timeFormat(start).replaceAll("/0", "/").substring(1) : timeFormat(start).replaceAll("/0", "/")
         new_end = timeFormat(new_end).replaceAll("/0", "/")[0] == "0" ? timeFormat(new_end).replaceAll("/0", "/").substring(1) : timeFormat(new_end).replaceAll("/0", "/")
@@ -41,60 +42,10 @@ const D3map = (props) => {
 
         covid_data = covid_data.map(d => [d.Province_State, d[new_end] - d[new_start]])
         covid_data = aggregate(covid_data)
+        // console.log(covid_data)
         return covid_data
     }
 
-
-
-
-    useEffect(() => {
-        console.log("trigger useffect")
-        var promises = [];
-        var files = [unemploy, covid];
-        files.forEach(url => promises.push(d3.csv(url))); //🚧  store two promises
-        // console.log(promises)
-
-        Promise.all(promises).then(function(values) {
-
-                var unemploy_data = values[0]
-                var covid_data = values[1]
-
-                covid_data = CovidDataPreprocess(covid_data)
-                var radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([5, 25])
-
-
-
-                const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
-                var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
-                var new_us = feature(us, us.objects.states).features
-                    // console.log("newus",new_us)
-                new_us.forEach(function(dd) {
-                    dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
-                    dd.properties.covid = covid_data[dd.properties.name]
-                })
-                console.log("new", new_us)
-
-                new_us.forEach(function(d) {
-                    d3.select("#" + d.properties.name).transition().attr("fill", d => colorscale(d.properties.unemploy)).attr('r', d => radius(d.properties.covid))
-                })
-
-                const legend = d3.select("#legend")
-                console.log([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
-                legend.selectAll("circle").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
-                    .attr('cy', d => -radius(d))
-                    .attr('r', radius);
-
-                legend.selectAll("text").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
-                    .attr('y', d => -2 * radius(d))
-                    .attr('dy', '1.3em')
-                    .text(d => d3.format('.1s')(d))
-
-
-
-
-            })
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [start, end])
 
     useEffect(() => {
         var svg = d3.select(svgRef.current).append("svg").attr('width', "1000px")
@@ -111,15 +62,8 @@ const D3map = (props) => {
             .attr('stroke', 'white')
             .attr('stroke-linejoin', 'round')
             .attr('d', path);
-        console.log(feature(us, us.objects.states))
-        svg.append('g')
-            .selectAll("text")
-            .data(feature(us, us.objects.states).features)
-            .enter()
-            .append("text")
-            .text(d => d.properties.name)
-            .attr("text-anchor", "middle")
-            .attr('transform', d => `translate(${path.centroid(d)})`)
+        // console.log(feature(us, us.objects.states))
+        
 
         var promises = [];
         var files = [unemploy, covid];
@@ -135,7 +79,7 @@ const D3map = (props) => {
                     // console.log(Object.keys(covid_data))
 
                 // var radius = d3.scaleSqrt([0, d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.985)], [5, 40]);
-                var radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([5, 25])
+                radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([0, 25])
 
                 const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
                 var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
@@ -145,24 +89,27 @@ const D3map = (props) => {
                     dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
                     dd.properties.covid = covid_data[dd.properties.name]
                 })
-                console.log("new", new_us)
+                console.log("one", feature(us, us.objects.states).features)
+
 
                 var r = [5,2,0,-2,-5]
-                var yscale = d3.scaleBand().domain(r).range([0, 300]).paddingInner(0).paddingOuter(0)
-                var yaxis = d3.axisTop(yscale);
+                // var yscale = d3.scaleBand().domain(r).range([0, 300]).paddingInner(0).paddingOuter(0)
+                var xscale = d3.scaleLinear().domain([-5,5]).range([0, 300])
+                console.log(xscale.domain())
+                var xaxis = d3.axisTop(xscale);
 
-                var axis_g = svg.append('g').attr('transform', 'translate(' + 450 + "," + 0 + ')')
-                axis_g.call(yaxis).select(".domain").remove();
-                
-                r = [-5,-2,0,2,5]
-                
+                svg.append("text").attr("x",550).attr("font-size",10).text("Unemployment growth rate").attr("fill","black")
+                var axis_g = svg.append('g').attr('transform', 'translate(' + 550 + "," + 30 + ')')
+                axis_g.call(xaxis).attr("y",10).select(".domain").remove();
+
+                r = d3.range(-5, 5, 0.1)
                 axis_g.selectAll("rect")
                     .data(r)
                     .enter()
                     .append("rect")
-                    .attr("x", d=>yscale(d))
+                    .attr("x", d=>xscale(d))
                     .attr("y", 0)
-                    .attr("width", yscale.bandwidth())
+                    .attr("width", 4)
                     .attr("height", 8)
                     .attr("fill", d => colorscale(d))
 
@@ -172,28 +119,42 @@ const D3map = (props) => {
                     .selectAll("path")
                     .data(feature(us, us.objects.states).features) //🚧  use us features
                     .join("path")
-                    .attr("id", d => d.properties.name)
+                    .attr("id", d => d.properties.name.replace(" ",""))
                     .attr("stroke", "#333")
-                    .attr("fill", d => colorscale(d.properties.unemploy)) //🚧  fill color based on value whose key is id
+                    .attr("fill", function(d) {return colorscale(d.properties.unemploy)}) //🚧  fill color based on value whose key is id
+                    .attr("fill-opacity",0.7)
                     .on("click", function(e, d) {
                         console.log(d.id)
+                        console.log(d.properties.name)
+                    })
+                    .on("mouseover",function(e,d){
+                        d3.select(this).attr("fill-opacity",1)
+                        // console.log(d)
+                        d3.select("text#"+d.properties.name.replace(" ","")).attr("display","block")
+
+                    }
+                    )
+                    .on("mouseout",function(e,d){
+                        d3.select(this).attr("fill-opacity",0.7)
+                        d3.select("text#"+d.properties.name.replace(" ","")).attr("display","none")
                     })
                     .attr("d", path)
                     .append("title")
+
 
                 svg.append('g')
                     .selectAll("circle")
                     .data(feature(us, us.objects.states).features)
                     .enter()
                     .append("circle")
-                    .attr("id", d => d.properties.name)
+                    .attr("id", d => d.properties.name.replace(" ",""))
                     .attr('transform', d => `translate(${path.centroid(d)})`)
                     .attr('r', d => radius(d.properties.covid))
-                    .attr("fill", "none")
+                    .attr("fill", "black")
                     // .attr('fill-opacity', 0.7)
                     .attr('stroke', 'black')
                     .attr('stroke-width', 0.5)
-
+               
 
 
                 const legend = svg.append('g')
@@ -216,9 +177,91 @@ const D3map = (props) => {
                     .attr('y', d => -2 * radius(d))
                     .attr('dy', '1.3em')
                     .text(d3.format('.1s'));
+                
+                svg.append('g')
+                    .selectAll("text")
+                    .data(feature(us, us.objects.states).features)
+                    .enter()
+                    .append("text")
+                    .attr("id",d=>d.properties.name.replace(" ",""))
+                    .text(d => d.properties.name)
+                    .attr("text-anchor", "middle")
+                    .attr('transform', d => `translate(${path.centroid(d)})`)
+                    // .on("mouseover",function(d){
+                    //     d3.select(this).attr("display","none")
+                    // })
+                    // .on("mouseout",function(d){
+                    //     d3.select(this).attr("display","block")
+                    // })
+                    .attr("display",d=>d.properties.name=="California"?"block":"none")
+            })
+            
+    }, [])
+
+    useEffect(() => {
+        console.log("trigger useffect")
+        var promises = [];
+        var files = [unemploy, covid];
+        files.forEach(url => promises.push(d3.csv(url))); //🚧  store two promises
+        // console.log(promises)
+
+        Promise.all(promises).then(function(values) {
+
+                var unemploy_data = values[0]
+                var covid_data = values[1]
+
+                covid_data = CovidDataPreprocess(covid_data)
+                // var radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([5, 25])
+
+
+
+                const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
+                var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
+                var new_us = feature(us, us.objects.states).features
+                    // console.log("newus",new_us)
+                new_us.forEach(function(dd) {
+                    dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
+                    dd.properties.covid = covid_data[dd.properties.name]
+                })
+                console.log("new", new_us)
+
+
+                new_us.forEach(function(d) {
+                    // console.log(d3.select("#" + d.properties.name))
+
+                    d3.select("path#" + d.properties.name.replace(" ","")).transition().attr("fill", d => colorscale(d.properties.unemploy))
+                    d3.select("circle#" + d.properties.name.replace(" ","")).transition().attr("fill", d => colorscale(d.properties.unemploy)).attr('r', d => radius(d.properties.covid))
+                })
+
+                const legend = d3.select("#legend")
+                console.log([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
+                legend.selectAll("circle").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
+                    .attr('cy', d => -radius(d))
+                    .attr('r', radius);
+
+                legend.selectAll("text").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
+                    .attr('y', d => -2 * radius(d))
+                    .attr('dy', '1.3em')
+                    .text(d => d3.format('.1s')(d))
+                // var svg = d3.select(svgRef.current).select("svg")
+                // var path = d3.geoPath()
+                // svg.append('g')
+                //     .selectAll("text")
+                //     .data(feature(us, us.objects.states).features)
+                //     .enter()
+                //     .append("text")
+                //     .text(d => d.properties.name)
+                //     .attr("text-anchor", "middle")
+                //     .attr('transform', d => `translate(${path.centroid(d)})`)
+
+
+
+
             })
             // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [start, end])
+
+
 
 
 
@@ -226,7 +269,9 @@ const D3map = (props) => {
 
 
     return ( <React.Fragment>
-        <div ref = { svgRef }/> 
+        <div ref = { svgRef }>
+
+        </div> 
         </React.Fragment>
     )
 }
