@@ -15,37 +15,37 @@ class Map extends Component {
         startDate: new Date("2020/1/22"),
         endDate: new Date("2020/7/22"),
 
-        barChosenDataset: 'unemployment',
+        barChosenDataset: 'unemploy_data',
         unemploy_data: unemploy_data,
         covid_data: covid_data,
 
         chartUI: {
             bar: {
-                title: 'Bar Chart',
+                title: 'Unemployment Rate Bar Chart',
                 filter: 'all'
             }
         }
     }
 
-    barSwitchFilterHandler = (bar) => {
+    barSwitchFilterHandler = (filterType) => {
         this.setState({
             chartUI: {
                 ...this.state.chartUI,
-                [bar]: {
-                    ...this.state.chartUI[bar],
-                    filter: "top"
+                bar: {
+                    ...this.state.chartUI.bar,
+                    filter: filterType
                 }
             }
         });
     }
 
-    resetTitleHandler = (chart) => {
+    resetTitleHandler = (chart, newTitle) => {
         this.setState({
             chartUI: {
                 ...this.state.chartUI,
                 [chart]: {
                     ...this.state.chartUI[chart],
-                    title: chart.charAt(0).toUpperCase() + chart.slice(1) + " Chart Demo"
+                    title: newTitle + chart.charAt(0).toUpperCase() + chart.slice(1) + " Chart"
                 }
             }
         })
@@ -66,9 +66,7 @@ class Map extends Component {
 
                 <BarChart
                     time={this.state.startDate}
-                    chosenDataset={this.state.barChosenDataset}
-                    unemploy_data={this.state.unemploy_data}
-                    covid_data={this.state.covid_data}
+                    chosenDataset={this.state[this.state.barChosenDataset]}
                     title={this.state.chartUI.bar.title}
                     filter={this.state.chartUI.bar.filter}
 
