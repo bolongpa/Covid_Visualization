@@ -9,6 +9,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/src/stylesheets/datepicker.scss";
 import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
+
+import { Container, Row, Col } from 'react-bootstrap';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+
 // https://docs.mapbox.com/mapbox-gl-js/style-spec/expressions/#variable-binding
 // https://docs.mapbox.com/mapbox-gl-js/example/data-driven-circle-colors/
 // https://docs.mapbox.com/help/tutorials/mapbox-gl-js-expressions/
@@ -185,7 +190,7 @@ class MapBox extends Component {
       .text("From "+timeFormat(self.state.startDate)+" to "+timeFormat(self.state.endDate))
       legend.append("tspan").attr("x",0).attr("dy", "1.5em").attr("class","tspan2")
       .text("The highest increase of covid cases was around "+format(self.state.m)+" in "+m_city.properties.state+"-"+m_city.properties.county)
-    
+    d3.select(self.legend).style("display","block")
     })
   };
 
@@ -250,13 +255,24 @@ class MapBox extends Component {
     return (
       <div>
         <div>
-          <div className={classes.MyDatePicker}>
+          <Container style={{"height":"50px","marginTop":"10px"}}>
+            <Row>
+              <Col xs='auto'>Start Date:</Col>
+              <Col xs="0"><DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2020/1/22")} maxDate={new Date("2020/11/1")} /></Col>
+              <Col xs='auto'>End Date:</Col>
+              <Col xs="0"><DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/11/1")} /></Col>
+              <Col><button onClick={this.changeDateHandler}>enter</button></Col>
+            </Row>
+          </Container>
+
+          {/* <div className={classes.MyDatePicker}>
+            <p>Start Date:</p>
             <DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2020/1/22")} maxDate={new Date("2020/11/1")} />
-          </div>
-          <div>
+          </div >
+          <div className={classes.MyDatePicker}>
             <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/11/1")} />
           </div>
-          <button onClick={this.changeDateHandler}>enter</button>
+          <button onClick={this.changeDateHandler}>enter</button> */}
         </div>
         <div className={classes.commands}>
           <span className={classes.filter} ref={this.RefFilter} id="all" onClick={function (e) { self.toggleFilter("#all"); self.filter(10000) }}>All</span>
@@ -265,16 +281,9 @@ class MapBox extends Component {
         </div>
         <div className={classes.mapContainer}>
           <div ref={el => this.mapContainer = el} style={{position: "relative",height: "inherit",width: "inherit"}}  />
-          <div class={classes.legend } ref={e => this.legend = e}>
-            <h4>Info</h4>
-            {/* <div><span style={{backgroundColor:"#8B4225"}} className={classes.span}></span>40,000</div>
-            <div><span style={{backgroundColor:"#B86B25"}} className={classes.span}></span>30,000</div>
-            <div><span style={{backgroundColor:"#DA9C20"}} className={classes.span}></span>20,000</div>
-            <div><span style={{backgroundColor: "#E6B71E"}} className={classes.span}></span>10,000</div>
-            <div><span style={{backgroundColor: "#F2F12D"}} className={classes.span}></span>0</div> */}
+          <div class={classes.legend } ref={e => this.legend = e} style={{"display":"none"}}>
+            <h3>Info</h3>
         </div>
-
-          {/* <div className={classes.legend} ref={e => this.legend = e} ></div> */}
           {console.log("final",this.state.m)}
         </div>
       </div>

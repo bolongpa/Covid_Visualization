@@ -79,5 +79,5 @@ text {
 
 .MyDatePicker {
     height: 40px;
-    display: inline-block;
+    display: table;
 }
