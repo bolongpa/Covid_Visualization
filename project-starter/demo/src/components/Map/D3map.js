@@ -9,9 +9,12 @@ import { feature, mesh } from "topojson-client";
 var monthmap = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" }
 var start = new Date("2020/1/1")
 var end = new Date("2020/8/1")
-const colorscale = d3.scaleSequential().domain([-5, 5]).interpolator(d3.interpolateRdBu)
+const colorscale = d3.scaleSequential().domain([-3, 3]).interpolator(d3.interpolateRdBu)
 const timeFormat = d3.timeFormat('%m/%d/%y')
 var radius
+var _s1 = d3.format(",.2s")
+var offset = new Set(["25","10","09","44"])
+
 const D3map = (props) => {
     const svgRef = useRef()
     start = props.startMonth
@@ -49,7 +52,7 @@ const D3map = (props) => {
 
     useEffect(() => {
         var svg = d3.select(svgRef.current).append("svg").attr('width', "1000px")
-            .attr('height', "800px").attr('viewBox', [0, 0, 975, 610])
+            .attr('height', "800px").attr('viewBox', [0, 0, 1100, 610])
         var path = d3.geoPath()
         svg.append('path')
             .datum(feature(us, us.objects.nation))
@@ -94,7 +97,7 @@ const D3map = (props) => {
 
                 var r = [5,2,0,-2,-5]
                 // var yscale = d3.scaleBand().domain(r).range([0, 300]).paddingInner(0).paddingOuter(0)
-                var xscale = d3.scaleLinear().domain([-5,5]).range([0, 300])
+                var xscale = d3.scaleLinear().domain([-4,4]).range([0, 300])
                 console.log(xscale.domain())
                 var xaxis = d3.axisTop(xscale);
 
@@ -102,7 +105,7 @@ const D3map = (props) => {
                 var axis_g = svg.append('g').attr('transform', 'translate(' + 550 + "," + 30 + ')')
                 axis_g.call(xaxis).attr("y",10).select(".domain").remove();
 
-                r = d3.range(-5, 5, 0.1)
+                r = d3.range(-4, 4, 0.05)
                 axis_g.selectAll("rect")
                     .data(r)
                     .enter()
@@ -120,7 +123,7 @@ const D3map = (props) => {
                     .data(feature(us, us.objects.states).features) //🚧  use us features
                     .join("path")
                     .attr("id", d => d.properties.name.replace(" ",""))
-                    .attr("stroke", "#333")
+                    .attr("stroke", "none")
                     .attr("fill", function(d) {return colorscale(d.properties.unemploy)}) //🚧  fill color based on value whose key is id
                     .attr("fill-opacity",0.7)
                     .on("click", function(e, d) {
@@ -141,59 +144,30 @@ const D3map = (props) => {
                     .attr("d", path)
                     .append("title")
 
-
-                svg.append('g')
-                    .selectAll("circle")
-                    .data(feature(us, us.objects.states).features)
-                    .enter()
-                    .append("circle")
-                    .attr("id", d => d.properties.name.replace(" ",""))
-                    .attr('transform', d => `translate(${path.centroid(d)})`)
-                    .attr('r', d => radius(d.properties.covid))
-                    .attr("fill", "black")
-                    // .attr('fill-opacity', 0.7)
-                    .attr('stroke', 'black')
-                    .attr('stroke-width', 0.5)
-               
-
-
-                const legend = svg.append('g')
-                    .attr('fill', '#777')
-                    .attr('transform', 'translate(910,608)')
-                    .attr('text-anchor', 'middle')
-                    .style('font', '10px sans-serif')
-                    .attr("id", "legend")
-                    .selectAll('g')
-                    .data([2000, 100000, 700000])
-                    .join('g');
-
-                legend.append('circle')
-                    .attr('fill', 'none')
-                    .attr('stroke', 'red')
-                    .attr('cy', d => -radius(d))
-                    .attr('r', radius);
-
-                legend.append('text')
-                    .attr('y', d => -2 * radius(d))
-                    .attr('dy', '1.3em')
-                    .text(d3.format('.1s'));
                 
-                svg.append('g')
+                const text_select = svg.append('g')
                     .selectAll("text")
                     .data(feature(us, us.objects.states).features)
                     .enter()
                     .append("text")
                     .attr("id",d=>d.properties.name.replace(" ",""))
-                    .text(d => d.properties.name)
                     .attr("text-anchor", "middle")
                     .attr('transform', d => `translate(${path.centroid(d)})`)
-                    // .on("mouseover",function(d){
-                    //     d3.select(this).attr("display","none")
-                    // })
-                    // .on("mouseout",function(d){
-                    //     d3.select(this).attr("display","block")
-                    // })
-                    .attr("display",d=>d.properties.name=="California"?"block":"none")
+                    .attr("display","none")
+                    .on("mouseover",function(e,d){
+                        d3.select(this).attr("display","block")
+                        d3.select("path#"+d.properties.name.replace(" ","")).attr("fill-opacity",1)
+                    })
+                    .on("mouseout",function(e,d){
+                        d3.select(this).attr("display","none")
+                        d3.select("path#"+d.properties.name.replace(" ","")).attr("fill-opacity",0.7)
+                    })
+                
+                text_select.append("tspan").attr("x",0).attr("dx",d=>offset.has(d.id)?"5em":"0").attr("dy", "0em").attr("class","tspan1")
+                .text(d => d.properties.name)
+                text_select.append("tspan").attr("x",0).attr("dx",d=>offset.has(d.id)?"3em":"0").attr("dy", "1.5em").attr("class","tspan2")
+                .text(d=>_s1(+d.properties.covid))
+
             })
             
     }, [])
@@ -230,7 +204,7 @@ const D3map = (props) => {
                     // console.log(d3.select("#" + d.properties.name))
 
                     d3.select("path#" + d.properties.name.replace(" ","")).transition().attr("fill", d => colorscale(d.properties.unemploy))
-                    d3.select("circle#" + d.properties.name.replace(" ","")).transition().attr("fill", d => colorscale(d.properties.unemploy)).attr('r', d => radius(d.properties.covid))
+                    //d3.select("circle#" + d.properties.name.replace(" ","")).transition().attr("fill", d => colorscale(d.properties.unemploy)).attr('r', d => radius(d.properties.covid))
                 })
 
                 const legend = d3.select("#legend")
@@ -243,22 +217,10 @@ const D3map = (props) => {
                     .attr('y', d => -2 * radius(d))
                     .attr('dy', '1.3em')
                     .text(d => d3.format('.1s')(d))
-                // var svg = d3.select(svgRef.current).select("svg")
-                // var path = d3.geoPath()
-                // svg.append('g')
-                //     .selectAll("text")
-                //     .data(feature(us, us.objects.states).features)
-                //     .enter()
-                //     .append("text")
-                //     .text(d => d.properties.name)
-                //     .attr("text-anchor", "middle")
-                //     .attr('transform', d => `translate(${path.centroid(d)})`)
 
-
-
+                d3.selectAll(".tspan2").text(d=>_s1(+d.properties.covid))
 
             })
-            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [start, end])
 
 
