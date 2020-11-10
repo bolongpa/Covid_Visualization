@@ -1,4 +1,4 @@
-// TODO: 1. pass time 
+// TODO: 1. pass time
 //  2. pass button action
 
 import React, { useEffect, useRef } from 'react';
@@ -12,8 +12,8 @@ const BarChart = (props) => {
     var time_year = time.getYear() + 1900;
     var time_month = time.getMonth() + 1;
     var chosenDataset = props.chosenDataset;  // currently using dataset name
-    //var unemploy_data = props.unemploy_data;  // raw unemployment data
-    //var covid_data = props.covid_data;  // raw covid data
+    // var unemploy_data = props.unemploy_data;  // raw unemployment data
+    // var covid_data = props.covid_data;  // raw covid data
     var chartTitle = props.title;  // chart title
     var filter = props.filter;
 
@@ -22,8 +22,8 @@ const BarChart = (props) => {
 
     const chartRef = useRef();
 
-    //var dataurl = {'covid':covid_data, 'unemployment':unemploy_data};
-    //var dataset = dataurl[chosenDataset];
+    // var dataurl = {'covid':covid_data, 'unemployment':unemploy_data};
+    // var dataset = dataurl[chosenDataset];
 
 
     // function to draw
@@ -116,6 +116,7 @@ const BarChart = (props) => {
         }
     }
 
+    // draw chart
     useEffect(() => {
         d3.csv(chosenDataset, d => {
             if (d.Year == time_year.toString() && d.Period == monthmap[time_month]) {
@@ -132,11 +133,12 @@ const BarChart = (props) => {
         })
     }, [chosenDataset, filter]);
 
+
     return (
         <div className={classes.BarChart}>
             <h1>{chartTitle}</h1>
-            <button onClick={() => props.resetTitleHandler("bar", "Covid Confirmed Case")}>COVID</button>
-            <button onClick={() => props.resetTitleHandler("bar", "Unemployment Rate")}>Unemployment</button>
+            <button onClick={() => props.resetTitleHandler("bar", "Covid Confirmed Case ")}>COVID</button>
+            <button onClick={() => props.resetTitleHandler("bar", "Unemployment Rate ")}>Unemployment</button>
             <button onClick={() => props.switchFilterHandler("top")}>Top 10</button>
             <button onClick={() => props.switchFilterHandler("bottom")}>Bottom 10</button>
 

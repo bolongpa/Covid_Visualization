@@ -5,6 +5,8 @@ import D3map from '../../components/Map/D3map.js';
 import BarChart from '../../components/Bar/BarChart';
 
 import "react-datepicker/dist/react-datepicker.css";
+import { Container, Row, Col } from 'react-bootstrap';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 // input data for bar chart
 import unemploy_data from "../../assets/data/unemployment.csv";
@@ -53,27 +55,39 @@ class Map extends Component {
 
     render() {
         return (
-            <div>
-                <p> Introduction here</p>
-                <div >
-                    <DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2019/1/1")} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
-                </div>
-                <div>
-                    <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
-                </div>
-                <D3map startMonth={this.state.startDate} endMonth={this.state.endDate}></D3map>
-                {console.log(this.state.startDate.getMonth())}
+            <React.Fragment>
+                {/* <p> Introduction here</p> */}
+                {/* <Container fluid="md" width="100%"> */}
+                <Row md={8} lg={1}>
+                    <Col xs='auto'>Start Month:</Col>
+                    <Col>
+                        <DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2019/1/1")} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
+                    </Col>
+                    <Col xs='auto'>End Month:</Col>
+                    <Col>
+                        <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <D3map startMonth={this.state.startDate} endMonth={this.state.endDate}></D3map>
+                    </Col>
+                    {console.log(this.state.startDate.getMonth())}
 
-                <BarChart
-                    time={this.state.startDate}
-                    chosenDataset={this.state[this.state.barChosenDataset]}
-                    title={this.state.chartUI.bar.title}
-                    filter={this.state.chartUI.bar.filter}
+                    <Col>
+                        <BarChart
+                            time={this.state.startDate}
+                            chosenDataset={this.state[this.state.barChosenDataset]}
+                            title={this.state.chartUI.bar.title}
+                            filter={this.state.chartUI.bar.filter}
 
-                    resetTitleHandler={this.resetTitleHandler}
-                    switchFilterHandler={this.barSwitchFilterHandler} />
+                            resetTitleHandler={this.resetTitleHandler}
+                            switchFilterHandler={this.barSwitchFilterHandler} />
+                    </Col>
+                </Row>
+                {/* </Container> */}
+            </React.Fragment>
 
-            </div>
 
         );
     }
