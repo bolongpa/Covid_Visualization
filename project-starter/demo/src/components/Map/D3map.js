@@ -22,10 +22,12 @@ const D3map = (props) => {
 
     function aggregate(data) {
         // console.log("agg",data)
+        console.log(data)
         var total = {}
         for (var d in data) {
             if (total[data[d][0]]) {
                 total[data[d][0]] += +data[d][1];
+                
             } else {
                 total[data[d][0]] = +data[d][1];
             }
@@ -86,6 +88,7 @@ const D3map = (props) => {
 
                 const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
                 var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
+                
                 var new_us = feature(us, us.objects.states).features
                     // console.log("newus",new_us)
                 new_us.forEach(function(dd) {
@@ -166,7 +169,7 @@ const D3map = (props) => {
                 text_select.append("tspan").attr("x",0).attr("dx",d=>offset.has(d.id)?"5em":"0").attr("dy", "0em").attr("class","tspan1")
                 .text(d => d.properties.name)
                 text_select.append("tspan").attr("x",0).attr("dx",d=>offset.has(d.id)?"3em":"0").attr("dy", "1.5em").attr("class","tspan2")
-                .text(d=>_s1(+d.properties.covid))
+                .text(d=>"+"+_s1(+d.properties.covid))
 
             })
             
@@ -189,9 +192,10 @@ const D3map = (props) => {
 
 
 
-                const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
+                const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
                 var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
                 var new_us = feature(us, us.objects.states).features
+                console.log(current,early)
                     // console.log("newus",new_us)
                 new_us.forEach(function(dd) {
                     dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
@@ -218,7 +222,7 @@ const D3map = (props) => {
                     .attr('dy', '1.3em')
                     .text(d => d3.format('.1s')(d))
 
-                d3.selectAll(".tspan2").text(d=>_s1(+d.properties.covid))
+                d3.selectAll(".tspan2").text(d=>isNaN(d.properties.covid)?"--":"+"+_s1(+d.properties.covid))
 
             })
     }, [start, end])
