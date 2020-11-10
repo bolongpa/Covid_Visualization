@@ -177,13 +177,14 @@ class MapBox extends Component {
 
       });
   
-    var svg = d3.select(self.legend).append("svg").attr("width","500").attr("height","50")
+    var svg = d3.select(self.legend).append("svg").attr("width","500").attr("height","40")
     var format = d3.format('.1s')
     const timeFormat = d3.timeFormat('%m/%d/%Y')
     const legend = svg.append('g').append('text')
       legend.attr('None', 'red')
       .attr('transform', 'translate(0,10)')
       // .attr('text-anchor', 'middle')
+      .attr("alignment-baseline","middle")
       .style('font', '14px sans-serif')
       
       legend.append("tspan").attr("x",0).attr("dy", "0em").attr("class","tspan1")
@@ -282,7 +283,7 @@ class MapBox extends Component {
         <div className={classes.mapContainer}>
           <div ref={el => this.mapContainer = el} style={{position: "relative",height: "inherit",width: "inherit"}}  />
           <div class={classes.legend } ref={e => this.legend = e} style={{"display":"none"}}>
-            <h3>Info</h3>
+            {/* <h3>Info</h3> */}
         </div>
           {console.log("final",this.state.m)}
         </div>
