@@ -22,19 +22,19 @@ class Map extends Component {
         chartUI: {
             bar: {
                 title: 'Bar Chart',
-                filter: 'top'
+                filter: 'all'
             }
         }
     }
 
-    barSwitchFilterHandler = (newfilter) => {
+    barSwitchFilterHandler = (bar) => {
         this.setState({
             chartUI: {
-                ...this.bar_state.chartUI,
-                bar: {
-                    ...this.bar_state.chartUI.bar,
-                    filter: newfilter
-                },
+                ...this.state.chartUI,
+                [bar]: {
+                    ...this.state.chartUI[bar],
+                    filter: "top"
+                }
             }
         });
     }
@@ -71,6 +71,7 @@ class Map extends Component {
                     covid_data={this.state.covid_data}
                     title={this.state.chartUI.bar.title}
                     filter={this.state.chartUI.bar.filter}
+
                     resetTitleHandler={this.resetTitleHandler}
                     switchFilterHandler={this.barSwitchFilterHandler} />
 
