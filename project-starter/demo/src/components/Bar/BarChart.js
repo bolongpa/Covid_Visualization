@@ -116,9 +116,6 @@ const BarChart = (props) => {
         }
     }
 
-
-    
-
     // draw chart
     useEffect(() => {
         d3.csv(dataset, d=>{
@@ -142,8 +139,8 @@ const BarChart = (props) => {
             <h1>{chartTitle}</h1>
             <button onClick={() => props.resetTitleHandler("covid")}>COVID</button>
             <button onClick={() => props.resetTitleHandler("unemployment")}>Unemployment</button>
-            <button onClick={() => props.switchFilterHandler('top')}>Top 10</button>
-            <button onClick={() => props.switchFilterHandler('bottom')}>Bottom 10</button>
+            <button onClick={() => props.switchFilterHandler('bar')}>Top 10</button>
+            <button onClick={() => props.switchFilterHandler('bar')}>Bottom 10</button>
 
             <div ref={chartRef} />
         </div>
