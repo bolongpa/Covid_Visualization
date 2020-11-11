@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/src/stylesheets/datepicker.scss";
 import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 
-import { Container, Row, Col,Button } from 'react-bootstrap';
+import { Container, Row, Col,Button,Badge } from 'react-bootstrap';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -258,22 +258,14 @@ class MapBox extends Component {
         <div>
           <Container style={{"height":"50px","marginTop":"10px"}}>
             <Row>
-              <Col xs='auto'>Start Date:</Col>
-              <Col xs="0"><DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2020/1/22")} maxDate={new Date("2020/11/1")} /></Col>
-              <Col xs='auto'>End Date:</Col>
-              <Col xs="0"><DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/11/1")} /></Col>
-              <Col><Button variant="outline-primary" onClick={this.changeDateHandler}>enter</Button></Col>
+              <Col xs='auto' className="mt-2">Start Date:</Col>
+              <Col xs="0" className="mt-1"><DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2020/1/22")} maxDate={new Date("2020/11/1")} /></Col>
+              <Col xs='auto'className="mt-2">End Date:</Col>
+              <Col xs="0" className="mt-1"><DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/11/1")} /></Col>
+              <Col xs='auto' ><Button variant="outline-primary" onClick={this.changeDateHandler} className="mt-0">enter</Button></Col>
             </Row>
           </Container>
 
-          {/* <div className={classes.MyDatePicker}>
-            <p>Start Date:</p>
-            <DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2020/1/22")} maxDate={new Date("2020/11/1")} />
-          </div >
-          <div className={classes.MyDatePicker}>
-            <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/11/1")} />
-          </div>
-          <button onClick={this.changeDateHandler}>enter</button> */}
         </div>
         <div className={classes.commands}>
           <span className={classes.filter} ref={this.RefFilter} id="all" onClick={function (e) { self.toggleFilter("#all"); self.filter(10000) }}>All</span>
