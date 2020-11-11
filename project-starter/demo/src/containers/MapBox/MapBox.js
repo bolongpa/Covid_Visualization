@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/src/stylesheets/datepicker.scss";
 import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col,Button } from 'react-bootstrap';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -262,7 +262,7 @@ class MapBox extends Component {
               <Col xs="0"><DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2020/1/22")} maxDate={new Date("2020/11/1")} /></Col>
               <Col xs='auto'>End Date:</Col>
               <Col xs="0"><DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/11/1")} /></Col>
-              <Col><button onClick={this.changeDateHandler}>enter</button></Col>
+              <Col><Button variant="outline-primary" onClick={this.changeDateHandler}>enter</Button></Col>
             </Row>
           </Container>
 
