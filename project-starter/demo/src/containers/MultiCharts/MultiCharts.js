@@ -3,11 +3,12 @@ import DatePicker from "react-datepicker";
 import * as d3 from 'd3';
 
 import classes from './MultiCharts.module.css';
+import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 import BubbleChart from '../../components/BubbleChart/BubbleChart';
 import BarChart from '../../components/BarChart/BarChart';
+import LineChart from '../../containers/LineChart/LineChart';
+
 import * as inputData from '../../assets/data/newUsers.json';
-//import "../../../node_modules/react-datepicker/dist/react-datepicker.css"
-import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 
 
 class MultiCharts extends Component {
@@ -116,7 +117,6 @@ class MultiCharts extends Component {
     }
 
     render() {
-        console.log(this.state.bubbleData)
         return (
             <div className={classes.MultiCharts}>
                 <h1>DatePicker Playground</h1>
@@ -146,6 +146,8 @@ class MultiCharts extends Component {
                     resetTitleHandler={this.resetTitleHandler}
                     barColor={this.state.chartUI.bar.color}
                     switchColorHandler={this.switchBarColorHandler} />
+                <br />
+                <LineChart />
             </div>
         );
     }
