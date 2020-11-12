@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as d3 from 'd3';
 
 import unemployment from '../../assets/data/lineChart_unemployment.csv';
+import covid from '../../assets/data/lineChart_covid.csv';
 
 
 class LineChart extends Component {
@@ -20,7 +21,8 @@ class LineChart extends Component {
 
     state = {
         initial: true,
-        data: null,
+        unemployData: null,
+        covidData: null,
         state: "All",
         timeout: setTimeout(2000),
         first: null,
@@ -41,7 +43,22 @@ class LineChart extends Component {
                 d.date = parseDate(d.Month);
             });
             this.setState({
-                data: inputData
+                unemployData: inputData
+            });
+
+        });
+        d3.csv(covid).then(inputData => {
+            var parseDate = d3.timeParse("%Y/%m");
+            inputData.forEach(function (d) {
+                Object.keys(d).map((key, _) => {
+                    if (key != "Month") {
+                        d[key] = +d[key]
+                    }
+                })
+                d.date = parseDate(d.Month);
+            });
+            this.setState({
+                covidData: inputData
             });
 
         });
@@ -58,36 +75,46 @@ class LineChart extends Component {
     }
 
     draw = () => {
-        if (!this.state.data) {
-            return
-        }
         console.log("draw()", this.state.state);
-        console.log(this.state.data)
-        var data = this.state.data;
+        console.log(this.state.unemployData)
+        var unemployData = this.state.unemployData;
+        var covidData = this.state.covidData;
 
         var width = 960 - this.state.margin.left - this.state.margin.right;
         var height = 350 - this.state.margin.top - this.state.margin.bottom;
 
         var x = d3.scaleTime();
-        var y = d3.scaleLinear();
+        var yLeft = d3.scaleLinear();
+        var yRight = d3.scaleLinear();
 
-        x.domain([data[0].date, data[data.length - 1].date])
+        x.domain([unemployData[0].date, unemployData[unemployData.length - 1].date])
             .range([0, width]);
 
-        y.domain(d3.extent(data.map(d => d[this.state.state])))
+        yLeft.domain(d3.extent(unemployData.map(d => d[this.state.state])))
+            .range([height, 0]);
+
+        yRight.domain(d3.extent(covidData.map(d => d[this.state.state])))
             .range([height, 0]);
 
         var xAxis = d3.axisBottom()
             .scale(x)
             .ticks(10);
 
-        var yAxis = d3.axisLeft()
-            .scale(y)
+        var yLeftAxis = d3.axisLeft()
+            .scale(yLeft)
+            .ticks(15);
+
+        var yRightAxis = d3.axisRight()
+            .scale(yRight)
             .ticks(15);
 
         var line = d3.line()
             .x(d => x(d.date))
-            .y(d => y(d[this.state.state]));
+            .y(d => yLeft(d[this.state.state]));
+
+        var covidLine = d3.line()
+            .x(d => x(d.date))
+            .y(d => yRight(d[this.state.state]));
 
         const svg = d3.select(this.chartRef.current).append('svg')
             .attr('id', 'lineSvg')
@@ -101,14 +128,16 @@ class LineChart extends Component {
             .call(xAxis);
 
         svg.append("g")
-            .attr("id", "yAxis")
-            .call(yAxis)
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("Index");
+            .attr("id", "yLeftAxis")
+            .attr("stroke", "#008B8B")
+            .call(yLeftAxis)
+            .append("text");
+
+        svg.append("g")
+            .attr("id", "yRightAxis")
+            .attr("transform", "translate( " + width + ", 0 )")
+            .attr("stroke", "#FF8C00")
+            .call(yRightAxis);
 
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
@@ -119,59 +148,88 @@ class LineChart extends Component {
                 .tickFormat(""));
 
         svg.append("path")
-            .datum(data)
+            .datum(unemployData)
             .attr("d", line)
             .attr("fill", "none")
             .attr("stroke", "#008B8B")
             .attr("stroke-width", 1.8)
             .attr("id", "line");
+
+        svg.append("path")
+            .datum(covidData)
+            .attr("d", covidLine)
+            .attr("fill", "none")
+            .attr("stroke", "#FF8C00")
+            .attr("stroke-width", 1.8)
+            .attr("id", "covidLine");
+
+        // Handmade legend
+        svg.append("rect").attr("x", 60).attr("y", 50).attr("width", 10).attr("height", 3).style("fill", "#008B8B")
+        svg.append("rect").attr("x", 60).attr("y", 70).attr("width", 10).attr("height", 3).style("fill", "#FF8C00")
+        svg.append("text").attr("x", 80).attr("y", 52).text("Unemployment Rate (%)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
+        svg.append("text").attr("x", 80).attr("y", 72).text("COVID confirmed cases").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
+
     }
 
     redraw = () => {
         console.log("redraw()", this.state.state)
         clearTimeout(this.state.timeout);
-        var data = this.state.data;
+        var unemployData = this.state.unemployData;
+        var covidData = this.state.covidData;
 
         var width = 960 - this.state.margin.left - this.state.margin.right;
         var height = 350 - this.state.margin.top - this.state.margin.bottom;
 
         var x = d3.scaleTime();
-        var y = d3.scaleLinear();
+        var yLeft = d3.scaleLinear();
+        var yRight = d3.scaleLinear();
 
-        x.domain([data[0].date, data[data.length - 1].date])
+        x.domain([unemployData[0].date, unemployData[unemployData.length - 1].date])
             .range([0, width]);
-        y.domain(d3.extent(data.map(d => d[this.state.state])))
+        yLeft.domain(d3.extent(unemployData.map(d => d[this.state.state])))
+            .range([height, 0]);
+        yRight.domain(d3.extent(covidData.map(d => d[this.state.state])))
             .range([height, 0]);
 
-        var yAxis = d3.axisLeft()
-            .scale(y)
+        var yLeftAxis = d3.axisLeft()
+            .scale(yLeft)
+            .ticks(15);
+        var yRightAxis = d3.axisRight()
+            .scale(yRight)
             .ticks(15);
 
         var line = d3.line()
             .x(d => x(d.date))
-            .y(d => y(d[this.state.state]));
+            .y(d => yLeft(d[this.state.state]));
+        var covidLine = d3.line()
+            .x(d => x(d.date))
+            .y(d => yRight(d[this.state.state]));
 
         var svg = d3.select('#lineSvg');
 
         // First transition the line & label to the new value.
-        var trans1 = svg.transition().duration(500);
+        var trans1 = svg.transition().duration(600);
         trans1.select("#line")
             .attr("d", line);
+        trans1.select("#covidLine")
+            .attr("d", covidLine);
 
         // Then transition the y-axis.
         var trans2 = trans1.transition();
         trans2.select("#line").attr("d", line);
-        trans2.select("#yAxis").call(yAxis);
+        trans2.select("#yLeftAxis").call(yLeftAxis);
+        trans2.select("#covidLine").attr("d", covidLine);
+        trans2.select("#yRightAxis").call(yRightAxis);
     }
 
     render() {
-        if (this.state.initial && this.state.data) {
+        if (this.state.initial && this.state.unemployData && this.state.covidData) {
             this.setState({ initial: false })
             this.draw();
         }
         var targetState = this.state.state;
         if (this.state.state == "All") {
-            targetState = "the United States"
+            targetState = "United States"
         }
         return (
             <div>
@@ -230,7 +288,7 @@ class LineChart extends Component {
                     <option key="Wisconsin" value="Wisconsin">Wisconsin</option>
                     <option key="Wyoming" value="Wyoming">Wyoming</option>
                 </select>
-                <h1>Unemployment Rate Trend of {targetState}</h1>
+                <h1>Trend of Unemployment Rate and COVID Confirmed Cases - {targetState}</h1>
                 <p ref={this.pRef}>2019/01-2020/08</p>
                 <div ref={this.chartRef} />
 
