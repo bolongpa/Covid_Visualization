@@ -8,9 +8,9 @@ import classes from './BarChart.module.css';
 const BarChart = (props) => {
     const bar_width = 30;
     var bar_num = 52;
-    var time = props.time;
-    var time_year = time.getYear() + 1900;
-    var time_month = time.getMonth() + 1;
+    var start = props.start;
+    var start_year = start.getYear() + 1900;
+    var start_month = start.getMonth() + 1;
     var chosenDataset = props.chosenDataset;  // currently using dataset name
     // var unemploy_data = props.unemploy_data;  // raw unemployment data
     // var covid_data = props.covid_data;  // raw covid data
@@ -119,7 +119,7 @@ const BarChart = (props) => {
     // draw chart
     useEffect(() => {
         d3.csv(chosenDataset, d => {
-            if (d.Year == time_year.toString() && d.Period == monthmap[time_month]) {
+            if (d.Year === start_year.toString() && d.Period === monthmap[start_month]) {
                 return {
                     state: d.State,
                     year: d.Year,

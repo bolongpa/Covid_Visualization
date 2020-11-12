@@ -24,7 +24,7 @@ class Map extends Component {
         chartUI: {
             bar: {
                 title: 'Unemployment Rate Bar Chart',
-                filter: 'all'
+                filter: 'top'
             }
         }
     }
@@ -91,7 +91,8 @@ class Map extends Component {
 
                     <Col >
                         <BarChart
-                            time={this.state.startDate}
+                            start={this.state.startDate}
+                            end={this.state.endDate}
                             chosenDataset={this.state[this.state.barChosenDataset]}
                             title={this.state.chartUI.bar.title}
                             filter={this.state.chartUI.bar.filter}
