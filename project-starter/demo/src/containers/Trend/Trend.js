@@ -118,8 +118,10 @@ class LineChart extends Component {
 
         const svg = d3.select(this.chartRef.current).append('svg')
             .attr('id', 'lineSvg')
-            .attr('width', width + this.state.margin.left + this.state.margin.right)
+            // .attr('width', width + this.state.margin.left + this.state.margin.right)
+            .attr('width', "100%")
             .attr('height', height + this.state.margin.top + this.state.margin.bottom)
+            .attr('viewBox', [0, 0, 900, 380])
             .append('g')
             .attr('transform', 'translate(' + this.state.margin.left + ', ' + this.state.margin.top + ')');
 
