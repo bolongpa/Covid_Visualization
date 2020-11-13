@@ -93,7 +93,8 @@ class Map extends Component {
                         <BarChart
                             start={this.state.startDate}
                             end={this.state.endDate}
-                            chosenDataset={this.state[this.state.barChosenDataset]}
+                            unemploy_data={this.state.unemploy_data}
+                            covid_data={this.state.covid_data}
                             title={this.state.chartUI.bar.title}
                             filter={this.state.chartUI.bar.filter}
 
