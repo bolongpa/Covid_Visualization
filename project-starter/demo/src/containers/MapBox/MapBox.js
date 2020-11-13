@@ -204,7 +204,9 @@ class MapBox extends Component {
       container: this.mapContainer, // container id
       style: 'mapbox://styles/mapbox/streets-v11', // style URL
       center: [this.state.viewport.longitude, this.state.viewport.latitude], // starting position [lng, lat]
-      zoom: this.state.viewport.zoom // starting zoom
+      zoom: this.state.viewport.zoom, // starting zoom
+      maxZoom: 10,
+      minZoom: 3
     });
     console.log(this.state.df)
     this.drawLayer(this.map)
