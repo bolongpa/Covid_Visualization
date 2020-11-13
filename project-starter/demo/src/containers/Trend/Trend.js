@@ -11,7 +11,6 @@ class LineChart extends Component {
     constructor(props) {
         super(props);
         this.chartRef = React.createRef();
-        this.pRef = React.createRef();
     }
 
     componentWillMount() {
@@ -332,8 +331,8 @@ class LineChart extends Component {
                     <option key="Wisconsin" value="Wisconsin">Wisconsin</option>
                     <option key="Wyoming" value="Wyoming">Wyoming</option>
                 </select>
-                <h1>Trend of Unemployment Rate and COVID Confirmed Cases - {targetState}</h1>
-                <p ref={this.pRef}>2019/01-2020/08</p>
+                <h1>Pandemics and the Labor Market - {targetState}</h1>
+                <p>2019/01-2020/08</p>
                 <div ref={this.chartRef} />
 
             </div>
