@@ -23,7 +23,7 @@
 
 
 @media (max-width: 499px) {
-    .DesktopOnlyToolbar {
+    .DesktopOnly {
         display: none;
     }
 }
