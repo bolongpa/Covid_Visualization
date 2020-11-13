@@ -52,7 +52,7 @@ class LineChart extends Component {
             inputData.forEach(function (d) {
                 Object.keys(d).map((key, _) => {
                     if (key != "Month") {
-                        d[key] = +d[key]
+                        d[key] = +d[key] / 1000 // will add a (k) at yAxis
                     }
                 })
                 d.date = parseDate(d.Month);
@@ -133,13 +133,24 @@ class LineChart extends Component {
             .attr("id", "yLeftAxis")
             .attr("stroke", "#008B8B")
             .call(yLeftAxis)
-            .append("text");
+            .append("text")
+            .attr("y", -20)
+            .attr("x", -10)
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("(%)");
 
         svg.append("g")
             .attr("id", "yRightAxis")
             .attr("transform", "translate( " + width + ", 0 )")
             .attr("stroke", "#FF8C00")
-            .call(yRightAxis);
+            .call(yRightAxis)
+            .append("text")
+            .attr("y", -20)
+            .attr("x", 10)
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("(k)");
 
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
@@ -169,7 +180,7 @@ class LineChart extends Component {
         svg.append("rect").attr("x", 60).attr("y", 50).attr("width", 10).attr("height", 3).style("fill", "#008B8B")
         svg.append("rect").attr("x", 60).attr("y", 70).attr("width", 10).attr("height", 3).style("fill", "#FF8C00")
         svg.append("text").attr("x", 80).attr("y", 52).text("Unemployment Rate (%)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
-        svg.append("text").attr("x", 80).attr("y", 72).text("COVID confirmed cases").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
+        svg.append("text").attr("x", 80).attr("y", 72).text("COVID confirmed cases (k)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
 
     }
 
