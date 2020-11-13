@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 
 import unemployment from '../../assets/data/lineChart_unemployment.csv';
 import covid from '../../assets/data/lineChart_covid.csv';
+import hiring from '../../assets/data/lineChart_hiring.csv';
 
 
 class LineChart extends Component {
@@ -23,6 +24,7 @@ class LineChart extends Component {
         initial: true,
         unemployData: null,
         covidData: null,
+        hiringData: null,
         state: "All",
         timeout: setTimeout(2000),
         first: null,
@@ -62,6 +64,21 @@ class LineChart extends Component {
             });
 
         });
+        d3.csv(hiring).then(inputData => {
+            var parseDate = d3.timeParse("%Y/%m");
+            inputData.forEach(function (d) {
+                Object.keys(d).map((key, _) => {
+                    if (key != "Month") {
+                        d[key] = +d[key]
+                    }
+                })
+                d.date = parseDate(d.Month);
+            });
+            this.setState({
+                hiringData: inputData
+            });
+
+        });
     }
 
     updateStateHandler = (event) => {
@@ -76,9 +93,9 @@ class LineChart extends Component {
 
     draw = () => {
         console.log("draw()", this.state.state);
-        console.log(this.state.unemployData)
         var unemployData = this.state.unemployData;
         var covidData = this.state.covidData;
+        var hiringData = this.state.hiringData;
 
         var width = 960 - this.state.margin.left - this.state.margin.right;
         var height = 350 - this.state.margin.top - this.state.margin.bottom;
@@ -90,7 +107,7 @@ class LineChart extends Component {
         x.domain([unemployData[0].date, unemployData[unemployData.length - 1].date])
             .range([0, width]);
 
-        yLeft.domain(d3.extent(unemployData.map(d => d[this.state.state])))
+        yLeft.domain([3, d3.max(unemployData.map(d => d[this.state.state]))])
             .range([height, 0]);
 
         yRight.domain(d3.extent(covidData.map(d => d[this.state.state])))
@@ -109,6 +126,10 @@ class LineChart extends Component {
             .ticks(15);
 
         var line = d3.line()
+            .x(d => x(d.date))
+            .y(d => yLeft(d[this.state.state]));
+
+        var hiringLine = d3.line()
             .x(d => x(d.date))
             .y(d => yLeft(d[this.state.state]));
 
@@ -169,6 +190,14 @@ class LineChart extends Component {
             .attr("id", "line");
 
         svg.append("path")
+            .datum(hiringData)
+            .attr("d", hiringLine)
+            .attr("fill", "none")
+            .attr("stroke", "#87CEFA")
+            .attr("stroke-width", 1.8)
+            .attr("id", "hiringLine");
+
+        svg.append("path")
             .datum(covidData)
             .attr("d", covidLine)
             .attr("fill", "none")
@@ -177,10 +206,12 @@ class LineChart extends Component {
             .attr("id", "covidLine");
 
         // Handmade legend
-        svg.append("rect").attr("x", 60).attr("y", 50).attr("width", 10).attr("height", 3).style("fill", "#008B8B")
-        svg.append("rect").attr("x", 60).attr("y", 70).attr("width", 10).attr("height", 3).style("fill", "#FF8C00")
-        svg.append("text").attr("x", 80).attr("y", 52).text("Unemployment Rate (%)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
-        svg.append("text").attr("x", 80).attr("y", 72).text("COVID confirmed cases (k)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
+        svg.append("rect").attr("x", 60).attr("y", 50).attr("width", 10).attr("height", 3).style("fill", "#87CEFA")
+        svg.append("rect").attr("x", 60).attr("y", 70).attr("width", 10).attr("height", 3).style("fill", "#008B8B")
+        svg.append("rect").attr("x", 60).attr("y", 90).attr("width", 10).attr("height", 3).style("fill", "#FF8C00")
+        svg.append("text").attr("x", 80).attr("y", 52).text("Nationwide Hiring Rate (%)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
+        svg.append("text").attr("x", 80).attr("y", 72).text("Statewide Unemployment Rate (%)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
+        svg.append("text").attr("x", 80).attr("y", 92).text("Statewide COVID confirmed cases (k)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
 
     }
 
@@ -236,7 +267,7 @@ class LineChart extends Component {
     }
 
     render() {
-        if (this.state.initial && this.state.unemployData && this.state.covidData) {
+        if (this.state.initial && this.state.unemployData && this.state.covidData && this.state.hiringData) {
             this.setState({ initial: false })
             this.draw();
         }
