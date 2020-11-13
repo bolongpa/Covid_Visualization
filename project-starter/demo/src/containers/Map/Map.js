@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 
 import D3map from '../../components/Map/D3map.js';
 import BarChart from '../../components/Bar/BarChart';
+import LineChart from '../../containers/Trend/Trend';
 
 import "react-datepicker/dist/react-datepicker.css";
 import { Container, Row, Col,Alert,Badge } from 'react-bootstrap';
@@ -100,6 +101,11 @@ class Map extends Component {
 
                             resetTitleHandler={this.resetTitleHandler}
                             switchFilterHandler={this.barSwitchFilterHandler} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <LineChart/>
                     </Col>
                 </Row>
                 </Container>
