@@ -9,9 +9,11 @@ import { svg } from 'd3';
 const BarChart = (props) => {
     const bar_width = 15;
     const bar_num = 10;
-    const timeFormat = d3.timeFormat('%m/%d/%y')
-    var start = props.start
-    var end = props.end
+    const timeFormat = d3.timeFormat('%m/%d/%y');
+    const colorscale1 = d3.scaleSequential().domain([-5, 14]).interpolator(d3.interpolateBlues);
+    const colorscale2 = d3.scaleSequential().domain([-500000, 650000]).interpolator(d3.interpolateOranges);
+    var start = props.start;
+    var end = props.end;
     var start_year = props.start.getYear() + 1900;
     var start_month = props.start.getMonth() + 1;
     var end_year = props.end.getYear() + 1900;
@@ -100,7 +102,7 @@ const BarChart = (props) => {
             .attr('y', d => x(d.state))
             .attr('width', d => y1(d.value))
             .attr('height', bar_width)
-            .attr('fill', 'steelblue');
+            .attr('fill', d => colorscale1(d.value));
 
         svg.selectAll('.name')
             .data(unemploy_data)
@@ -122,7 +124,7 @@ const BarChart = (props) => {
             .attr('y', d => x(d.state)+bar_width)
             .attr('width', d => y2(d.value))
             .attr('height', bar_width)
-            .attr('fill', 'orange');
+            .attr('fill', d => colorscale2(d.value));
 
         var xAxis = d3.axisLeft()
             .scale(d3.scaleLinear().range([0, height+5]))  // adding outer padding to scaleBand
@@ -140,7 +142,7 @@ const BarChart = (props) => {
 
         svg.append('g')
             .attr('class', 'axis')
-            .attr('id', 'axis_top')
+            .attr('id', 'axis_top').attr('stroke', 'steelblue')
             .call(y1Axis);
 
         var y2Axis = d3.axisBottom()
@@ -150,26 +152,38 @@ const BarChart = (props) => {
         svg.append('g')
             .attr('class', 'axis')
             .attr('id', 'axis_bottom')
-            .attr('transform', 'translate(0,'+height+')')
+            .attr('transform', 'translate(0,'+height+')').attr('stroke', 'orange')
             .call(y2Axis);
 
         svg.append('text')
             .attr('x', -40)
-            .attr('y', 0)
+            .attr('y', -5)
             .attr('class', 'xlabel')
             .append('tspan').text('State')
 
         svg.append('text')
-            .attr('x', width - 100)
+            .attr('x', width - 150)
             .attr('y', -25)
             .attr('class', 'ylabel')
-            .append('tspan').text('Unemployment Rate (%)')
+            .append('tspan').text('Unemployment Rate (%)').attr('fill', 'steelblue')
 
         svg.append('text')
             .attr('x', width - 100)
             .attr('y', height + 35)
             .attr('class', 'ylabel')
-            .append('tspan').text('COVID-19 Confirmed')
+            .append('tspan').text('COVID-19 Confirmed').attr('fill', 'orange')
+
+        // draw legend
+        // var r = d3.range(0, 550000, 1000);
+        // svg.selectAll("rect")
+        //     .data(r)
+        //     .enter()
+        //     .append("rect")
+        //     .attr("x", width+30)
+        //     .attr("y", d=>height-y2(d)/width*height+0)
+        //     .attr("width", 10)
+        //     .attr("height", 10)
+        //     .attr("fill", d => colorscale2(d))
 
         function topten(data) {
             return data.sort(function (a, b) { return d3.descending(a.value, b.value) }).slice(0, 10);
@@ -228,6 +242,7 @@ const BarChart = (props) => {
                     .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
                 
                 draw(svg, width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
+                
 
                 
         });
@@ -270,7 +285,8 @@ const BarChart = (props) => {
         svg.selectAll('.bar1').data(unemploy_data)
             .transition()
             .duration(800)
-            .attr('width', d => y1(d.value));
+            .attr('width', d => y1(d.value))
+            .attr('fill', d => colorscale1(d.value));
 
         svg.selectAll('.name')
             .data(unemploy_data)
@@ -282,7 +298,8 @@ const BarChart = (props) => {
             .data(covid_data)
             .transition()
             .duration(800)
-            .attr('width', d => y2(d.value));
+            .attr('width', d => y2(d.value))
+            .attr('fill', d => colorscale2(d.value));
 
         // update axes
         var y1Axis = d3.axisTop()
