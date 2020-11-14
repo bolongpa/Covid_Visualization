@@ -4,9 +4,10 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import classes from './BarChart.module.css';
+import { svg } from 'd3';
 
 const BarChart = (props) => {
-    const bar_width = 30;
+    const bar_width = 15;
     const bar_num = 10;
     const timeFormat = d3.timeFormat('%m/%d/%y')
     var start = props.start
@@ -80,7 +81,7 @@ const BarChart = (props) => {
         var y2 = d3.scaleLinear();
 
         x.domain(unemploy_data.map(d => d.state))
-            .range([10, height])
+            .range([7, height-10])
             .paddingInner(0.2);
 
         y1.domain([0, d3.max(unemploy_data, d => d.value)])
@@ -121,7 +122,7 @@ const BarChart = (props) => {
             .attr('x', d => 0)
             .attr('y', d => x(d.state))
             .attr('width', d => y1(d.value))
-            .attr('height', x.bandwidth())
+            .attr('height', bar_width)
             .attr('fill', 'steelblue');
 
         svg.selectAll('.name')
@@ -134,15 +135,26 @@ const BarChart = (props) => {
             .attr('x', d => -20)
             .attr('y', d => x(d.state) + 15);
 
+        // covid bars
+        svg.selectAll('.bar2')
+            .data(covid_data)
+            .enter()
+            .append('rect')
+            .attr('class', 'bar')
+            .attr('x', d => 0)
+            .attr('y', d => x(d.state)+bar_width)
+            .attr('width', d => y2(d.value))
+            .attr('height', bar_width)
+            .attr('fill', 'orange');
+
         var xAxis = d3.axisLeft()
-            .scale(d3.scaleLinear().range([0, height]))  // adding outer padding to scaleBand
+            .scale(d3.scaleLinear().range([0, height+5]))  // adding outer padding to scaleBand
             .ticks(0)
             .tickSize(0)
             .tickFormat('');
 
         svg.append('g')
             .attr('class', 'axis')
-            .attr('transform', 'translate(0,' + height + ')')
             .call(xAxis);
 
         var y1Axis = d3.axisTop()
@@ -153,6 +165,15 @@ const BarChart = (props) => {
             .attr('class', 'axis')
             .call(y1Axis);
 
+        var y2Axis = d3.axisBottom()
+            .scale(y2)
+            .ticks(5, 'd');
+
+        svg.append('g')
+            .attr('class', 'axis')
+            .attr('transform', 'translate(0,'+height+')')
+            .call(y2Axis);
+
         svg.append('text')
             .attr('x', -40)
             .attr('y', 0)
@@ -160,22 +181,12 @@ const BarChart = (props) => {
             .append('tspan').text('State')
 
         svg.append('text')
-            .attr('x', width - 30)
-            .attr('y', -15)
+            .attr('x', width - 100)
+            .attr('y', -25)
             .attr('class', 'ylabel')
-            .append('tspan').text('Rate')
+            .append('tspan').text('Unemployment Rate (%)')
 
-        // covid bars
-        svg.selectAll('.bar2')
-            .data(covid_data)
-            .enter()
-            .append('rect')
-            .attr('class', 'bar')
-            .attr('x', d => 0)
-            .attr('y', d => x(d.state))
-            .attr('width', d => y2(d.value))
-            .attr('height', x.bandwidth())
-            .attr('fill', 'orange');
+        
 
 
         function topten(data) {
@@ -223,9 +234,10 @@ const BarChart = (props) => {
                 // console.log(covid_data_to_chart);
 
                 // draw chart
-                var margin = { top: 50, left: 50, bottom: 50, right: 50 },
+                var margin = { top: 50, left: 50, bottom: 60, right: 50 },
                     width = 850 - margin.left - margin.right,
-                    height = bar_num * bar_width - margin.top - margin.bottom;
+                    height = bar_num * bar_width * 3.1 - margin.top - margin.bottom;
+                
                 var svg = d3.select(chartRef.current).append('svg')
                     .attr('id', "bar_chart")
                     .attr('width', width + margin.left + margin.right)
@@ -235,22 +247,14 @@ const BarChart = (props) => {
                 
                 draw(svg, width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
                 
+                
         });
+    }, []);
 
-        // d3.csv(unemploy_data, d => {
-        //     if (d.Year == start_year.toString() && d.Period == monthmap[start_month]) {
-        //         return {
-        //             state: d.State,
-        //             year: d.Year,
-        //             month: d.Period,
-        //             rate: +d.unemploymentrate
-        //         };
-        //     };
-        // }).then(data => {
-        //     console.log(data);
-        // })
-    }, [filter]);
-
+    // redraw svg according to filter
+    useEffect(() => {
+        console.log(filter);
+    }, [filter])
 
     return (
         <div className={classes.BarChart}>
