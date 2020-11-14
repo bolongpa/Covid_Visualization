@@ -374,7 +374,7 @@ const BarChart = (props) => {
             });
                 
         
-    }, [filter])
+    }, [filter, start_year, start_month, end_year, end_month])
 
     return (
         <div className={classes.BarChart}>
