@@ -10,8 +10,8 @@ const BarChart = (props) => {
     const bar_width = 15;
     const bar_num = 10;
     const timeFormat = d3.timeFormat('%m/%d/%y');
-    const colorscale1 = d3.scaleSequential().domain([-5, 14]).interpolator(d3.interpolateBlues);
-    const colorscale2 = d3.scaleSequential().domain([-500000, 650000]).interpolator(d3.interpolateOranges);
+    // const colorscale1 = d3.scaleSequential().domain([-15, 14]).interpolator(d3.interpolateBlues);
+    // const colorscale2 = d3.scaleSequential().domain([-500000, 650000]).interpolator(d3.interpolateOranges);
     var start = props.start;
     var end = props.end;
     var start_year = props.start.getYear() + 1900;
@@ -20,8 +20,10 @@ const BarChart = (props) => {
     var end_month = props.end.getMonth() + 1;
     var unemploy_data = props.unemploy_data;  // raw unemployment data url
     var covid_data = props.covid_data;  // raw covid data url
-    var chartTitle = props.title;  // chart title
+    // var chartTitle = props.title;  // chart title
     var filter = props.filter;
+    var chartTitle;
+    if (filter == 'top') {chartTitle = 'Top 10 of State Unemployed Rate'} else {chartTitle = 'Bottom 10 of State Unemployed Rate'};
 
     // month and state abbr map
     var monthmap = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" }
@@ -86,11 +88,13 @@ const BarChart = (props) => {
             .range([7, height-10])
             .paddingInner(0.2);
 
-        y1.domain([0, d3.max(unemploy_data, d => d.value)])
+        y1.domain([Math.min(0, d3.min(unemploy_data, d => d.value)), Math.max(0, d3.max(unemploy_data, d => d.value))])
             .range([0, width]);
         
-        y2.domain([0, d3.max(covid_data, d => d.value)])
+        y2.domain([Math.min(0, d3.min(covid_data, d => d.value)), Math.max(0, d3.max(covid_data, d => d.value))])
             .range([0, width]);
+
+        var y1zeroposition = width*Math.min(0, d3.min(unemploy_data, d => d.value))/(Math.min(0, d3.min(unemploy_data, d => d.value))-Math.max(0, d3.max(unemploy_data, d => d.value)));
 
         // unemployment bars
         svg.selectAll('.bar1')
@@ -98,11 +102,11 @@ const BarChart = (props) => {
             .enter()
             .append('rect')
             .attr('class', 'bar1')
-            .attr('x', d => 0)
+            .attr('x', d => {if (d.value > 0) {return y1zeroposition;} else {return y1zeroposition-y1(d.value)}})
             .attr('y', d => x(d.state))
-            .attr('width', d => y1(d.value))
+            .attr('width', d => {if (d.value < 0) {return y1(d.value);} else {return y1(d.value);}})
             .attr('height', bar_width)
-            .attr('fill', d => colorscale1(d.value));
+            .attr('fill', d => "#4e8df2");
 
         svg.selectAll('.name')
             .data(unemploy_data)
@@ -120,11 +124,11 @@ const BarChart = (props) => {
             .enter()
             .append('rect')
             .attr('class', 'bar2')
-            .attr('x', d => 0)
+            .attr('x', d => width*Math.min(0, d3.min(covid_data, d => d.value))/(Math.min(0, d3.min(covid_data, d => d.value))-Math.max(0, d3.max(covid_data, d => d.value))))
             .attr('y', d => x(d.state)+bar_width)
             .attr('width', d => y2(d.value))
             .attr('height', bar_width)
-            .attr('fill', d => colorscale2(d.value));
+            .attr('fill', d => '#fac150');
 
         var xAxis = d3.axisLeft()
             .scale(d3.scaleLinear().range([0, height+5]))  // adding outer padding to scaleBand
@@ -256,6 +260,7 @@ const BarChart = (props) => {
         } else if (filter == 'bottom') {
             unemploy_data = bottomten(unemploy_data);
         }
+        console.log(unemploy_data);
         // process covid_data
         var states_to_show = unemploy_data.map(d => d.state);
         var covid_data_temp = covid_data.map(d => {if (states_to_show.includes(d.state)) {return d;}});
@@ -274,19 +279,22 @@ const BarChart = (props) => {
             .range([7, height-10])
             .paddingInner(0.2);
 
-        y1.domain([0, d3.max(unemploy_data, d => d.value)])
+        y1.domain([Math.min(0, d3.min(unemploy_data, d => d.value)), Math.max(0, d3.max(unemploy_data, d => d.value))])
             .range([0, width]);
         
-        y2.domain([0, d3.max(covid_data, d => d.value)])
+        y2.domain([Math.min(0, d3.min(covid_data, d => d.value)), Math.max(0, d3.max(covid_data, d => d.value))])
             .range([0, width]);
+
+        var y1zeroposition = width*Math.min(0, d3.min(unemploy_data, d => d.value))/(Math.min(0, d3.min(unemploy_data, d => d.value))-Math.max(0, d3.max(unemploy_data, d => d.value)));
 
         // update unemployment bars
         var svg = d3.select('#bar_chart')
         svg.selectAll('.bar1').data(unemploy_data)
             .transition()
             .duration(800)
-            .attr('width', d => y1(d.value))
-            .attr('fill', d => colorscale1(d.value));
+            .attr('x', d => {if (d.value > 0) {return y1zeroposition;} else {return y1zeroposition-y1(d.value)}} )
+            .attr('width', d => {if (d.value < 0) {return y1(d.value);} else {return y1(d.value);}})
+            .attr('fill', d => '#4e8df2');
 
         svg.selectAll('.name')
             .data(unemploy_data)
@@ -298,8 +306,9 @@ const BarChart = (props) => {
             .data(covid_data)
             .transition()
             .duration(800)
+            .attr('x', d => width*Math.min(0, d3.min(covid_data, d => d.value))/(Math.min(0, d3.min(covid_data, d => d.value))-Math.max(0, d3.max(covid_data, d => d.value))))
             .attr('width', d => y2(d.value))
-            .attr('fill', d => colorscale2(d.value));
+            .attr('fill', d => '#fac150');
 
         // update axes
         var y1Axis = d3.axisTop()
