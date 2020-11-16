@@ -27,7 +27,9 @@ class Map extends Component {
                 title: 'Unemployment Rate Bar Chart',
                 filter: 'top'
             }
-        }
+        },
+
+        clickedState: "All" // initial state: user hasn't clicked on anything on the map, so the line chart would show stat. of the whole U.S.
     }
 
     barSwitchFilterHandler = (filterType) => {
@@ -52,6 +54,15 @@ class Map extends Component {
                 }
             }
         })
+    }
+
+
+    updateStateHandler = (value) => {
+        console.log("updateStateHandler");
+        this.setState({
+            clickedState: value
+        });
+
     }
 
     render() {
@@ -105,7 +116,9 @@ class Map extends Component {
                 </Row>
                 <Row>
                     <Col>
-                        <LineChart/>
+                        <LineChart 
+                            clickedState={this.state.clickedState}
+                            updateStateHandler={this.updateStateHandler}/>
                     </Col>
                 </Row>
                 </Container>
