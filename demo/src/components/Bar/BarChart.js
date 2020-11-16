@@ -102,9 +102,9 @@ const BarChart = (props) => {
             .enter()
             .append('rect')
             .attr('class', 'bar1')
-            .attr('x', d => {if (d.value > 0) {return y1zeroposition;} else {return y1zeroposition-y1(d.value)}})
             .attr('y', d => x(d.state))
-            .attr('width', d => {if (d.value < 0) {return y1(d.value);} else {return y1(d.value);}})
+            .attr('x', d => {if (d.value > 0) {return y1zeroposition;} else {return y1(d.value)}} )
+            .attr('width', d => {if (d.value < 0) {return y1zeroposition-y1(d.value);} else if (d.value > 0) {return y1(d.value)-y1zeroposition;} else {return 1;}})
             .attr('height', bar_width)
             .attr('fill', d => "#4e8df2");
 
@@ -142,7 +142,10 @@ const BarChart = (props) => {
 
         var y1Axis = d3.axisTop()
             .scale(y1)
-            .ticks(5, 'd');
+            .ticks(5, 'd')
+            .tickFormat(function (d){
+                return d3.format(".1f")(d);
+            });
 
         svg.append('g')
             .attr('class', 'axis')
@@ -292,8 +295,8 @@ const BarChart = (props) => {
         svg.selectAll('.bar1').data(unemploy_data)
             .transition()
             .duration(800)
-            .attr('x', d => {if (d.value > 0) {return y1zeroposition;} else {return y1zeroposition-y1(d.value)}} )
-            .attr('width', d => {if (d.value < 0) {return y1(d.value);} else {return y1(d.value);}})
+            .attr('x', d => {if (d.value > 0) {return y1zeroposition;} else {return y1(d.value)}} )
+            .attr('width', d => {if (d.value < 0) {return y1zeroposition-y1(d.value);} else if (d.value > 0) {return y1(d.value)-y1zeroposition;} else {return 1;}})
             .attr('fill', d => '#4e8df2');
 
         svg.selectAll('.name')
@@ -313,7 +316,10 @@ const BarChart = (props) => {
         // update axes
         var y1Axis = d3.axisTop()
             .scale(y1)
-            .ticks(5, 'd');
+            .ticks(5, 'd')
+            .tickFormat(function (d){
+                return d3.format(".1f")(d);
+            });
 
         svg.select('#axis_top')
             .transition()
