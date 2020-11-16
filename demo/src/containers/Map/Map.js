@@ -6,12 +6,13 @@ import BarChart from '../../components/Bar/BarChart';
 import LineChart from '../../containers/Trend/Trend';
 
 import "react-datepicker/dist/react-datepicker.css";
-import { Container, Row, Col,Alert,Badge } from 'react-bootstrap';
+import { Container, Row, Col,Alert,Badge,Button } from 'react-bootstrap';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 // input data for bar chart
 import unemploy_data from "../../assets/data/unemployment.csv";
 import covid_data from "../../assets/data/time_series_covid19_confirmed_US.csv";
+import { wait, waitFor } from '@testing-library/react';
 
 class Map extends Component {
     state = {
@@ -30,6 +31,33 @@ class Map extends Component {
         },
 
         clickedState: "All" // initial state: user hasn't clicked on anything on the map, so the line chart would show stat. of the whole U.S.
+    }
+
+
+
+
+    animation = ()=>{
+
+        var cur = new Date(this.state.startDate.getFullYear(),this.state.startDate.getMonth()+1)
+        // console.log(cur)
+        var stop = this.state.endDate
+
+        var arr = []
+        while (cur<=stop){
+            arr.push(cur)
+            cur = new Date(cur.getFullYear(),cur.getMonth()+1)
+        }
+
+        var self = this
+        for (var j = 0;j<arr.length;j++){
+            (function(x){
+                setTimeout(function() {
+                    console.log(x);
+                    self.setState({ endDate: x});
+                    j++;
+                }, 1000 * j);
+              })(arr[j]);            
+        }
     }
 
     barSwitchFilterHandler = (filterType) => {
@@ -79,9 +107,7 @@ class Map extends Component {
                     <p>Bar chart...</p>
                 
                 <Row >
-                <Badge pill variant="success">
-                    Success
-                </Badge>
+                
 
                     <Col xs='auto'>Start Month:</Col>
                     <Col xs = "2">
@@ -92,6 +118,9 @@ class Map extends Component {
                     <Col xs = "2">
                         <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
                     </Col>
+                    <Badge variant="outline-primary" onClick={this.animation}>
+                     transition
+                    </Badge>
 
                 </Row>
                 </Alert>
@@ -103,7 +132,7 @@ class Map extends Component {
                             updateStateHandler={this.updateStateHandler}
                             ></D3map>
                     </Col>
-                    {console.log(this.state.startDate.getMonth())}
+                    {/* {console.log(this.state.startDate.getMonth())} */}
 
                     <Col >
                         <BarChart

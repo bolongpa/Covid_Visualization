@@ -22,7 +22,7 @@ const D3map = (props) => {
 
     function aggregate(data) {
         // console.log("agg",data)
-        console.log(data)
+        // console.log(data)
         var total = {}
         for (var d in data) {
             if (total[data[d][0]]) {
