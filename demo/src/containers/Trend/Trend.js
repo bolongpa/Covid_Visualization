@@ -18,13 +18,18 @@ class LineChart extends Component {
         this.lineChartDataHandler();
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.clickedState !== this.props.clickedState) {
+          this.redraw();
+        }
+      }
+
 
     state = {
         initial: true,
         unemployData: null,
         covidData: null,
         hiringData: null,
-        state: "All",
         timeout: setTimeout(2000),
         first: null,
         last: null,
@@ -80,18 +85,8 @@ class LineChart extends Component {
         });
     }
 
-    updateStateHandler = (event) => {
-        console.log("updateStateHandler");
-        this.setState({
-            state: event.target.value
-        }, () => {
-            this.redraw();
-        });
-
-    }
-
     draw = () => {
-        console.log("draw()", this.state.state);
+        console.log("draw()", this.props.clickedState);
         var unemployData = this.state.unemployData;
         var covidData = this.state.covidData;
         var hiringData = this.state.hiringData;
@@ -106,10 +101,10 @@ class LineChart extends Component {
         x.domain([unemployData[0].date, unemployData[unemployData.length - 1].date])
             .range([0, width]);
 
-        yLeft.domain([3, d3.max(unemployData.map(d => d[this.state.state]))])
+        yLeft.domain([3, d3.max(unemployData.map(d => d[this.props.clickedState]))])
             .range([height, 0]);
 
-        yRight.domain(d3.extent(covidData.map(d => d[this.state.state])))
+        yRight.domain(d3.extent(covidData.map(d => d[this.props.clickedState])))
             .range([height, 0]);
 
         var xAxis = d3.axisBottom()
@@ -126,15 +121,15 @@ class LineChart extends Component {
 
         var line = d3.line()
             .x(d => x(d.date))
-            .y(d => yLeft(d[this.state.state]));
+            .y(d => yLeft(d[this.props.clickedState]));
 
         var hiringLine = d3.line()
             .x(d => x(d.date))
-            .y(d => yLeft(d[this.state.state]));
+            .y(d => yLeft(d[this.props.clickedState]));
 
         var covidLine = d3.line()
             .x(d => x(d.date))
-            .y(d => yRight(d[this.state.state]));
+            .y(d => yRight(d[this.props.clickedState]));
 
         const svg = d3.select(this.chartRef.current).append('svg')
             .attr('id', 'lineSvg')
@@ -215,7 +210,7 @@ class LineChart extends Component {
     }
 
     redraw = () => {
-        console.log("redraw()", this.state.state)
+        console.log("redraw()", this.props.clickedState)
         clearTimeout(this.state.timeout);
         var unemployData = this.state.unemployData;
         var covidData = this.state.covidData;
@@ -229,9 +224,9 @@ class LineChart extends Component {
 
         x.domain([unemployData[0].date, unemployData[unemployData.length - 1].date])
             .range([0, width]);
-        yLeft.domain(d3.extent(unemployData.map(d => d[this.state.state])))
+        yLeft.domain(d3.extent(unemployData.map(d => d[this.props.clickedState])))
             .range([height, 0]);
-        yRight.domain(d3.extent(covidData.map(d => d[this.state.state])))
+        yRight.domain(d3.extent(covidData.map(d => d[this.props.clickedState])))
             .range([height, 0]);
 
         var yLeftAxis = d3.axisLeft()
@@ -243,10 +238,10 @@ class LineChart extends Component {
 
         var line = d3.line()
             .x(d => x(d.date))
-            .y(d => yLeft(d[this.state.state]));
+            .y(d => yLeft(d[this.props.clickedState]));
         var covidLine = d3.line()
             .x(d => x(d.date))
-            .y(d => yRight(d[this.state.state]));
+            .y(d => yRight(d[this.props.clickedState]));
 
         var svg = d3.select('#lineSvg');
 
@@ -270,13 +265,13 @@ class LineChart extends Component {
             this.setState({ initial: false })
             this.draw();
         }
-        var targetState = this.state.state;
-        if (this.state.state == "All") {
+        var targetState = this.props.clickedState;
+        if (this.props.clickedState == "All") {
             targetState = "United States"
         }
         return (
             <div>
-                <select onChange={(event) => this.updateStateHandler(event)} value={this.state.state}>
+                <select onChange={(event) => this.props.updateStateHandler(event.target.value)} value={this.props.clickedState}>
                     <option key="All" value="All">All</option>
                     <option key="Alabama" value="Alabama">Alabama</option>
                     <option key="Alaska" value="Alaska">Alaska</option>

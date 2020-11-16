@@ -132,6 +132,7 @@ const D3map = (props) => {
                     .on("click", function(e, d) {
                         console.log(d.id)
                         console.log(d.properties.name)
+                        props.updateStateHandler(d.properties.name);
                     })
                     .on("mouseover",function(e,d){
                         d3.select(this).attr("fill-opacity",1)
@@ -157,6 +158,9 @@ const D3map = (props) => {
                     .attr("text-anchor", "middle")
                     .attr('transform', d => `translate(${path.centroid(d)})`)
                     .attr("display","none")
+                    .on("click", function(e, d) {
+                        props.updateStateHandler(d.properties.name);
+                    })
                     .on("mouseover",function(e,d){
                         d3.select(this).attr("display","block")
                         d3.select("path#"+d.properties.name.replace(" ","")).attr("fill-opacity",1)
