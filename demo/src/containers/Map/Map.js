@@ -97,7 +97,11 @@ class Map extends Component {
                 </Alert>
                 <Row>
                     <Col xs="7">
-                        <D3map startMonth={this.state.startDate} endMonth={this.state.endDate}></D3map>
+                        <D3map 
+                            startMonth={this.state.startDate} 
+                            endMonth={this.state.endDate}
+                            updateStateHandler={this.updateStateHandler}
+                            ></D3map>
                     </Col>
                     {console.log(this.state.startDate.getMonth())}
 

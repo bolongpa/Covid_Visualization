@@ -132,6 +132,7 @@ const D3map = (props) => {
                     .on("click", function(e, d) {
                         console.log(d.id)
                         console.log(d.properties.name)
+                        props.updateStateHandler(d.properties.name);
                     })
                     .on("mouseover",function(e,d){
                         d3.select(this).attr("fill-opacity",1)
