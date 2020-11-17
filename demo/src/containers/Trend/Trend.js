@@ -201,12 +201,12 @@ class LineChart extends Component {
             .attr("id", "covidLine");
 
         // Handmade legend
-        svg.append("rect").attr("x", 60).attr("y", 50).attr("width", 10).attr("height", 3).style("fill", "#87CEFA")
-        svg.append("rect").attr("x", 60).attr("y", 70).attr("width", 10).attr("height", 3).style("fill", "#008B8B")
-        svg.append("rect").attr("x", 60).attr("y", 90).attr("width", 10).attr("height", 3).style("fill", "#FF8C00")
-        svg.append("text").attr("x", 80).attr("y", 52).text("Nationwide Hiring Rate (%)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
-        svg.append("text").attr("x", 80).attr("y", 72).text("Statewide Unemployment Rate (%)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
-        svg.append("text").attr("x", 80).attr("y", 92).text("Statewide COVID confirmed cases (k)").style("font-size", "0.8rem").attr("alignment-baseline", "middle")
+        svg.append("rect").attr("x", 60).attr("y", 50).attr("width", 10).attr("height", 3).style("fill", "#FF8C00");
+        svg.append("rect").attr("x", 60).attr("y", 70).attr("width", 10).attr("height", 3).style("fill", "#008B8B");
+        svg.append("rect").attr("x", 60).attr("y", 90).attr("width", 10).attr("height", 3).style("fill", "#87CEFA").attr("class", "hiringLegend");
+        svg.append("text").attr("x", 80).attr("y", 52).text("COVID confirmed cases (k)").style("font-size", "0.8rem").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 80).attr("y", 72).text("Unemployment Rate (%)").style("font-size", "0.8rem").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 80).attr("y", 92).text("Nationwide Hiring Rate (%)").style("font-size", "0.8rem").attr("alignment-baseline", "middle").attr("class", "hiringLegend");
 
     }
 
@@ -259,6 +259,15 @@ class LineChart extends Component {
         trans2.select("#yLeftAxis").call(yLeftAxis);
         trans2.select("#covidLine").attr("d", covidLine);
         trans2.select("#yRightAxis").call(yRightAxis);
+
+        // show nationwide hiring rate only when user select "All"
+        if (this.props.clickedState != "All") {
+            trans1.select("#hiringLine").style("visibility", "hidden");
+            trans1.selectAll(".hiringLegend").style("visibility", "hidden");
+        } else {
+            trans1.select("#hiringLine").style("visibility", "visible");
+            trans1.selectAll(".hiringLegend").style("visibility", "visible");
+        }
     }
 
     render() {
