@@ -34,7 +34,9 @@ class LineChart extends Component {
         timeout: setTimeout(2000),
         first: null,
         last: null,
-        margin: { top: 20, right: 80, bottom: 20, left: 50 }
+        margin: { top: 20, right: 80, bottom: 20, left: 50 },
+        height: 500,
+        width: window.screen.width
     }
 
     lineChartDataHandler = () => {
@@ -92,8 +94,8 @@ class LineChart extends Component {
         var covidData = this.state.covidData;
         var hiringData = this.state.hiringData;
 
-        var width = 960 - this.state.margin.left - this.state.margin.right;
-        var height = 350 - this.state.margin.top - this.state.margin.bottom;
+        var width = this.state.width - this.state.margin.left - this.state.margin.right;
+        var height = this.state.height - this.state.margin.top - this.state.margin.bottom;
 
         var x = d3.scaleTime();
         var yLeft = d3.scaleLinear();
@@ -137,7 +139,7 @@ class LineChart extends Component {
             // .attr('width', width + this.state.margin.left + this.state.margin.right)
             .attr('width', "100%")
             .attr('height', height + this.state.margin.top + this.state.margin.bottom)
-            .attr('viewBox', [0, 0, 900, 380])
+            .attr('viewBox', [0, 0, this.state.width, this.state.height])
             .append('g')
             .attr('transform', 'translate(' + this.state.margin.left + ', ' + this.state.margin.top + ')');
 
@@ -216,8 +218,8 @@ class LineChart extends Component {
         var unemployData = this.state.unemployData;
         var covidData = this.state.covidData;
 
-        var width = 960 - this.state.margin.left - this.state.margin.right;
-        var height = 350 - this.state.margin.top - this.state.margin.bottom;
+        var width = this.state.width - this.state.margin.left - this.state.margin.right;
+        var height = this.state.height - this.state.margin.top - this.state.margin.bottom;
 
         var x = d3.scaleTime();
         var yLeft = d3.scaleLinear();
