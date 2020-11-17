@@ -239,7 +239,7 @@ const BarChart = (props) => {
                 // draw chart
                 var margin = { top: 50, left: 50, bottom: 60, right: 50 },
                     width = 850 - margin.left - margin.right,
-                    height = bar_num * bar_width * 3.1 - margin.top - margin.bottom;
+                    height = bar_num * bar_width * 3.5 - margin.top - margin.bottom;
                 
                 var svg = d3.select(chartRef.current).append('svg')
                     .attr('id', "bar_chart")
