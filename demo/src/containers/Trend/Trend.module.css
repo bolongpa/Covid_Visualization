@@ -1,9 +1,11 @@
 .LineChart{
     color: #484848;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
 }
 .Label {
     margin: 1rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
     display: inline-block;
 }
 .StateSelection {
@@ -14,7 +16,7 @@
     border: 1px solid #484848;
     border-radius: 0.25em;
     padding: 0.25em 0.5em;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #484848;
     cursor: pointer;
     line-height: 1.1;
