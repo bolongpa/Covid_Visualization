@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 
+import classes from './Trend.module.css';
 import unemployment from '../../assets/data/lineChart_unemployment.csv';
 import covid from '../../assets/data/lineChart_covid.csv';
 import hiring from '../../assets/data/lineChart_hiring.csv';
@@ -20,9 +21,9 @@ class LineChart extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.clickedState !== this.props.clickedState) {
-          this.redraw();
+            this.redraw();
         }
-      }
+    }
 
 
     state = {
@@ -270,64 +271,66 @@ class LineChart extends Component {
             targetState = "United States"
         }
         return (
-            <div>
-                <select onChange={(event) => this.props.updateStateHandler(event.target.value)} value={this.props.clickedState}>
-                    <option key="All" value="All">All</option>
-                    <option key="Alabama" value="Alabama">Alabama</option>
-                    <option key="Alaska" value="Alaska">Alaska</option>
-                    <option key="Arizona" value="Arizona">Arizona</option>
-                    <option key="Arkansas" value="Arkansas">Arkansas</option>
-                    <option key="California" value="California">California</option>
-                    <option key="Colorado" value="Colorado">Colorado</option>
-                    <option key="Connecticut" value="Connecticut">Connecticut</option>
-                    <option key="Delaware" value="Delaware">Delaware</option>
-                    <option key="District of Columbia" value="District of Columbia">District of Columbia</option>
-                    <option key="Florida" value="Florida">Florida</option>
-                    <option key="Georgia" value="Georgia">Georgia</option>
-                    <option key="Hawaii" value="Hawaii">Hawaii</option>
-                    <option key="Idaho" value="Idaho">Idaho</option>
-                    <option key="Illinois" value="Illinois">Illinois</option>
-                    <option key="Indiana" value="Indiana">Indiana</option>
-                    <option key="Iowa" value="Iowa">Iowa</option>
-                    <option key="Kansas" value="Kansas">Kansas</option>
-                    <option key="Kentucky" value="Kentucky">Kentucky</option>
-                    <option key="Louisiana" value="Louisiana">Louisiana</option>
-                    <option key="Maine" value="Maine">Maine</option>
-                    <option key="Maryland" value="Maryland">Maryland</option>
-                    <option key="Massachusetts" value="Massachusetts">Massachusetts</option>
-                    <option key="Michigan" value="Michigan">Michigan</option>
-                    <option key="Minnesota" value="Minnesota">Minnesota</option>
-                    <option key="Mississippi" value="Mississippi">Mississippi</option>
-                    <option key="Missouri" value="Missouri">Missouri</option>
-                    <option key="Montana" value="Montana">Montana</option>
-                    <option key="Nebraska" value="Nebraska">Nebraska</option>
-                    <option key="Nevada" value="Nevada">Nevada</option>
-                    <option key="New Hampshire" value="New Hampshire">New Hampshire</option>
-                    <option key="New Jersey" value="New Jersey">New Jersey</option>
-                    <option key="New Mexico" value="New Mexico">New Mexico</option>
-                    <option key="New York" value="New York">New York</option>
-                    <option key="North Carolina" value="North Carolina">North Carolina</option>
-                    <option key="North Dakota" value="North Dakota">North Dakota</option>
-                    <option key="Ohio" value="Ohio">Ohio</option>
-                    <option key="Oklahoma" value="Oklahoma">Oklahoma</option>
-                    <option key="Oregon" value="Oregon">Oregon</option>
-                    <option key="Pennsylvania" value="Pennsylvania">Pennsylvania</option>
-                    <option key="Puerto Rico" value="Puerto Rico">Puerto Rico</option>
-                    <option key="Rhode Island" value="Rhode Island">Rhode Island</option>
-                    <option key="South Carolina" value="South Carolina">South Carolina</option>
-                    <option key="South Dakota" value="South Dakota">South Dakota</option>
-                    <option key="Tennessee" value="Tennessee">Tennessee</option>
-                    <option key="Texas" value="Texas">Texas</option>
-                    <option key="Utah" value="Utah">Utah</option>
-                    <option key="Vermont" value="Vermont">Vermont</option>
-                    <option key="Virginia" value="Virginia">Virginia</option>
-                    <option key="Washington" value="Washington">Washington</option>
-                    <option key="West Virginia" value="West Virginia">West Virginia</option>
-                    <option key="Wisconsin" value="Wisconsin">Wisconsin</option>
-                    <option key="Wyoming" value="Wyoming">Wyoming</option>
-                </select>
+            <div className={classes.LineChart}>
                 <h1>Pandemics and the Labor Market - {targetState}</h1>
-                <p>2019/01-2020/08</p>
+                <div>
+                    <p className={classes.Label}>State: </p>
+                    <select className={classes.StateSelection} onChange={(event) => this.props.updateStateHandler(event.target.value)} value={this.props.clickedState}>
+                        <option key="All" value="All">All</option>
+                        <option key="Alabama" value="Alabama">Alabama</option>
+                        <option key="Alaska" value="Alaska">Alaska</option>
+                        <option key="Arizona" value="Arizona">Arizona</option>
+                        <option key="Arkansas" value="Arkansas">Arkansas</option>
+                        <option key="California" value="California">California</option>
+                        <option key="Colorado" value="Colorado">Colorado</option>
+                        <option key="Connecticut" value="Connecticut">Connecticut</option>
+                        <option key="Delaware" value="Delaware">Delaware</option>
+                        <option key="District of Columbia" value="District of Columbia">District of Columbia</option>
+                        <option key="Florida" value="Florida">Florida</option>
+                        <option key="Georgia" value="Georgia">Georgia</option>
+                        <option key="Hawaii" value="Hawaii">Hawaii</option>
+                        <option key="Idaho" value="Idaho">Idaho</option>
+                        <option key="Illinois" value="Illinois">Illinois</option>
+                        <option key="Indiana" value="Indiana">Indiana</option>
+                        <option key="Iowa" value="Iowa">Iowa</option>
+                        <option key="Kansas" value="Kansas">Kansas</option>
+                        <option key="Kentucky" value="Kentucky">Kentucky</option>
+                        <option key="Louisiana" value="Louisiana">Louisiana</option>
+                        <option key="Maine" value="Maine">Maine</option>
+                        <option key="Maryland" value="Maryland">Maryland</option>
+                        <option key="Massachusetts" value="Massachusetts">Massachusetts</option>
+                        <option key="Michigan" value="Michigan">Michigan</option>
+                        <option key="Minnesota" value="Minnesota">Minnesota</option>
+                        <option key="Mississippi" value="Mississippi">Mississippi</option>
+                        <option key="Missouri" value="Missouri">Missouri</option>
+                        <option key="Montana" value="Montana">Montana</option>
+                        <option key="Nebraska" value="Nebraska">Nebraska</option>
+                        <option key="Nevada" value="Nevada">Nevada</option>
+                        <option key="New Hampshire" value="New Hampshire">New Hampshire</option>
+                        <option key="New Jersey" value="New Jersey">New Jersey</option>
+                        <option key="New Mexico" value="New Mexico">New Mexico</option>
+                        <option key="New York" value="New York">New York</option>
+                        <option key="North Carolina" value="North Carolina">North Carolina</option>
+                        <option key="North Dakota" value="North Dakota">North Dakota</option>
+                        <option key="Ohio" value="Ohio">Ohio</option>
+                        <option key="Oklahoma" value="Oklahoma">Oklahoma</option>
+                        <option key="Oregon" value="Oregon">Oregon</option>
+                        <option key="Pennsylvania" value="Pennsylvania">Pennsylvania</option>
+                        <option key="Puerto Rico" value="Puerto Rico">Puerto Rico</option>
+                        <option key="Rhode Island" value="Rhode Island">Rhode Island</option>
+                        <option key="South Carolina" value="South Carolina">South Carolina</option>
+                        <option key="South Dakota" value="South Dakota">South Dakota</option>
+                        <option key="Tennessee" value="Tennessee">Tennessee</option>
+                        <option key="Texas" value="Texas">Texas</option>
+                        <option key="Utah" value="Utah">Utah</option>
+                        <option key="Vermont" value="Vermont">Vermont</option>
+                        <option key="Virginia" value="Virginia">Virginia</option>
+                        <option key="Washington" value="Washington">Washington</option>
+                        <option key="West Virginia" value="West Virginia">West Virginia</option>
+                        <option key="Wisconsin" value="Wisconsin">Wisconsin</option>
+                        <option key="Wyoming" value="Wyoming">Wyoming</option>
+                    </select>
+                </div>
                 <div ref={this.chartRef} />
 
             </div>
