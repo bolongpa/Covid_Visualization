@@ -285,7 +285,7 @@ class LineChart extends Component {
             <div className={classes.LineChart}>
                 <h1>Pandemics and the Labor Market - {targetState}</h1>
                 <div>
-                    <p className={classes.Label}>State: </p>
+                    <p className={classes.Label}>Region: </p>
                     <select className={classes.StateSelection} onChange={(event) => this.props.updateStateHandler(event.target.value)} value={this.props.clickedState}>
                         <option key="All" value="All">All</option>
                         <option key="Alabama" value="Alabama">Alabama</option>
