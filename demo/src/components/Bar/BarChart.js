@@ -172,16 +172,18 @@ const BarChart = (props) => {
             .append('tspan').text('State')
 
         svg.append('text')
-            .attr('x', width - 150)
+            .attr('text-anchor', 'end')
+            .attr('x', width*0.9)
             .attr('y', -25)
             .attr('class', 'ylabel')
-            .append('tspan').text('Unemployment Rate Change (%)').attr('fill', '#4e8df2')
+            .append('tspan').text('Unemployment Rate Change (%)').attr('fill', '#4e8df2').attr('font-size', width/20);
 
         svg.append('text')
-            .attr('x', width - 100)
+            .attr('text-anchor', 'end')
+            .attr('x', width*0.9)
             .attr('y', height + 35)
             .attr('class', 'ylabel')
-            .append('tspan').text('COVID-19 Confirmed').attr('fill', '#fac150')
+            .append('tspan').text('COVID-19 Confirmed').attr('fill', '#fac150').attr('font-size', width/20);
 
         // draw legend
         // var r = d3.range(0, 550000, 1000);
