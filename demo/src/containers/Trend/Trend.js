@@ -265,8 +265,8 @@ class LineChart extends Component {
         trans2.select("#covidLine").attr("d", covidLine);
         trans2.select("#yRightAxis").call(yRightAxis);
 
-        // show nationwide hiring rate only when user select "All"
-        if (this.props.clickedState != "All") {
+        // show nationwide hiring rate only when user select "United States"
+        if (this.props.clickedState != "United States") {
             trans1.select("#hiringLine").style("visibility", "hidden");
             trans1.selectAll(".hiringLegend").style("visibility", "hidden");
         } else {
@@ -280,17 +280,13 @@ class LineChart extends Component {
             this.setState({ initial: false })
             this.draw();
         }
-        var targetState = this.props.clickedState;
-        if (this.props.clickedState == "All") {
-            targetState = "United States"
-        }
         return (
             <div className={classes.LineChart}>
-                <h1>Pandemics and the Labor Market - {targetState}</h1>
+                <h1>Pandemics and the Labor Market - {this.props.clickedState}</h1>
                 <div>
                     <p className={classes.Label}>Region: </p>
                     <select className={classes.StateSelection} onChange={(event) => this.props.updateStateHandler(event.target.value)} value={this.props.clickedState}>
-                        <option key="All" value="All">All</option>
+                        <option key="United States" value="United States">United States</option>
                         <option key="Alabama" value="Alabama">Alabama</option>
                         <option key="Alaska" value="Alaska">Alaska</option>
                         <option key="Arizona" value="Arizona">Arizona</option>
