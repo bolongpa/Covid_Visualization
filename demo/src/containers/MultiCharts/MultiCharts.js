@@ -7,9 +7,13 @@ import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 import BubbleChart from '../../components/BubbleChart/BubbleChart';
 import BarChart from '../../components/BarChart/BarChart';
 import LineChart from '../../containers/LineChart/LineChart';
+// import WordCloud from '../../components/WordCloud/WordCloud';
 
 import * as inputData from '../../assets/data/newUsers.json';
 
+
+import { render } from 'react-dom';
+import WordCloud from 'react-d3-cloud';
 
 class MultiCharts extends Component {
 
@@ -115,6 +119,7 @@ class MultiCharts extends Component {
             }
         })
     }
+    
 
     render() {
         return (
@@ -148,6 +153,8 @@ class MultiCharts extends Component {
                     switchColorHandler={this.switchBarColorHandler} />
                 <br />
                 <LineChart />
+                <br/>
+                
             </div>
         );
     }
