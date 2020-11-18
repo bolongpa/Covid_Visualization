@@ -151,7 +151,7 @@ class LineChart extends Component {
         svg.append("g")
             .style("font-size", "1.1rem")
             .attr("id", "yLeftAxis")
-            .attr("stroke", "#008B8B")
+            .attr("stroke", "#114C94")
             .call(yLeftAxis)
             .append("text")
             .attr("y", -20)
@@ -185,16 +185,16 @@ class LineChart extends Component {
             .datum(unemployData)
             .attr("d", line)
             .attr("fill", "none")
-            .attr("stroke", "#008B8B")
-            .attr("stroke-width", 1.8)
+            .attr("stroke", "#114C94")
+            .attr("stroke-width", 3)
             .attr("id", "line");
 
         svg.append("path")
             .datum(hiringData)
             .attr("d", hiringLine)
             .attr("fill", "none")
-            .attr("stroke", "#87CEFA")
-            .attr("stroke-width", 1.8)
+            .attr("stroke", "#A174A9")
+            .attr("stroke-width", 3)
             .attr("id", "hiringLine");
 
         svg.append("path")
@@ -202,13 +202,13 @@ class LineChart extends Component {
             .attr("d", covidLine)
             .attr("fill", "none")
             .attr("stroke", "#FF8C00")
-            .attr("stroke-width", 1.8)
+            .attr("stroke-width", 3)
             .attr("id", "covidLine");
 
         // Handmade legend
         svg.append("rect").attr("x", 60).attr("y", 50).attr("width", 10).attr("height", 5).style("fill", "#FF8C00");
-        svg.append("rect").attr("x", 60).attr("y", 80).attr("width", 10).attr("height", 5).style("fill", "#008B8B");
-        svg.append("rect").attr("x", 60).attr("y", 110).attr("width", 10).attr("height", 5).style("fill", "#87CEFA").attr("class", "hiringLegend");
+        svg.append("rect").attr("x", 60).attr("y", 80).attr("width", 10).attr("height", 5).style("fill", "#114C94");
+        svg.append("rect").attr("x", 60).attr("y", 110).attr("width", 10).attr("height", 5).style("fill", "#A174A9").attr("class", "hiringLegend");
         svg.append("text").attr("x", 80).attr("y", 55).text("COVID confirmed cases (k)").style("font-size", "1.2rem").attr("alignment-baseline", "middle");
         svg.append("text").attr("x", 80).attr("y", 85).text("Unemployment Rate (%)").style("font-size", "1.2rem").attr("alignment-baseline", "middle");
         svg.append("text").attr("x", 80).attr("y", 115).text("Nationwide Hiring Rate (%)").style("font-size", "1.2rem").attr("alignment-baseline", "middle").attr("class", "hiringLegend");
