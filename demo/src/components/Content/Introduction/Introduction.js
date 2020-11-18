@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
+//import { Container, Row, Col } from 'react-bootstrap';
 
 import classes from './Introduction.module.css';
-import MapBox from '../../../containers/MapBox/MapBox';
-import { Container, Row, Col } from 'react-bootstrap';
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import * as d3 from 'd3';
-import { render } from 'react-dom';
-import WordCloud from 'react-d3-cloud';
+
+import MapBox from '../../../containers/MapBox/MapBox';
 import WCloud from "../../WordCloud/WordCloud"
-import w from '../../../assets/data/words.json'
 
 
 class Introduction extends Component {
