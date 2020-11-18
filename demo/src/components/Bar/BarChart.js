@@ -175,7 +175,7 @@ const BarChart = (props) => {
             .attr('x', width - 150)
             .attr('y', -25)
             .attr('class', 'ylabel')
-            .append('tspan').text('Unemployment Rate (%)').attr('fill', '#4e8df2')
+            .append('tspan').text('Unemployment Rate Change (%)').attr('fill', '#4e8df2')
 
         svg.append('text')
             .attr('x', width - 100)
