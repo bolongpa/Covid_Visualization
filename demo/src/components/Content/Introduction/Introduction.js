@@ -18,19 +18,18 @@ class Introduction extends Component {
         // console.log(this.data)
         return (
             <div>
-                <h1>Title</h1>
+                <h1 className={classes.Title}>US LABOR MARKET AND COVID-19</h1>
                 <div className={classes.Introduction}>
-                    <p>Introduction here</p>
-                    <WCloud/>
+                    <WCloud />
+                    <br />
+                    <p>TODO: Will add motivation and introduction here</p>
+                    <br />
                 </div>
                 <div className={classes.mapContainer}>
-                    {/* <p>Mapbox here</p> */}
-                    <MapBox></MapBox>
-
-
+                    <MapBox />
                 </div>
 
-            </div>
+            </div >
 
         );
     }
