@@ -6,7 +6,7 @@ import BarChart from '../../components/Bar/BarChart';
 import LineChart from '../../containers/Trend/Trend';
 
 import "react-datepicker/dist/react-datepicker.css";
-import { Container, Row, Col,Alert,Badge,Button } from 'react-bootstrap';
+import { Container, Row, Col, Alert, Badge, Button } from 'react-bootstrap';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 // input data for bar chart
@@ -30,33 +30,33 @@ class Map extends Component {
             }
         },
 
-        clickedState: "All" // initial state: user hasn't clicked on anything on the map, so the line chart would show stat. of the whole U.S.
+        clickedState: "United States" // initial state: user hasn't clicked on anything on the map, so the line chart would show stat. of the whole U.S.
     }
 
 
 
 
-    animation = ()=>{
+    animation = () => {
 
-        var cur = new Date(this.state.startDate.getFullYear(),this.state.startDate.getMonth()+1)
+        var cur = new Date(this.state.startDate.getFullYear(), this.state.startDate.getMonth() + 1)
         // console.log(cur)
         var stop = this.state.endDate
 
         var arr = []
-        while (cur<=stop){
+        while (cur <= stop) {
             arr.push(cur)
-            cur = new Date(cur.getFullYear(),cur.getMonth()+1)
+            cur = new Date(cur.getFullYear(), cur.getMonth() + 1)
         }
 
         var self = this
-        for (var j = 0;j<arr.length;j++){
-            (function(x){
-                setTimeout(function() {
+        for (var j = 0; j < arr.length; j++) {
+            (function (x) {
+                setTimeout(function () {
                     console.log(x);
-                    self.setState({ endDate: x});
+                    self.setState({ endDate: x });
                     j++;
                 }, 1000 * j);
-              })(arr[j]);            
+            })(arr[j]);
         }
     }
 
@@ -98,62 +98,62 @@ class Map extends Component {
             <React.Fragment>
                 {/* <p> Introduction here</p> */}
                 <Container fluid>
-                <Alert variant="dark">
-                    
-                    <h3>In this section, you can explore the unemployment rate and covid pandemic more!</h3>
-                    <p>For better understanding of the relationship between unemployment rate and number of covid cases, you can pick the period you are interested and see the change of unemployment rate during that time. When hovering over the state, the increase number of covid of that period will also show up.</p>
-                    <p>Currently, we only have employment data till 2020 August.</p>
-                    <hr />
-                    <p>Bar chart...</p>
-                
-                <Row >
-                
+                    <Alert variant="dark">
 
-                    <Col xs='auto'>Start Month:</Col>
-                    <Col xs = "2">
-                        <DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2019/1/1")} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
-                    </Col>
-                                  
-                    <Col xs='auto'>End Month:</Col>
-                    <Col xs = "2">
-                        <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
-                    </Col>
-                    <Badge variant="outline-primary" onClick={this.animation}>
-                     transition
+                        <h3>In this section, you can explore the unemployment rate and covid pandemic more!</h3>
+                        <p>For better understanding of the relationship between unemployment rate and number of covid cases, you can pick the period you are interested and see the change of unemployment rate during that time. When hovering over the state, the increase number of covid of that period will also show up.</p>
+                        <p>Currently, we only have employment data till 2020 August.</p>
+                        <hr />
+                        <p>Bar chart...</p>
+
+                        <Row >
+
+
+                            <Col xs='auto'>Start Month:</Col>
+                            <Col xs="2">
+                                <DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2019/1/1")} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
+                            </Col>
+
+                            <Col xs='auto'>End Month:</Col>
+                            <Col xs="2">
+                                <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
+                            </Col>
+                            <Badge variant="outline-primary" onClick={this.animation}>
+                                transition
                     </Badge>
 
-                </Row>
-                </Alert>
-                <Row>
-                    <Col xs="8">
-                        <D3map 
-                            startMonth={this.state.startDate} 
-                            endMonth={this.state.endDate}
-                            updateStateHandler={this.updateStateHandler}
+                        </Row>
+                    </Alert>
+                    <Row>
+                        <Col xs="8">
+                            <D3map
+                                startMonth={this.state.startDate}
+                                endMonth={this.state.endDate}
+                                updateStateHandler={this.updateStateHandler}
                             ></D3map>
-                    </Col>
-                    {/* {console.log(this.state.startDate.getMonth())} */}
+                        </Col>
+                        {/* {console.log(this.state.startDate.getMonth())} */}
 
-                    <Col xs={7} md={4}>
-                        <BarChart
-                            start={this.state.startDate}
-                            end={this.state.endDate}
-                            unemploy_data={this.state.unemploy_data}
-                            covid_data={this.state.covid_data}
-                            title={this.state.chartUI.bar.title}
-                            filter={this.state.chartUI.bar.filter}
+                        <Col xs={7} md={4}>
+                            <BarChart
+                                start={this.state.startDate}
+                                end={this.state.endDate}
+                                unemploy_data={this.state.unemploy_data}
+                                covid_data={this.state.covid_data}
+                                title={this.state.chartUI.bar.title}
+                                filter={this.state.chartUI.bar.filter}
 
-                            resetTitleHandler={this.resetTitleHandler}
-                            switchFilterHandler={this.barSwitchFilterHandler} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <LineChart 
-                            clickedState={this.state.clickedState}
-                            updateStateHandler={this.updateStateHandler}/>
-                    </Col>
-                </Row>
+                                resetTitleHandler={this.resetTitleHandler}
+                                switchFilterHandler={this.barSwitchFilterHandler} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <LineChart
+                                clickedState={this.state.clickedState}
+                                updateStateHandler={this.updateStateHandler} />
+                        </Col>
+                    </Row>
                 </Container>
             </React.Fragment>
 
