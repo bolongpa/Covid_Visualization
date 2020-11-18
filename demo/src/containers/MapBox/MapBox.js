@@ -31,7 +31,7 @@ class MapBox extends Component {
     },
     popupInfo: null,
     df: [],
-    startDate: new Date("2020/1/22"),
+    startDate: new Date("2020/10/1"),
     endDate: new Date("2020/11/1"),
     m: 1
   };
