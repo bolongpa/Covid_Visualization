@@ -245,7 +245,7 @@ class MapBox extends Component {
     var self = this
     return (
       <div>
-        <div>
+        {/* <div>
           <Container style={{ "height": "50px", "marginTop": "10px" }}>
             <Row>
               <Col xs='auto' className="mt-2">Start Date:</Col>
@@ -256,12 +256,14 @@ class MapBox extends Component {
             </Row>
           </Container>
 
-        </div>
-        <div className={classes.commands}>
+        </div> */}
+
+        {/* <div className={classes.commands}>
           <span className={classes.filter} ref={this.RefFilter} id="all" onClick={function (e) { self.toggleFilter("#all"); self.filter(10000) }}>All</span>
           <span className={classes.filter} ref={this.RefFilter} id="top10" onClick={function (e) { self.toggleFilter("#top10"); self.filter(10) }}>Filter top 10 by number of cases</span>
           <span className={classes.filter} ref={this.RefFilter} id="top20" onClick={function (e) { self.toggleFilter("#top20"); self.filter(20) }}>Filter top 20 by number of cases</span>
-        </div>
+        </div> */}
+
         <div className={classes.mapContainer}>
           <div ref={el => this.mapContainer = el} style={{ position: "relative", height: "inherit", width: "inherit" }} />
           <div class={classes.legend} ref={e => this.legend = e} style={{ "display": "none" }}>
