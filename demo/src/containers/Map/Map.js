@@ -125,7 +125,7 @@ class Map extends Component {
                 </Row>
                 </Alert>
                 <Row>
-                    <Col xs="7">
+                    <Col xs="8">
                         <D3map 
                             startMonth={this.state.startDate} 
                             endMonth={this.state.endDate}
@@ -134,7 +134,7 @@ class Map extends Component {
                     </Col>
                     {/* {console.log(this.state.startDate.getMonth())} */}
 
-                    <Col >
+                    <Col xs={7} md={4}>
                         <BarChart
                             start={this.state.startDate}
                             end={this.state.endDate}
