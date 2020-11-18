@@ -246,7 +246,7 @@ const BarChart = (props) => {
                     width = w - margin.left - margin.right;
                     bar_width = width/16;
                 var height = bar_num * bar_width * 3.5 - margin.top - margin.bottom;
-                
+                d3.select('#bar_chart').remove();
                 var svg = d3.select(chartRef.current).append('svg')//.attr('viewBox', [0, 0, 1100, 610])
                     .attr('id', "bar_chart")
                     .attr('width', width + margin.left + margin.right)
@@ -256,16 +256,106 @@ const BarChart = (props) => {
                 
                 draw(svg, width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
                 
+                // window.addEventListener('resize', function(){
+                //     var new_width = parseInt(d3.select(chartRef.current).style("width"))-100;
+                //     bar_width = width/16;
+                //     height = bar_num * bar_width * 3.5 - margin.top - margin.bottom;
+                //     redraw_resize(new_width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
+                // })
 
                 
         });
-        window.addEventListener('resize', function(){console.log("resize",d3.select(chartRef.current).style("width"));redraw_resize(parseInt(d3.select(chartRef.current).style("width")))})
     }, []);
 
 
-    function redraw_resize(w){
+    function redraw_resize(width, height, unemploy_data, covid_data, filter){
+        if (filter == 'top') {
+            unemploy_data = topten(unemploy_data);
+        } else if (filter == 'bottom') {
+            unemploy_data = bottomten(unemploy_data);
+        }
+        console.log(unemploy_data);
+        // process covid_data
+        var states_to_show = unemploy_data.map(d => d.state);
+        var covid_data_temp = covid_data.map(d => {if (states_to_show.includes(d.state)) {return d;}});
+        var covid_data = [];
+        for (let i in covid_data_temp) {
+            if (covid_data_temp[i]) {
+                covid_data.push(covid_data_temp[i]);
+            };
+        }
+
+        var x = d3.scaleBand();
+        var y1 = d3.scaleLinear();
+        var y2 = d3.scaleLinear();
+
+        x.domain(unemploy_data.map(d => d.state))
+            .range([7, height-10])
+            .paddingInner(0.2);
+
+        y1.domain([Math.min(0, d3.min(unemploy_data, d => d.value)), Math.max(0, d3.max(unemploy_data, d => d.value))])
+            .range([0, width]);
+        
+        y2.domain([Math.min(0, d3.min(covid_data, d => d.value)), Math.max(0, d3.max(covid_data, d => d.value))])
+            .range([0, width]);
+
+        var y1zeroposition = width*Math.min(0, d3.min(unemploy_data, d => d.value))/(Math.min(0, d3.min(unemploy_data, d => d.value))-Math.max(0, d3.max(unemploy_data, d => d.value)));
+
+        // update unemployment bars
         var svg = d3.select('#bar_chart')
-        svg.attr("width",w)
+        svg.selectAll('.bar1').data(unemploy_data)
+            .transition()
+            .duration(800)
+            .attr('x', d => {if (d.value > 0) {return y1zeroposition;} else {return y1(d.value)}} )
+            .attr('width', d => {if (d.value < 0) {return y1zeroposition-y1(d.value);} else if (d.value > 0) {return y1(d.value)-y1zeroposition;} else {return 1;}})
+            .attr('fill', d => '#4e8df2');
+
+        svg.selectAll('.name')
+            .data(unemploy_data)
+            .transition()
+            .text(d => d.state);
+
+        // update covid bars
+        svg.selectAll('.bar2')
+            .data(covid_data)
+            .transition()
+            .duration(800)
+            .attr('x', d => width*Math.min(0, d3.min(covid_data, d => d.value))/(Math.min(0, d3.min(covid_data, d => d.value))-Math.max(0, d3.max(covid_data, d => d.value))))
+            .attr('width', d => y2(d.value))
+            .attr('fill', d => '#fac150');
+
+        // update axes
+        var y1Axis = d3.axisTop()
+            .scale(y1)
+            .ticks(5, 'd')
+            .tickFormat(function (d){
+                return d3.format(".1f")(d);
+            });
+
+        svg.select('#axis_top')
+            .transition()
+            .duration(800)
+            .call(y1Axis);
+
+        var y2Axis = d3.axisBottom()
+            .scale(y2)
+            .ticks(5, 'd')
+            .tickFormat(function (d){
+                return d3.format(".0s")(d);
+            });
+
+        svg.select('#axis_bottom')
+            .transition()
+            .duration(800)
+            .call(y2Axis);
+
+        function topten(data) {
+            return data.sort(function (a, b) { return d3.descending(a.value, b.value) }).slice(0, 10);
+        }
+        function bottomten(data) {
+            return data.sort(function (a, b) { return d3.ascending(a.value, b.value) }).slice(0, 10);
+        }
+            
     
     }
 
@@ -403,6 +493,13 @@ const BarChart = (props) => {
                     height = bar_num * bar_width * 3.1 - margin.top - margin.bottom;
                 
                 redraw(width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
+
+                window.addEventListener('resize', function(){
+                    var new_width = parseInt(d3.select(chartRef.current).style("width"))-100;
+                    bar_width = width/16;
+                    height = bar_num * bar_width * 3.5 - margin.top - margin.bottom;
+                    redraw_resize(new_width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
+                })
             });
                 
         
