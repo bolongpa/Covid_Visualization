@@ -7,7 +7,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/dsci-554-projects/project-ninjav/">
     <App />
   </BrowserRouter>,
   document.getElementById('root')
