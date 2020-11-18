@@ -16,12 +16,14 @@ class Introduction extends Component {
         return (
             <div>
                 <h1 className={classes.Title}>US LABOR MARKET AND COVID-19</h1>
+                <h2 className={classes.Title}>Labor Market Overviews</h2>
                 <div className={classes.Introduction}>
                     <WCloud />
                     <br />
                     <p>TODO: Will add motivation and introduction here</p>
                     <br />
                 </div>
+                <h2 className={classes.Title}>Confirmed COVID-19 Cases in the US</h2>
                 <div className={classes.mapContainer}>
                     <MapBox />
                 </div>
