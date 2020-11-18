@@ -7,7 +7,7 @@ import classes from './BarChart.module.css';
 import { svg } from 'd3';
 
 const BarChart = (props) => {
-    const bar_width = 15;
+    var bar_width = 15;
     const bar_num = 10;
     const timeFormat = d3.timeFormat('%m/%d/%y');
     // const colorscale1 = d3.scaleSequential().domain([-15, 14]).interpolator(d3.interpolateBlues);
@@ -149,21 +149,24 @@ const BarChart = (props) => {
 
         svg.append('g')
             .attr('class', 'axis')
-            .attr('id', 'axis_top').attr('stroke', 'steelblue')
+            .attr('id', 'axis_top').attr('stroke', '#4e8df2')
             .call(y1Axis);
 
         var y2Axis = d3.axisBottom()
             .scale(y2)
-            .ticks(5, 'd');
+            .ticks(5, 'd')
+            .tickFormat(function (d){
+                return d3.format(".0s")(d);
+            });
 
         svg.append('g')
             .attr('class', 'axis')
             .attr('id', 'axis_bottom')
-            .attr('transform', 'translate(0,'+height+')').attr('stroke', 'orange')
+            .attr('transform', 'translate(0,'+height+')').attr('stroke', '#fac150')
             .call(y2Axis);
 
         svg.append('text')
-            .attr('x', -40)
+            .attr('x', -50)
             .attr('y', -5)
             .attr('class', 'xlabel')
             .append('tspan').text('State')
@@ -172,13 +175,13 @@ const BarChart = (props) => {
             .attr('x', width - 150)
             .attr('y', -25)
             .attr('class', 'ylabel')
-            .append('tspan').text('Unemployment Rate (%)').attr('fill', 'steelblue')
+            .append('tspan').text('Unemployment Rate (%)').attr('fill', '#4e8df2')
 
         svg.append('text')
             .attr('x', width - 100)
             .attr('y', height + 35)
             .attr('class', 'ylabel')
-            .append('tspan').text('COVID-19 Confirmed').attr('fill', 'orange')
+            .append('tspan').text('COVID-19 Confirmed').attr('fill', '#fac150')
 
         // draw legend
         // var r = d3.range(0, 550000, 1000);
@@ -240,8 +243,9 @@ const BarChart = (props) => {
                 var w =  parseInt(d3.select(chartRef.current).style("width"))
                 console.log("w",w)
                 var margin = { top: 50, left: 50, bottom: 60, right: 50 },
-                    width = w - margin.left - margin.right,
-                    height = bar_num * bar_width * 3.5 - margin.top - margin.bottom;
+                    width = w - margin.left - margin.right;
+                    bar_width = width/16;
+                var height = bar_num * bar_width * 3.5 - margin.top - margin.bottom;
                 
                 var svg = d3.select(chartRef.current).append('svg')//.attr('viewBox', [0, 0, 1100, 610])
                     .attr('id', "bar_chart")
@@ -338,7 +342,10 @@ const BarChart = (props) => {
 
         var y2Axis = d3.axisBottom()
             .scale(y2)
-            .ticks(5, 'd');
+            .ticks(5, 'd')
+            .tickFormat(function (d){
+                return d3.format(".0s")(d);
+            });
 
         svg.select('#axis_bottom')
             .transition()
