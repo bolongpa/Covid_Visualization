@@ -87,7 +87,7 @@ const BarChart = (props) => {
         x.domain(unemploy_data.map(d => d.state))
             .range([7, height-10])
             .paddingInner(0.2);
-
+        console.log("draw width",width)
         y1.domain([Math.min(0, d3.min(unemploy_data, d => d.value)), Math.max(0, d3.max(unemploy_data, d => d.value))])
             .range([0, width]);
         
@@ -237,11 +237,13 @@ const BarChart = (props) => {
                 // console.log(covid_data_to_chart);
 
                 // draw chart
+                var w =  parseInt(d3.select(chartRef.current).style("width"))
+                console.log("w",w)
                 var margin = { top: 50, left: 50, bottom: 60, right: 50 },
-                    width = 850 - margin.left - margin.right,
-                    height = bar_num * bar_width * 3.1 - margin.top - margin.bottom;
+                    width = w - margin.left - margin.right,
+                    height = bar_num * bar_width * 3.5 - margin.top - margin.bottom;
                 
-                var svg = d3.select(chartRef.current).append('svg')
+                var svg = d3.select(chartRef.current).append('svg')//.attr('viewBox', [0, 0, 1100, 610])
                     .attr('id', "bar_chart")
                     .attr('width', width + margin.left + margin.right)
                     .attr('height', height + margin.top + margin.bottom)
@@ -253,7 +255,15 @@ const BarChart = (props) => {
 
                 
         });
+        window.addEventListener('resize', function(){console.log("resize",d3.select(chartRef.current).style("width"));redraw_resize(parseInt(d3.select(chartRef.current).style("width")))})
     }, []);
+
+
+    function redraw_resize(w){
+        var svg = d3.select('#bar_chart')
+        svg.attr("width",w)
+    
+    }
 
 
     // function to redraw according to filter
@@ -379,10 +389,10 @@ const BarChart = (props) => {
                     }
                 }
                 // console.log(covid_data_to_chart);
-
+                var w =  parseInt(d3.select(chartRef.current).style("width"))
                 // redraw chart
                 var margin = { top: 50, left: 50, bottom: 60, right: 50 },
-                    width = 850 - margin.left - margin.right,
+                    width = w - margin.left - margin.right,
                     height = bar_num * bar_width * 3.1 - margin.top - margin.bottom;
                 
                 redraw(width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
@@ -397,7 +407,7 @@ const BarChart = (props) => {
             <button onClick={() => props.switchFilterHandler("top")}>Top 10</button>
             <button onClick={() => props.switchFilterHandler("bottom")}>Bottom 10</button>
 
-            <div ref={chartRef} />
+            <div ref={chartRef}  style={{width:"400",display: 'flex', flexDirection: 'col', alignItems: 'center', justifyContent: 'left' }}/>
         </div>
     );
 }
