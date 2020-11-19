@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 import classes from './Trend.module.css';
 import unemployment from '../../assets/data/lineChart_unemployment.csv';
-import covid from '../../assets/data/lineChart_covid.csv';
+import covid from '../../assets/data/lineChart_covid_new_confirmed.csv';
 import hiring from '../../assets/data/lineChart_hiring.csv';
 
 
@@ -209,7 +209,7 @@ class LineChart extends Component {
         svg.append("rect").attr("x", 60).attr("y", 50).attr("width", 10).attr("height", 5).style("fill", "#FF8C00");
         svg.append("rect").attr("x", 60).attr("y", 80).attr("width", 10).attr("height", 5).style("fill", "#114C94");
         svg.append("rect").attr("x", 60).attr("y", 110).attr("width", 10).attr("height", 5).style("fill", "#A174A9").attr("class", "hiringLegend");
-        svg.append("text").attr("x", 80).attr("y", 55).text("COVID confirmed cases (k)").style("font-size", "1.2rem").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 80).attr("y", 55).text("COVID newly confirmed cases (k)").style("font-size", "1.2rem").attr("alignment-baseline", "middle");
         svg.append("text").attr("x", 80).attr("y", 85).text("Unemployment Rate (%)").style("font-size", "1.2rem").attr("alignment-baseline", "middle");
         svg.append("text").attr("x", 80).attr("y", 115).text("Nationwide Hiring Rate (%)").style("font-size", "1.2rem").attr("alignment-baseline", "middle").attr("class", "hiringLegend");
 
