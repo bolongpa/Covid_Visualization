@@ -6,7 +6,7 @@ import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 import MapBox from '../../../containers/MapBox/MapBox';
 import WCloud from "../../WordCloud/WordCloud"
-
+import infoGraph from "../../../assets/images/Unemployment2020.png";
 
 class Introduction extends Component {
 
@@ -15,13 +15,9 @@ class Introduction extends Component {
         // console.log(this.data)
         return (
             <div>
-                <h1 className={classes.Title}>US LABOR MARKET AND COVID-19</h1>
-                <h2 className={classes.Title}>Labor Market Overviews</h2>
-                <div className={classes.Introduction}>
+                <div className={classes.InfoGraphBox}>
                     <WCloud />
-                    <br />
-                    <p>TODO: Will add motivation and introduction here</p>
-                    <br />
+                    <img src={infoGraph} width="100%" />
                 </div>
                 <h2 className={classes.Title}>Confirmed COVID-19 Cases in the US</h2>
                 <div className={classes.mapContainer}>
