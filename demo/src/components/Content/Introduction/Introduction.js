@@ -19,11 +19,6 @@ class Introduction extends Component {
                     <WCloud />
                     <img src={infoGraph} width="100%" />
                 </div>
-                <h2 className={classes.Title}>Confirmed COVID-19 Cases in the US</h2>
-                <div className={classes.mapContainer}>
-                    <MapBox />
-                </div>
-
             </div >
 
         );
