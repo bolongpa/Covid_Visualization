@@ -2,7 +2,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Layout from './hoc/Layout/Layout';
 import MultiCharts from './containers/MultiCharts/MultiCharts';
-import Claims from './containers/Recovery/Recovery';
+import Claims from './containers/Claims/Claims';
 import Map from './containers/Map/Map';
 import Introduction from './components/Content/Introduction/Introduction';
 
