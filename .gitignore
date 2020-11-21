@@ -2,3 +2,4 @@ node_modules
 .DS_Store
 project-starter/demo/src/containers/MapBox/mapbox_old
 project-starter
+demo/src/containers/MapBox/mapbox_old.js
