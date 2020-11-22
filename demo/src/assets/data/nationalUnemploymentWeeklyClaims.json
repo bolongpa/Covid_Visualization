@@ -1,18 +1,32 @@
 {
-    "Jan4": {
-        "initial": 335480,
-        "continued": 2249123
-    },
-    "Mar21": {
-        "initial": 2290162,
-        "continued": 3416645
-    },
-    "May9": {
-        "initial": 2356626,
-        "continued": 22794145
-    },
-    "Oct24": {
-        "initial": 738709,
-        "continued": 6888363
-    }
+    "4 Jan. 2020": [
+        {
+            "type": "initial",
+            "value": 335480
+        },
+        {
+            "type": "continued",
+            "value": 2249123
+        }
+    ],
+    "21 Mar. 2020": [
+        {
+            "type": "initial",
+            "value": 2290162
+        },
+        {
+            "type": "continued",
+            "value": 3416645
+        }
+    ],
+    "24 Oct. 2020": [
+        {
+            "type": "initial",
+            "value": 738709
+        },
+        {
+            "type": "continued",
+            "value": 6888363
+        }
+    ]
 }
