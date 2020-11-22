@@ -680,9 +680,29 @@ const BarChart = (props) => {
                     };
                     bar_width = new_width / 16;
                     height = bar_num * bar_width * 2.5 - margin.top - margin.bottom;
-                    redraw_resize(new_width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
-                }
 
+                    redraw(width + 100, height, unemploy_data_to_chart, covid_data_to_chart, filter);
+
+                    window.addEventListener('resize', function () {
+                        if (d3.select(chartRef.current) != null) {
+                            // console.log(d3.select(chartRef.current))
+                            try {
+                                var new_width = parseInt(d3.select(chartRef.current).style("width")) - 100;
+                                if (new_width < 250) {
+                                    new_width = 250;
+                                };
+                                bar_width = new_width / 16;
+                                height = bar_num * bar_width * 2.5 - margin.top - margin.bottom;
+                                redraw_resize(new_width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
+                            }
+                            catch (e) {
+                                console.log("error")
+                            }
+
+                        }
+                    })
+
+                }
             })
         });
 
