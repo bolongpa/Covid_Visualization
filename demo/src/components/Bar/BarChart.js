@@ -65,6 +65,22 @@ const BarChart = (props) => {
         return covid_data
     }
 
+    function hover(ori,state){
+        d3.select("text#"+state).attr("fill","red")
+        d3.select("rect#"+state).attr("height",4)
+        d3.select("circle#"+state).attr("r",10)
+        props.barStateHover(ori.replace(" ",""))
+
+    }
+
+    function hover_out(state){
+        d3.select("text#"+state).attr("fill","black")
+        d3.select("rect#"+state).attr("height",2)
+        d3.select("circle#"+state).attr("r",8)
+        props.barStateHover(null)
+
+    }
+
     // function to draw
     function draw(svg, width, height, unemploy_data, covid_data, filter) {
         if (width < 250) {
@@ -120,11 +136,22 @@ const BarChart = (props) => {
             .data(unemploy_data)
             .enter()
             .append('text')
-            .text(d => d.state)
+            .text(d => statemap[d.state])
             .attr('text-anchor', 'middle')
             .attr('class', 'name')
+            .attr('id',d=>statemap[d.state])
             .attr('x', d => -20)
-            .attr('y', d => x(d.state) + 15);
+            .attr('y', d => x(d.state) + x.bandwidth()*0.6)
+            .on("click", function(e, d) {
+                props.updateStateHandler(d.state);
+            })
+            .on("mouseover",function(e,d){
+                hover(d.state,statemap[d.state])
+                
+            })
+            .on("mouseout",function(e,d){
+                hover_out(statemap[d.state])
+            })
 
         // covid bars
         svg.selectAll('.bar2')
@@ -132,15 +159,26 @@ const BarChart = (props) => {
             .enter()
             .append('rect')
             .attr('class', 'bar2')
+            .attr('id',d=>statemap[d.state])
             .attr('x', d => width*Math.min(0, d3.min(covid_data, d => d.value))/(Math.min(0, d3.min(covid_data, d => d.value))-Math.max(0, d3.max(covid_data, d => d.value))))
-            .attr('y', d => x(d.state)+bar_width*0.9)
+            .attr('y', d => x(d.state)+x.bandwidth()/2)
             .attr('width', d => y2(d.value))
-            .attr('height', 2)//bar_width/3
-            .attr('fill', d => '#fac150');
+            .attr('height', 2)
+            .attr('fill', d => '#707070')
+            .on("click", function(e, d) {
+                props.updateStateHandler(d.state);
+            })
+            .on("mouseover",function(e,d){
+                hover(d.state,statemap[d.state])
+                
+            })
+            .on("mouseout",function(e,d){
+                hover_out(statemap[d.state])
+            });
 
-        svg.selectAll('.bar2')
-            .data(unemploy_data)
-            .attr('fill', "#707070")//d => colorscale(d.value)
+        // svg.selectAll('.bar2')
+        //     .data(unemploy_data)
+        //     .attr('fill', "#707070")//d => colorscale(d.value)
         
         var unemploy_map = new Map();
         unemploy_data.forEach(d=>unemploy_map.set(d.state,d.value))
@@ -150,11 +188,21 @@ const BarChart = (props) => {
             .enter()
             .append('circle')
             .attr('class', 'circle')
+            .attr('id',d=>statemap[d.state])
             .attr('cx', d => y2(d.value))
-            .attr('cy', d => x(d.state)+bar_width*0.9)
+            .attr('cy', d => x(d.state)+x.bandwidth()*0.5)
             .attr('r', 8)
             .attr("fill",d=>colorscale(unemploy_map.get(d.state)))
-
+            .on("click", function(e, d) {
+                props.updateStateHandler(d.state);
+            })
+            .on("mouseover",function(e,d){
+                hover(d.state,statemap[d.state])
+                
+            })
+            .on("mouseout",function(e,d){
+                hover_out(statemap[d.state])
+            })
 
         var xAxis = d3.axisLeft()
             .scale(d3.scaleLinear().range([0, height+5]))  // adding outer padding to scaleBand
@@ -254,7 +302,7 @@ const BarChart = (props) => {
                 var unemploy_data_to_chart = [];
                 for (let k in statemap) {
                     var state = statemap[k];
-                    unemploy_data_to_chart.push({"state": state, "value": +((unemployment_end_rate[state] - unemployment_start_rate[state])/unemployment_start_rate[state]).toFixed(2)});
+                    unemploy_data_to_chart.push({"state": k, "value": +((unemployment_end_rate[state] - unemployment_start_rate[state])/unemployment_start_rate[state]).toFixed(2)});
                 }
                 // console.log(unemploy_data_to_chart)
 
@@ -263,7 +311,7 @@ const BarChart = (props) => {
                 var covid_data_to_chart = [];
                 for (let k in temp_covid_data_to_chart) {
                     if (statemap[k]) {
-                        covid_data_to_chart.push({"state": statemap[k], "value": temp_covid_data_to_chart[k]});
+                        covid_data_to_chart.push({"state": k, "value": temp_covid_data_to_chart[k]});
                     }
                 }
                 // console.log(covid_data_to_chart);
@@ -298,7 +346,6 @@ const BarChart = (props) => {
                 
         });
     }, []);
-
 
     function redraw_resize(width, height, unemploy_data, covid_data, filter){
         if (width < 250) {
@@ -344,7 +391,6 @@ const BarChart = (props) => {
         svg.attr('width', width+100)
             .attr('height', height+110);
 
-
         // svg.selectAll('.bar1').data(unemploy_data)
         //     .transition()
         //     .duration(800)
@@ -356,8 +402,7 @@ const BarChart = (props) => {
             .data(unemploy_data)
             .transition()
             .duration(300)
-            .text(d => d.state)
-            .attr('y', d => x(d.state) + 15);
+            .attr('y', d => x(d.state) + +x.bandwidth()*0.6);
 
         // update covid bars
         svg.selectAll('.bar2')
@@ -365,17 +410,15 @@ const BarChart = (props) => {
             .transition()
             .duration(300)
             .attr('x', d => width*Math.min(0, d3.min(covid_data, d => d.value))/(Math.min(0, d3.min(covid_data, d => d.value))-Math.max(0, d3.max(covid_data, d => d.value))))
-            .attr('y', d => x(d.state)+bar_width*0.9)
+            .attr('y', d => x(d.state)+x.bandwidth()/2)
             .attr('width', d => y2(d.value))
-
 
         svg.selectAll('.circle')
             .data(covid_data)
             .transition()
             .duration(300)
             .attr('cx', d => y2(d.value))
-            .attr('cy', d => x(d.state)+bar_width*0.9)
-
+            .attr('cy', d => x(d.state)+x.bandwidth()/2)
 
         // update axes
         // var y1Axis = d3.axisTop()
@@ -429,7 +472,6 @@ const BarChart = (props) => {
     
     }
 
-
     // function to redraw according to filter
     function redraw(width, height, unemploy_data, covid_data, filter) {
         if (filter == 'top') {
@@ -452,7 +494,6 @@ const BarChart = (props) => {
         var x = d3.scaleBand();
         // var y1 = d3.scaleLinear();
         var y2 = d3.scaleLinear();
-
 
 
         x.domain(unemploy_data.map(d => d.state))
@@ -485,31 +526,29 @@ const BarChart = (props) => {
         //     .attr('fill', d => '#4e8df2');
 
         // svg.select("#axis_left").call(xAxis)
-        svg.selectAll('.name')
-            .data(unemploy_data)
-            .transition()
-            .text(d => d.state);
+        // svg.selectAll('.name')
+        //     .data(unemploy_data)
+        //     .transition()
+        //     .text(d => statemap[d.state]);
 
         // update covid bars
         svg.selectAll('.bar2')
             .data(covid_data)
             .transition()
+            .attr("id",d=>statemap[d.state])
             .duration(800)
             .attr('x', d => width*Math.min(0, d3.min(covid_data, d => d.value))/(Math.min(0, d3.min(covid_data, d => d.value))-Math.max(0, d3.max(covid_data, d => d.value))))
-            .attr('y', d => x(d.state)+bar_width*0.9)
+            .attr('y', d => x(d.state)+x.bandwidth()/2)
             .attr('width', d => y2(d.value))
             
 
         svg.selectAll('.name')
             .data(unemploy_data)
             .transition()
+            .attr("id",d=>statemap[d.state])
             .duration(800)
-            .text(d => d.state)
-            .attr('y', d => x(d.state) + 15);
-
-        svg.selectAll('.bar2')
-            .data(unemploy_data)
-            //.attr('fill', d => colorscale(d.value))
+            .text(d => statemap[d.state])
+            .attr('y', d => x(d.state) + x.bandwidth()*0.6);
 
         
         var unemploy_map = new Map();
@@ -519,9 +558,10 @@ const BarChart = (props) => {
         svg.selectAll('.circle')
             .data(covid_data)
             .transition()
+            .attr("id",d=>statemap[d.state])
             .duration(800)
             .attr('cx', d => y2(d.value))
-            .attr('cy', d => x(d.state)+bar_width*0.9)
+            .attr('cy', d => x(d.state)+x.bandwidth()/2)
             .attr("fill",d=>colorscale(unemploy_map.get(d.state)))
 
         // svg.selectAll('.circle')
@@ -606,7 +646,7 @@ const BarChart = (props) => {
                 var unemploy_data_to_chart = [];
                 for (let k in statemap) {
                     var state = statemap[k];
-                    unemploy_data_to_chart.push({"state": state, "value": +((unemployment_end_rate[state] - unemployment_start_rate[state])/unemployment_start_rate[state]).toFixed(2)});
+                    unemploy_data_to_chart.push({"state": k, "value": +((unemployment_end_rate[state] - unemployment_start_rate[state])/unemployment_start_rate[state]).toFixed(2)});
                 }
                 // console.log(unemploy_data_to_chart)
 
@@ -615,7 +655,7 @@ const BarChart = (props) => {
                 var covid_data_to_chart = [];
                 for (let k in temp_covid_data_to_chart) {
                     if (statemap[k]) {
-                        covid_data_to_chart.push({"state": statemap[k], "value": temp_covid_data_to_chart[k]});
+                        covid_data_to_chart.push({"state": k, "value": temp_covid_data_to_chart[k]});
                     }
                 }
                 // console.log(covid_data_to_chart);

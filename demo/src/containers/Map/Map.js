@@ -30,7 +30,8 @@ class Map extends Component {
             }
         },
 
-        clickedState: "United States" // initial state: user hasn't clicked on anything on the map, so the line chart would show stat. of the whole U.S.
+        clickedState: "United States", // initial state: user hasn't clicked on anything on the map, so the line chart would show stat. of the whole U.S.
+        barState:null
     }
 
 
@@ -92,6 +93,12 @@ class Map extends Component {
         });
 
     }
+    barStateHover = (value) =>{
+        this.setState({
+            barState:value
+        });
+    }
+
 
     render() {
         return (
@@ -129,23 +136,27 @@ class Map extends Component {
                             <D3map
                                 startMonth={this.state.startDate}
                                 endMonth={this.state.endDate}
+                                barState={this.state.barState}
                                 updateStateHandler={this.updateStateHandler}
                             ></D3map>
+
                         </Col>
                         {/* {console.log(this.state.startDate.getMonth())} */}
 
                         <Col xs={7} md={4}>
-                            <BarChart
+                        <BarChart
                                 start={this.state.startDate}
                                 end={this.state.endDate}
                                 unemploy_data={this.state.unemploy_data}
                                 covid_data={this.state.covid_data}
                                 title={this.state.chartUI.bar.title}
                                 filter={this.state.chartUI.bar.filter}
-
+                                barStateHover={this.barStateHover}
+                                updateStateHandler={this.updateStateHandler}
                                 resetTitleHandler={this.resetTitleHandler}
                                 switchFilterHandler={this.barSwitchFilterHandler} />
                         </Col>
+
                     </Row>
                     <Row>
                         <Col>

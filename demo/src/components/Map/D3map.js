@@ -5,7 +5,6 @@ import unemploy from "../../assets/data/unemployment.csv";
 import covid from "../../assets/data/time_series_covid19_confirmed_US.csv";
 import { feature, mesh } from "topojson-client";
 
-
 var monthmap = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" }
 var start = new Date("2020/1/1")
 var end = new Date("2020/8/1")
@@ -14,6 +13,7 @@ const timeFormat = d3.timeFormat('%m/%d/%y')
 var radius
 var _s1 = d3.format(",.2s")
 var offset = new Set(["25","10","09","44"])
+var prevBarState=null
 
 const D3map = (props) => {
     const svgRef = useRef()
@@ -50,7 +50,6 @@ const D3map = (props) => {
         // console.log(covid_data)
         return covid_data
     }
-
 
     useEffect(() => {
         var svg = d3.select(svgRef.current).append("svg").attr('width', "100%")
@@ -97,11 +96,10 @@ const D3map = (props) => {
                 })
                 console.log("one", feature(us, us.objects.states).features)
 
-
                 var r = [5,2,0,-2,-5]
                 // var yscale = d3.scaleBand().domain(r).range([0, 300]).paddingInner(0).paddingOuter(0)
                 var xscale = d3.scaleLinear().domain([-4,4]).range([0, 300])
-                console.log(xscale.domain())
+
                 var xaxis = d3.axisTop(xscale);
 
                 svg.append("text").attr("x",550).attr("font-size",10).text("Unemployment growth rate").attr("fill","black")
@@ -132,6 +130,8 @@ const D3map = (props) => {
                     .on("click", function(e, d) {
                         console.log(d.id)
                         console.log(d.properties.name)
+                        console.log(d.properties.unemploy)
+                        
                         props.updateStateHandler(d.properties.name);
                     })
                     .on("mouseover",function(e,d){
@@ -179,6 +179,18 @@ const D3map = (props) => {
             
     }, [])
 
+    useEffect(()=>{
+
+        if (props.barState != null){
+            d3.select("text#"+props.barState).attr("display","block")
+            d3.select("path#"+props.barState).attr("fill-opacity",1)
+            prevBarState = props.barState
+        }else{
+            d3.select("text#"+prevBarState).attr("display","none")
+            d3.select("path#"+prevBarState).attr("fill-opacity",0.7)
+        }        
+    },[props.barState])
+
     useEffect(() => {
         console.log("trigger useffect")
         var promises = [];
@@ -195,18 +207,14 @@ const D3map = (props) => {
                 // var radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([5, 25])
 
 
-
                 const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
                 var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
                 var new_us = feature(us, us.objects.states).features
-                console.log(current,early)
-                    // console.log("newus",new_us)
+
                 new_us.forEach(function(dd) {
                     dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
                     dd.properties.covid = covid_data[dd.properties.name]
                 })
-                console.log("new", new_us)
-
 
                 new_us.forEach(function(d) {
                     // console.log(d3.select("#" + d.properties.name))
@@ -216,7 +224,7 @@ const D3map = (props) => {
                 })
 
                 const legend = d3.select("#legend")
-                console.log([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
+                // console.log([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
                 legend.selectAll("circle").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
                     .attr('cy', d => -radius(d))
                     .attr('r', radius);
@@ -230,7 +238,6 @@ const D3map = (props) => {
 
             })
     }, [start, end])
-
 
 
 
