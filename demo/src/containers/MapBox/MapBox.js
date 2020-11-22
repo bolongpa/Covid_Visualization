@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
 import mapboxgl from 'mapbox-gl';
-import DatePicker from "react-datepicker";
-import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import classes from './MapBox.module.css';
-import claim from '../../assets/data/weekly_claim_state.csv';
-
-import "react-datepicker/dist/react-datepicker.css";
-import "react-datepicker/src/stylesheets/datepicker.scss";
-import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
+import claim from '../../assets/data/weekly_claim_state.csv';
 
-// https://docs.mapbox.com/mapbox-gl-js/style-spec/expressions/#variable-binding
-// https://docs.mapbox.com/mapbox-gl-js/example/data-driven-circle-colors/
-// https://docs.mapbox.com/help/tutorials/mapbox-gl-js-expressions/
-//https://dev.to/laney/react-mapbox-beginner-tutorial-2e35
 class MapBox extends Component {
 
   state = {
@@ -40,9 +30,7 @@ class MapBox extends Component {
 
   async loadData() {
     d3.csv(claim, dd => {
-      var self = this
- return {
-
+      return {
         //state:dd["Province_State"],county:dd["Admin2"],value:dd["11/1/20"],lon:dd["Long_"],lat:dd["Lat"]}
         "type": "Feature",
         "properties": {
@@ -78,9 +66,9 @@ class MapBox extends Component {
         data: self.state.df
       });
 
-    var claims_max = d3.max(self.state.df.features.map(d => d.properties.value))
+      var claims_max = d3.max(self.state.df.features.map(d => d.properties.value))
 
-    var m_state = self.state.df.features.filter(d => d.properties.value == claims_max)[0]
+      var m_state = self.state.df.features.filter(d => d.properties.value == claims_max)[0]
 
 
       map.addLayer({
@@ -89,7 +77,7 @@ class MapBox extends Component {
         "source": "mapdata",
         "layout": {},
         "paint": {
-          "circle-radius": ["/",["sqrt",['to-number', ['get', 'value']]],15],
+          "circle-radius": ["/", ["sqrt", ['to-number', ['get', 'value']]], 15],
           "circle-color": "DarkRed",
           "circle-opacity": 0.7,
           // 'fill-color': [ 'interpolate', ['linear'], ["/", ['to-number', ['get', 'value'], 1], self.state.m / 40000], 0, '#F2F12D', 10000, '#E6B71E', 20000, '#DA9C20', 30000, '#B86B25', 40000, '#8B4225'],  //OK - interpolate color proportional to AREA property with a factor of 0.5
@@ -109,9 +97,9 @@ class MapBox extends Component {
         .style('font', '14px sans-serif')
 
       legend.append("tspan").attr("x", 0).attr("dy", "0em").attr("class", "tspan1")
-        .text("During the week 11/07/2020 ")
+        .text("During the week 10/24/2020 ")
       legend.append("tspan").attr("x", 0).attr("dy", "1.5em").attr("class", "tspan2")
-        .text("The highest number of claim was around " + format(claims_max) + " in "+ m_state.properties.state )
+        .text("The highest number of claim was around " + format(claims_max) + " in " + m_state.properties.state)
       d3.select(self.legend).style("display", "block")
     })
   };
@@ -169,7 +157,6 @@ class MapBox extends Component {
   // }
 
   render() {
-    var self = this
     return (
       <div>
         <div className={classes.mapContainer}>
