@@ -686,13 +686,16 @@ const BarChart = (props) => {
     }, [filter, start_year, start_month, end_year, end_month])
 
     return (
+        <React.Fragment>
+        <h3>{"No. of infection cases sorted by unemployment change rate"}</h3>
         <div className={classes.BarChart}>
-            <h1>{chartTitle}</h1>
+            
             <Button variant="outline-primary" onClick={() => props.switchFilterHandler("top")}>Top 10</Button>
             <Button variant="outline-primary" onClick={() => props.switchFilterHandler("bottom")}>Bottom 10</Button>
 
             <div ref={chartRef}  style={{width:"400",display: 'flex', flexDirection: 'col', alignItems: 'center', justifyContent: 'left' }}/>
         </div>
+        </React.Fragment>
     );
 }
 
