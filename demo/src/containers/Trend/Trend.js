@@ -282,7 +282,7 @@ class LineChart extends Component {
         }
         return (
             <div className={classes.LineChart}>
-                <h1>Pandemics and the Labor Market - {this.props.clickedState}</h1>
+                <h3 className={classes.Title}>Pandemics and the Labor Market - {this.props.clickedState}</h3>
                 <div>
                     <p className={classes.Label}>Region: </p>
                     <select className={classes.StateSelection} onChange={(event) => this.props.updateStateHandler(event.target.value)} value={this.props.clickedState}>

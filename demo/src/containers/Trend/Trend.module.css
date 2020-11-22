@@ -3,11 +3,29 @@
     margin-top: 5rem;
     margin-bottom: 5rem;
 }
+
+.Title {
+    font-size: 2rem;
+}
+
+@media (max-width: 1450px) {
+    .Title {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 1300px) {
+    .Title {
+        font-size: 1.5rem;
+    }
+}
+
 .Label {
     margin: 1rem;
     font-size: 1.2rem;
     display: inline-block;
 }
+
 .StateSelection {
     width: 100%;
     min-width: 150px;

@@ -5,6 +5,8 @@ import unemploy from "../../assets/data/unemployment.csv";
 import covid from "../../assets/data/time_series_covid19_confirmed_US.csv";
 import { feature, mesh } from "topojson-client";
 
+import classes from './D3map.module.css';
+
 var monthmap = { 1: "Jan", 2: "Feb", 3: "Mar", 4: "Apr", 5: "May", 6: "Jun", 7: "Jul", 8: "Aug", 9: "Sep", 10: "Oct", 11: "Nov", 12: "Dec" }
 var start = new Date("2020/1/1")
 var end = new Date("2020/8/1")
@@ -12,8 +14,8 @@ const colorscale = d3.scaleSequential().domain([-3, 3]).interpolator(d3.interpol
 const timeFormat = d3.timeFormat('%m/%d/%y')
 var radius
 var _s1 = d3.format(",.2s")
-var offset = new Set(["25","10","09","44"])
-var prevBarState=null
+var offset = new Set(["25", "10", "09", "44"])
+var prevBarState = null
 
 const D3map = (props) => {
     const svgRef = useRef()
@@ -27,7 +29,7 @@ const D3map = (props) => {
         for (var d in data) {
             if (total[data[d][0]]) {
                 total[data[d][0]] += +data[d][1];
-                
+
             } else {
                 total[data[d][0]] = +data[d][1];
             }
@@ -67,129 +69,129 @@ const D3map = (props) => {
             .attr('stroke-linejoin', 'round')
             .attr('d', path);
         // console.log(feature(us, us.objects.states))
-        
+
 
         var promises = [];
         var files = [unemploy, covid];
         files.forEach(url => promises.push(d3.csv(url))); //🚧  store two promises
         console.log(promises)
 
-        Promise.all(promises).then(function(values) {
+        Promise.all(promises).then(function (values) {
 
-                var unemploy_data = values[0]
-                var covid_data = values[1]
+            var unemploy_data = values[0]
+            var covid_data = values[1]
 
-                covid_data = CovidDataPreprocess(covid_data)
-                    // console.log(Object.keys(covid_data))
+            covid_data = CovidDataPreprocess(covid_data)
+            // console.log(Object.keys(covid_data))
 
-                // var radius = d3.scaleSqrt([0, d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.985)], [5, 40]);
-                radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([0, 25])
+            // var radius = d3.scaleSqrt([0, d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.985)], [5, 40]);
+            radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([0, 25])
 
-                const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
-                var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
-                
-                var new_us = feature(us, us.objects.states).features
-                    // console.log("newus",new_us)
-                new_us.forEach(function(dd) {
-                    dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
-                    dd.properties.covid = covid_data[dd.properties.name]
-                })
-                console.log("one", feature(us, us.objects.states).features)
+            const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate]))
+            var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
 
-                var r = [5,2,0,-2,-5]
-                // var yscale = d3.scaleBand().domain(r).range([0, 300]).paddingInner(0).paddingOuter(0)
-                var xscale = d3.scaleLinear().domain([-4,4]).range([0, 300])
-
-                var xaxis = d3.axisTop(xscale);
-
-                svg.append("text").attr("x",550).attr("font-size",10).text("Unemployment growth rate").attr("fill","black")
-                var axis_g = svg.append('g').attr('transform', 'translate(' + 550 + "," + 30 + ')')
-                axis_g.call(xaxis).attr("y",10).select(".domain").remove();
-
-                r = d3.range(-4, 4, 0.05)
-                axis_g.selectAll("rect")
-                    .data(r)
-                    .enter()
-                    .append("rect")
-                    .attr("x", d=>xscale(d))
-                    .attr("y", 0)
-                    .attr("width", 4)
-                    .attr("height", 8)
-                    .attr("fill", d => colorscale(d))
-
-                svg.append("g")
-                    .attr("width",900)
-                    .attr('class', 'countries')
-                    .selectAll("path")
-                    .data(feature(us, us.objects.states).features) //🚧  use us features
-                    .join("path")
-                    .attr("id", d => d.properties.name.replace(" ",""))
-                    .attr("stroke", "none")
-                    .attr("fill", function(d) {return colorscale(d.properties.unemploy)}) //🚧  fill color based on value whose key is id
-                    .attr("fill-opacity",0.7)
-                    .on("click", function(e, d) {
-                        console.log(d.id)
-                        console.log(d.properties.name)
-                        console.log(d.properties.unemploy)
-                        
-                        props.updateStateHandler(d.properties.name);
-                    })
-                    .on("mouseover",function(e,d){
-                        d3.select(this).attr("fill-opacity",1)
-                        // console.log(d)
-                        d3.select("text#"+d.properties.name.replace(" ","")).attr("display","block")
-
-                    }
-                    )
-                    .on("mouseout",function(e,d){
-                        d3.select(this).attr("fill-opacity",0.7)
-                        d3.select("text#"+d.properties.name.replace(" ","")).attr("display","none")
-                    })
-                    .attr("d", path)
-                    .append("title")
-
-                
-                const text_select = svg.append('g')
-                    .selectAll("text")
-                    .data(feature(us, us.objects.states).features)
-                    .enter()
-                    .append("text")
-                    .attr("id",d=>d.properties.name.replace(" ",""))
-                    .attr("text-anchor", "middle")
-                    .attr('transform', d => `translate(${path.centroid(d)})`)
-                    .attr("display","none")
-                    .on("click", function(e, d) {
-                        props.updateStateHandler(d.properties.name);
-                    })
-                    .on("mouseover",function(e,d){
-                        d3.select(this).attr("display","block")
-                        d3.select("path#"+d.properties.name.replace(" ","")).attr("fill-opacity",1)
-                    })
-                    .on("mouseout",function(e,d){
-                        d3.select(this).attr("display","none")
-                        d3.select("path#"+d.properties.name.replace(" ","")).attr("fill-opacity",0.7)
-                    })
-                
-                text_select.append("tspan").attr("x",0).attr("dx",d=>offset.has(d.id)?"5em":"0").attr("dy", "0em").attr("class","tspan1")
-                .text(d => d.properties.name)
-                text_select.append("tspan").attr("x",0).attr("dx",d=>offset.has(d.id)?"3em":"0").attr("dy", "1.5em").attr("class","tspan2")
-                .text(d=>"+"+_s1(+d.properties.covid))
-
+            var new_us = feature(us, us.objects.states).features
+            // console.log("newus",new_us)
+            new_us.forEach(function (dd) {
+                dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
+                dd.properties.covid = covid_data[dd.properties.name]
             })
-            
+            console.log("one", feature(us, us.objects.states).features)
+
+            var r = [5, 2, 0, -2, -5]
+            // var yscale = d3.scaleBand().domain(r).range([0, 300]).paddingInner(0).paddingOuter(0)
+            var xscale = d3.scaleLinear().domain([-4, 4]).range([0, 300])
+
+            var xaxis = d3.axisTop(xscale);
+
+            svg.append("text").attr("x", 550).attr("font-size", 10).text("Unemployment growth rate").attr("fill", "black")
+            var axis_g = svg.append('g').attr('transform', 'translate(' + 550 + "," + 30 + ')')
+            axis_g.call(xaxis).attr("y", 10).select(".domain").remove();
+
+            r = d3.range(-4, 4, 0.05)
+            axis_g.selectAll("rect")
+                .data(r)
+                .enter()
+                .append("rect")
+                .attr("x", d => xscale(d))
+                .attr("y", 0)
+                .attr("width", 4)
+                .attr("height", 8)
+                .attr("fill", d => colorscale(d))
+
+            svg.append("g")
+                .attr("width", 900)
+                .attr('class', 'countries')
+                .selectAll("path")
+                .data(feature(us, us.objects.states).features) //🚧  use us features
+                .join("path")
+                .attr("id", d => d.properties.name.replace(" ", ""))
+                .attr("stroke", "none")
+                .attr("fill", function (d) { return colorscale(d.properties.unemploy) }) //🚧  fill color based on value whose key is id
+                .attr("fill-opacity", 0.7)
+                .on("click", function (e, d) {
+                    console.log(d.id)
+                    console.log(d.properties.name)
+                    console.log(d.properties.unemploy)
+
+                    props.updateStateHandler(d.properties.name);
+                })
+                .on("mouseover", function (e, d) {
+                    d3.select(this).attr("fill-opacity", 1)
+                    // console.log(d)
+                    d3.select("text#" + d.properties.name.replace(" ", "")).attr("display", "block")
+
+                }
+                )
+                .on("mouseout", function (e, d) {
+                    d3.select(this).attr("fill-opacity", 0.7)
+                    d3.select("text#" + d.properties.name.replace(" ", "")).attr("display", "none")
+                })
+                .attr("d", path)
+                .append("title")
+
+
+            const text_select = svg.append('g')
+                .selectAll("text")
+                .data(feature(us, us.objects.states).features)
+                .enter()
+                .append("text")
+                .attr("id", d => d.properties.name.replace(" ", ""))
+                .attr("text-anchor", "middle")
+                .attr('transform', d => `translate(${path.centroid(d)})`)
+                .attr("display", "none")
+                .on("click", function (e, d) {
+                    props.updateStateHandler(d.properties.name);
+                })
+                .on("mouseover", function (e, d) {
+                    d3.select(this).attr("display", "block")
+                    d3.select("path#" + d.properties.name.replace(" ", "")).attr("fill-opacity", 1)
+                })
+                .on("mouseout", function (e, d) {
+                    d3.select(this).attr("display", "none")
+                    d3.select("path#" + d.properties.name.replace(" ", "")).attr("fill-opacity", 0.7)
+                })
+
+            text_select.append("tspan").attr("x", 0).attr("dx", d => offset.has(d.id) ? "5em" : "0").attr("dy", "0em").attr("class", "tspan1")
+                .text(d => d.properties.name)
+            text_select.append("tspan").attr("x", 0).attr("dx", d => offset.has(d.id) ? "3em" : "0").attr("dy", "1.5em").attr("class", "tspan2")
+                .text(d => "+" + _s1(+d.properties.covid))
+
+        })
+
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        if (props.barState != null){
-            d3.select("text#"+props.barState).attr("display","block")
-            d3.select("path#"+props.barState).attr("fill-opacity",1)
+        if (props.barState != null) {
+            d3.select("text#" + props.barState).attr("display", "block")
+            d3.select("path#" + props.barState).attr("fill-opacity", 1)
             prevBarState = props.barState
-        }else{
-            d3.select("text#"+prevBarState).attr("display","none")
-            d3.select("path#"+prevBarState).attr("fill-opacity",0.7)
-        }        
-    },[props.barState])
+        } else {
+            d3.select("text#" + prevBarState).attr("display", "none")
+            d3.select("path#" + prevBarState).attr("fill-opacity", 0.7)
+        }
+    }, [props.barState])
 
     useEffect(() => {
         console.log("trigger useffect")
@@ -198,45 +200,45 @@ const D3map = (props) => {
         files.forEach(url => promises.push(d3.csv(url))); //🚧  store two promises
         // console.log(promises)
 
-        Promise.all(promises).then(function(values) {
+        Promise.all(promises).then(function (values) {
 
-                var unemploy_data = values[0]
-                var covid_data = values[1]
+            var unemploy_data = values[0]
+            var covid_data = values[1]
 
-                covid_data = CovidDataPreprocess(covid_data)
-                // var radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([5, 25])
+            covid_data = CovidDataPreprocess(covid_data)
+            // var radius = d3.scaleSqrt().domain(d3.extent(Object.values(covid_data))).range([5, 25])
 
 
-                const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
-                var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
-                var new_us = feature(us, us.objects.states).features
+            const early = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start.getYear() - 100 + 2000 && x["Period"] == monthmap[start.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
+            var current = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end.getYear() - 100 + 2000 && x["Period"] == monthmap[end.getMonth() + 1]).map(d => [d.State, d.unemploymentrate.replace("(P)", "")]))
+            var new_us = feature(us, us.objects.states).features
 
-                new_us.forEach(function(dd) {
-                    dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
-                    dd.properties.covid = covid_data[dd.properties.name]
-                })
-
-                new_us.forEach(function(d) {
-                    // console.log(d3.select("#" + d.properties.name))
-
-                    d3.select("path#" + d.properties.name.replace(" ","")).transition().attr("fill", d => colorscale(d.properties.unemploy))
-                    //d3.select("circle#" + d.properties.name.replace(" ","")).transition().attr("fill", d => colorscale(d.properties.unemploy)).attr('r', d => radius(d.properties.covid))
-                })
-
-                const legend = d3.select("#legend")
-                // console.log([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
-                legend.selectAll("circle").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
-                    .attr('cy', d => -radius(d))
-                    .attr('r', radius);
-
-                legend.selectAll("text").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
-                    .attr('y', d => -2 * radius(d))
-                    .attr('dy', '1.3em')
-                    .text(d => d3.format('.1s')(d))
-
-                d3.selectAll(".tspan2").text(d=>isNaN(d.properties.covid)?"--":"+"+_s1(+d.properties.covid))
-
+            new_us.forEach(function (dd) {
+                dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
+                dd.properties.covid = covid_data[dd.properties.name]
             })
+
+            new_us.forEach(function (d) {
+                // console.log(d3.select("#" + d.properties.name))
+
+                d3.select("path#" + d.properties.name.replace(" ", "")).transition().attr("fill", d => colorscale(d.properties.unemploy))
+                //d3.select("circle#" + d.properties.name.replace(" ","")).transition().attr("fill", d => colorscale(d.properties.unemploy)).attr('r', d => radius(d.properties.covid))
+            })
+
+            const legend = d3.select("#legend")
+            // console.log([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
+            legend.selectAll("circle").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
+                .attr('cy', d => -radius(d))
+                .attr('r', radius);
+
+            legend.selectAll("text").data([d3.min(Object.values(covid_data)), d3.quantile(Object.values(covid_data).sort(d3.ascending), 0.6), d3.max(Object.values(covid_data))])
+                .attr('y', d => -2 * radius(d))
+                .attr('dy', '1.3em')
+                .text(d => d3.format('.1s')(d))
+
+            d3.selectAll(".tspan2").text(d => isNaN(d.properties.covid) ? "--" : "+" + _s1(+d.properties.covid))
+
+        })
     }, [start, end])
 
 
@@ -245,13 +247,13 @@ const D3map = (props) => {
 
 
 
-    return ( <React.Fragment>
-        <h1>US State Map</h1>
-        <div ref = { svgRef } style={{"width":"100%"}}>
-        
+    return (<React.Fragment>
+        <h1 className={classes.Title}>Unemployment Rate Change and <br /> Increased Confirmed Cases Among States</h1>
+        <div ref={svgRef} style={{ "width": "100%" }}>
 
-        </div> 
-        </React.Fragment>
+
+        </div>
+    </React.Fragment>
     )
 }
 
