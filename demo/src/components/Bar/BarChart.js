@@ -1,6 +1,3 @@
-// TODO: 1. pass time
-//  2. pass button action
-
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import classes from './BarChart.module.css';
@@ -12,8 +9,6 @@ const BarChart = (props) => {
     const bar_num = 10;
     const timeFormat = d3.timeFormat('%m/%d/%y');
     const colorscale = d3.scaleSequential().domain([-3, 3]).interpolator(d3.interpolateRdBu);
-    // const colorscale1 = d3.scaleSequential().domain([-15, 14]).interpolator(d3.interpolateBlues);
-    // const colorscale2 = d3.scaleSequential().domain([-500000, 650000]).interpolator(d3.interpolateOranges);
     var start = props.start;
     var end = props.end;
     var start_year = props.start.getYear() + 1900;
@@ -22,7 +17,6 @@ const BarChart = (props) => {
     var end_month = props.end.getMonth() + 1;
     var unemploy_data = props.unemploy_data;  // raw unemployment data url
     var covid_data = props.covid_data;  // raw covid data url
-    // var chartTitle = props.title;  // chart title
     var filter = props.filter;
     var chartTitle;
     if (filter == 'top') { chartTitle = 'Top 10 of State Unemployed Rate' } else { chartTitle = 'Bottom 10 of State Unemployed Rate' };
@@ -35,8 +29,6 @@ const BarChart = (props) => {
 
     // data processing functions for covid data
     function aggregate(data) {
-        // console.log("agg",data)
-        // console.log(data)
         var total = {}
         for (var d in data) {
             if (total[data[d][0]]) {
@@ -57,11 +49,9 @@ const BarChart = (props) => {
         if (start.getMonth() == 0) {
             new_start = "1/22/20"
         }
-        // console.log(new_start, new_end)
 
         covid_data = covid_data.map(d => [d.Province_State, d[new_end] - d[new_start]])
         covid_data = aggregate(covid_data)
-        // console.log(covid_data)
         return covid_data
     }
 
@@ -104,7 +94,6 @@ const BarChart = (props) => {
         }
         console.log("covid_data", covid_data)
         var x = d3.scaleBand();
-        // var y1 = d3.scaleLinear();
         var y2 = d3.scaleLinear();
 
         x.domain(unemploy_data.map(d => d.state))
@@ -112,25 +101,9 @@ const BarChart = (props) => {
             .paddingInner(0.2);
         console.log("draw width", width)
         console.log("draw height", height)
-        // y1.domain([Math.min(0, d3.min(unemploy_data, d => d.value)), Math.max(0, d3.max(unemploy_data, d => d.value))])
-        //     .range([0, width]);
 
         y2.domain([Math.min(0, d3.min(covid_data, d => d.value)), Math.max(0, d3.max(covid_data, d => d.value))])
             .range([0, width]);
-
-        // var y1zeroposition = width*Math.min(0, d3.min(unemploy_data, d => d.value))/(Math.min(0, d3.min(unemploy_data, d => d.value))-Math.max(0, d3.max(unemploy_data, d => d.value)));
-
-        // unemployment bars
-        // svg.selectAll('.bar1')
-        //     .data(unemploy_data)
-        //     .enter()
-        //     .append('rect')
-        //     .attr('class', 'bar1')
-        //     .attr('y', d => x(d.state))
-        //     .attr('x', d => {if (d.value > 0) {return y1zeroposition;} else {return y1(d.value)}} )
-        //     .attr('width', d => {if (d.value < 0) {return y1zeroposition-y1(d.value);} else if (d.value > 0) {return y1(d.value)-y1zeroposition;} else {return 1;}})
-        //     .attr('height', bar_width)
-        //     .attr('fill', d => "#4e8df2");
 
         svg.selectAll('.name')
             .data(unemploy_data)
@@ -176,10 +149,6 @@ const BarChart = (props) => {
                 hover_out(statemap[d.state])
             });
 
-        // svg.selectAll('.bar2')
-        //     .data(unemploy_data)
-        //     .attr('fill', "#707070")//d => colorscale(d.value)
-
         var unemploy_map = new Map();
         unemploy_data.forEach(d => unemploy_map.set(d.state, d.value))
 
@@ -215,18 +184,6 @@ const BarChart = (props) => {
             .attr('id', 'axis_left')
             .call(xAxis);
 
-        // var y1Axis = d3.axisTop()
-        //     .scale(y1)
-        //     .ticks(5, 'd')
-        //     .tickFormat(function (d){
-        //         return d3.format(".1f")(d);
-        //     });
-
-        // svg.append('g')
-        //     .attr('class', 'axis')
-        //     .attr('id', 'axis_top').attr('stroke', '#4e8df2')
-        //     .call(y1Axis);
-
         var y2Axis = d3.axisBottom()
             .scale(y2)
             .ticks(5, 'd')
@@ -246,31 +203,12 @@ const BarChart = (props) => {
             .attr('class', 'xlabel')
             .append('tspan').text('State')
 
-        // svg.append('text')
-        //     .attr('text-anchor', 'end')
-        //     .attr('x', width*0.9)
-        //     .attr('y', -25)
-        //     .attr('class', 'ylabel')
-        //     .append('tspan').text('Unemployment Rate Change (%)').attr('fill', '#4e8df2').attr('font-size', width/20);
-
         svg.append('text')
             .attr('text-anchor', 'end')
             .attr('x', width * 0.9)
             .attr('y', height + 35)
             .attr('id', 'ylabel')
             .append('tspan').text('COVID-19 Confirmed').attr('font-size', width / 20); //.attr('fill', '#fac150')
-
-        // draw legend
-        // var r = d3.range(0, 550000, 1000);
-        // svg.selectAll("rect")
-        //     .data(r)
-        //     .enter()
-        //     .append("rect")
-        //     .attr("x", width+30)
-        //     .attr("y", d=>height-y2(d)/width*height+0)
-        //     .attr("width", 10)
-        //     .attr("height", 10)
-        //     .attr("fill", d => colorscale2(d))
 
         function topten(data) {
             return data.sort(function (a, b) { return d3.descending(a.value, b.value) }).slice(0, 10);
@@ -286,25 +224,20 @@ const BarChart = (props) => {
         var promises = [];
         var files = [unemploy_data, covid_data];
         files.forEach(url => promises.push(d3.csv(url))); //  store two promises
-        // console.log(promises)
 
         Promise.all(promises).then(function (values) {
 
             var unemploy_data = values[0];
             var covid_data = values[1];
-            // console.log(unemploy_data)
 
             // extract unemployment data for chart
             const unemployment_start_rate = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start_year && x["Period"] == monthmap[start_month]).map(d => [statemap[d.State], +d.unemploymentrate]));
             const unemployment_end_rate = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end_year && x["Period"] == monthmap[end_month]).map(d => [statemap[d.State], +d.unemploymentrate]));
-            // console.log(unemployment_start_rate);
-            // console.log(unemployment_end_rate)
             var unemploy_data_to_chart = [];
             for (let k in statemap) {
                 var state = statemap[k];
                 unemploy_data_to_chart.push({ "state": k, "value": +((unemployment_end_rate[state] - unemployment_start_rate[state]) / unemployment_start_rate[state]).toFixed(2) });
             }
-            // console.log(unemploy_data_to_chart)
 
             // extract covid data for chart
             const temp_covid_data_to_chart = CovidDataPreprocess(covid_data);
@@ -314,7 +247,6 @@ const BarChart = (props) => {
                     covid_data_to_chart.push({ "state": k, "value": temp_covid_data_to_chart[k] });
                 }
             }
-            // console.log(covid_data_to_chart);
 
             // draw chart
             var w = parseInt(d3.select(chartRef.current).style("width"));
@@ -335,14 +267,6 @@ const BarChart = (props) => {
                 .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
 
             draw(svg, width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
-
-            // window.addEventListener('resize', function(){
-            //     var new_width = parseInt(d3.select(chartRef.current).style("width"))-100;
-            //     bar_width = width/16;
-            //     height = bar_num * bar_width * 3.5 - margin.top - margin.bottom;
-            //     redraw_resize(new_width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
-            // })
-
 
         });
     }, []);
@@ -369,34 +293,20 @@ const BarChart = (props) => {
         }
 
         var x = d3.scaleBand();
-        // var y1 = d3.scaleLinear();
         var y2 = d3.scaleLinear();
-
-        // console.log("height",height)
 
         x.domain(unemploy_data.map(d => d.state))
             .range([7, height - 10])
             .paddingInner(0.2);
 
-        // y1.domain([Math.min(0, d3.min(unemploy_data, d => d.value)), Math.max(0, d3.max(unemploy_data, d => d.value))])
-        //     .range([0, width]);
-
         y2.domain([Math.min(0, d3.min(covid_data, d => d.value)), Math.max(0, d3.max(covid_data, d => d.value))])
             .range([0, width]);
 
-        // var y1zeroposition = width*Math.min(0, d3.min(unemploy_data, d => d.value))/(Math.min(0, d3.min(unemploy_data, d => d.value))-Math.max(0, d3.max(unemploy_data, d => d.value)));
 
         // update unemployment bars
         var svg = d3.select('#bar_chart')
         svg.attr('width', width + 100)
             .attr('height', height + 110);
-
-        // svg.selectAll('.bar1').data(unemploy_data)
-        //     .transition()
-        //     .duration(800)
-        //     .attr('x', d => {if (d.value > 0) {return y1zeroposition;} else {return y1(d.value)}} )
-        //     .attr('width', d => {if (d.value < 0) {return y1zeroposition-y1(d.value);} else if (d.value > 0) {return y1(d.value)-y1zeroposition;} else {return 1;}})
-        //     .attr('fill', d => '#4e8df2');
 
         svg.selectAll('.name')
             .data(unemploy_data)
@@ -419,19 +329,6 @@ const BarChart = (props) => {
             .duration(300)
             .attr('cx', d => y2(d.value))
             .attr('cy', d => x(d.state) + x.bandwidth() / 2)
-
-        // update axes
-        // var y1Axis = d3.axisTop()
-        //     .scale(y1)
-        //     .ticks(5, 'd')
-        //     .tickFormat(function (d){
-        //         return d3.format(".1f")(d);
-        //     });
-
-        // svg.select('#axis_top')
-        //     .transition()
-        //     .duration(800)
-        //     .call(y1Axis);
 
         var y2Axis = d3.axisBottom()
             .scale(y2)
@@ -468,8 +365,6 @@ const BarChart = (props) => {
         function bottomten(data) {
             return data.sort(function (a, b) { return d3.ascending(a.value, b.value) }).slice(0, 10);
         }
-
-
     }
 
     // function to redraw according to filter
@@ -492,9 +387,7 @@ const BarChart = (props) => {
         console.log("covid_data", covid_data)
 
         var x = d3.scaleBand();
-        // var y1 = d3.scaleLinear();
         var y2 = d3.scaleLinear();
-
 
         x.domain(unemploy_data.map(d => d.state))
             .range([7, height - 10])
@@ -503,33 +396,13 @@ const BarChart = (props) => {
         var xAxis = d3.axisLeft()
             .scale(x);
 
-
-
-
-        // y1.domain([Math.min(0, d3.min(unemploy_data, d => d.value)), Math.max(0, d3.max(unemploy_data, d => d.value))])
-        //     .range([0, width]);
-
         y2.domain([Math.min(0, d3.min(covid_data, d => d.value)), Math.max(0, d3.max(covid_data, d => d.value))])
             .range([0, width]);
-
-        // var y1zeroposition = width*Math.min(0, d3.min(unemploy_data, d => d.value))/(Math.min(0, d3.min(unemploy_data, d => d.value))-Math.max(0, d3.max(unemploy_data, d => d.value)));
 
         // update unemployment bars
         var svg = d3.select('#bar_chart')
         svg.attr('width', width + 100)
             .attr('height', height + 110);
-        // svg.selectAll('.bar1').data(unemploy_data)
-        //     .transition()
-        //     .duration(800)
-        //     .attr('x', d => {if (d.value > 0) {return y1zeroposition;} else {return y1(d.value)}} )
-        //     .attr('width', d => {if (d.value < 0) {return y1zeroposition-y1(d.value);} else if (d.value > 0) {return y1(d.value)-y1zeroposition;} else {return 1;}})
-        //     .attr('fill', d => '#4e8df2');
-
-        // svg.select("#axis_left").call(xAxis)
-        // svg.selectAll('.name')
-        //     .data(unemploy_data)
-        //     .transition()
-        //     .text(d => statemap[d.state]);
 
         // update covid bars
         svg.selectAll('.bar2')
@@ -563,23 +436,6 @@ const BarChart = (props) => {
             .attr('cx', d => y2(d.value))
             .attr('cy', d => x(d.state) + x.bandwidth() / 2)
             .attr("fill", d => colorscale(unemploy_map.get(d.state)))
-
-        // svg.selectAll('.circle')
-        //     .data(unemploy_data)
-        //     .attr('fill', d => {console.log(d.state, d.value, colorscale(d.value)); return colorscale(d.value);})
-
-        // update axes
-        // var y1Axis = d3.axisTop()
-        //     .scale(y1)
-        //     .ticks(5, 'd')
-        //     .tickFormat(function (d){
-        //         return d3.format(".1f")(d);
-        //     });
-
-        // svg.select('#axis_top')
-        //     .transition()
-        //     .duration(800)
-        //     .call(y1Axis);
 
         var y2Axis = d3.axisBottom()
             .scale(y2)
@@ -630,25 +486,20 @@ const BarChart = (props) => {
         var promises = [];
         var files = [unemploy_data, covid_data];
         files.forEach(url => promises.push(d3.csv(url))); //  store two promises
-        // console.log(promises)
 
         Promise.all(promises).then(function (values) {
 
             var unemploy_data = values[0];
             var covid_data = values[1];
-            // console.log(unemploy_data)
 
             // extract unemployment data for chart
             const unemployment_start_rate = Object.fromEntries(unemploy_data.filter(x => x["Year"] == start_year && x["Period"] == monthmap[start_month]).map(d => [statemap[d.State], +d.unemploymentrate]));
             const unemployment_end_rate = Object.fromEntries(unemploy_data.filter(x => x["Year"] == end_year && x["Period"] == monthmap[end_month]).map(d => [statemap[d.State], +d.unemploymentrate]));
-            // console.log(unemployment_start_rate);
-            // console.log(unemployment_end_rate)
             var unemploy_data_to_chart = [];
             for (let k in statemap) {
                 var state = statemap[k];
                 unemploy_data_to_chart.push({ "state": k, "value": +((unemployment_end_rate[state] - unemployment_start_rate[state]) / unemployment_start_rate[state]).toFixed(2) });
             }
-            // console.log(unemploy_data_to_chart)
 
             // extract covid data for chart
             const temp_covid_data_to_chart = CovidDataPreprocess(covid_data);
@@ -658,7 +509,6 @@ const BarChart = (props) => {
                     covid_data_to_chart.push({ "state": k, "value": temp_covid_data_to_chart[k] });
                 }
             }
-            // console.log(covid_data_to_chart);
             var w = parseInt(d3.select(chartRef.current).style("width")) - 100
             if (w < 250) {
                 w = 250;
@@ -673,7 +523,6 @@ const BarChart = (props) => {
 
             window.addEventListener('resize', function () {
                 if (d3.select(chartRef.current) != null) {
-                    // console.log(d3.select(chartRef.current))
                     try {
                         var new_width = parseInt(d3.select(chartRef.current).style("width")) - 100;
                         if (new_width < 250) {
