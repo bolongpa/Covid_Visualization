@@ -71,6 +71,7 @@ const Donut = (props) => {
             .attr('x', width / 2)
             .attr('y', margin / 3)
             .attr('text-anchor', 'middle')
+            .attr('font-weight', 'bold')
             .text(props.label);
 
         // Add the polylines between chart and labels:
