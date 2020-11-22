@@ -29,7 +29,7 @@ const Claims = (props) => {
 
     return (
         <div>
-            <h1 style={{ margin: "1rem" }}>US Unemployment Insurance</h1>
+            <h1 style={{ margin: "1rem" }}>US Unemployment Insurance Claims</h1>
             <p className={classes.Description}>According to the US Department of Labor, in order to receive unemployment insurance benefits,
             applicants need to file a claim with the unemployment insurance program in the state where you worked.
             Applicants are asked to file the claim weekly.
@@ -45,7 +45,7 @@ const Claims = (props) => {
             <p className={classes.Caption}>total number of jobless claim during the week 24 October 2020</p>
 
             <p className={classes.Description}>We can observe in this map that those states with higher COVID-19 cumulated confirmed cases so far, such as California, Texas, Florida and New York, also suffers from more jobless claims.
-            Along with the visualization results in our Data Exploration page, we can conclude that: states with larger number of cumulated confirmed cases have higher unemployment rates than states with fewer confirmed cases,
+            Along with the visualization results in our <a href="/dsci-554-projects/project-ninjav/map">Data Exploration</a> page, we can conclude that: states with larger number of cumulated confirmed cases have higher unemployment rates than states with fewer confirmed cases,
             although the relationship between confirmed cases and unemployment rate is not always obvious in every state,
             we have to admit that how the state government and people are dealing with COVID-19 do influence its job market situation.
             </p>
