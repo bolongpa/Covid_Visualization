@@ -104,7 +104,7 @@ class Map extends Component {
                         <p>For better understanding of the relationship between unemployment rate and number of covid cases, you can pick the period you are interested and see the change of unemployment rate during that time. When hovering over the state, the increase number of covid of that period will also show up.</p>
                         <p>Currently, we only have employment data till 2020 August.</p>
                         <hr />
-                        <p>Bar chart...</p>
+                        <p>The Lollipop chart shows the COVID-19 confirmed case increase number and the candy color corresponds to the unemployment rate change in the selected period. Two buttons are provided to explore the top ten states and the bottom ten.</p>
 
                         <Row >
 
