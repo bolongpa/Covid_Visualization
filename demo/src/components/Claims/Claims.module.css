@@ -1,0 +1,37 @@
+.DonutLegend {
+    height: 50px;
+    width: 50%;
+    align-items: center;
+    margin: auto;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.DonutsArea {
+    width : 90%;
+	margin : 0 auto;
+	padding : 5px;
+	display : flex;
+	justify-content : center;
+	align-items: center;
+}
+
+/* Responsive */
+@media (max-width: 1300px) {
+    .DonutsArea {
+        display : inline-block;
+    }
+}
+
+.LegendSquare{
+    width: 1rem;
+    height: 1rem;
+    display: inline-block;
+    margin-right: 0.5rem;
+    border: 2px solid green;
+}
+
+.LegendLabel {
+    display: inline-block;
+    margin-right: 1rem;
+}
