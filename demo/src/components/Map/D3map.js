@@ -53,7 +53,7 @@ const D3map = (props) => {
 
     useEffect(() => {
         var svg = d3.select(svgRef.current).append("svg").attr('width', "100%")
-            .attr('height', "800px").attr('viewBox', [0, 0, 1100, 610])
+            .attr('height', "100%").attr('viewBox', [0, -20, 1100, 610])
         var path = d3.geoPath()
         svg.append('path')
             .datum(feature(us, us.objects.nation))
@@ -246,7 +246,9 @@ const D3map = (props) => {
 
 
     return ( <React.Fragment>
+        <h1>US State Map</h1>
         <div ref = { svgRef } style={{"width":"100%"}}>
+        
 
         </div> 
         </React.Fragment>

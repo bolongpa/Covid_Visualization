@@ -672,13 +672,17 @@ const BarChart = (props) => {
                 redraw(width+100, height, unemploy_data_to_chart, covid_data_to_chart, filter);
 
                 window.addEventListener('resize', function(){
-                    var new_width = parseInt(d3.select(chartRef.current).style("width"))-100;
-                    if (new_width < 250) {
-                        new_width = 250;
-                    };
-                    bar_width = new_width/16;
-                    height = bar_num * bar_width * 2.5 - margin.top - margin.bottom;
-                    redraw_resize(new_width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
+                    if (d3.select(chartRef.current) != null){
+                        // console.log(d3.select(chartRef.current))
+                        var new_width = parseInt(d3.select(chartRef.current).style("width"))-100;
+                        if (new_width < 250) {
+                            new_width = 250;
+                        };
+                        bar_width = new_width/16;
+                        height = bar_num * bar_width * 2.5 - margin.top - margin.bottom;
+                        redraw_resize(new_width, height, unemploy_data_to_chart, covid_data_to_chart, filter);
+                    }
+                    
                 })
             });
                 
@@ -686,13 +690,16 @@ const BarChart = (props) => {
     }, [filter, start_year, start_month, end_year, end_month])
 
     return (
+        <React.Fragment>
+        <h3>{"No. of Confirmed Cases Sorted By Unemployment Rate Change"}</h3>
         <div className={classes.BarChart}>
-            <h1>{chartTitle}</h1>
+            
             <Button variant="outline-primary" onClick={() => props.switchFilterHandler("top")}>Top 10</Button>
             <Button variant="outline-primary" onClick={() => props.switchFilterHandler("bottom")}>Bottom 10</Button>
 
             <div ref={chartRef}  style={{width:"400",display: 'flex', flexDirection: 'col', alignItems: 'center', justifyContent: 'left' }}/>
         </div>
+        </React.Fragment>
     );
 }
 

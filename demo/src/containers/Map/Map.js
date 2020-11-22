@@ -125,9 +125,10 @@ class Map extends Component {
                             <Col xs="2">
                                 <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
                             </Col>
-                            <Badge variant="outline-primary" onClick={this.animation}>
-                                transition
-                    </Badge>
+                            <h3>
+                            <Badge variant="info" onClick={this.animation}>
+                                see transitions between months
+                    </Badge></h3>
 
                         </Row>
                     </Alert>
