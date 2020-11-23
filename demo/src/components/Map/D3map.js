@@ -45,11 +45,10 @@ const D3map = (props) => {
         if (start.getMonth() == 0) {
             new_start = "1/22/20"
         }
-        console.log(new_start, new_end)
+        // console.log(new_start, new_end)
 
         covid_data = covid_data.map(d => [d.Province_State, d[new_end] - d[new_start]])
         covid_data = aggregate(covid_data)
-        // console.log(covid_data)
         return covid_data
     }
 
@@ -74,7 +73,6 @@ const D3map = (props) => {
         var promises = [];
         var files = [unemploy, covid];
         files.forEach(url => promises.push(d3.csv(url))); //🚧  store two promises
-        console.log(promises)
 
         Promise.all(promises).then(function (values) {
 
@@ -96,7 +94,6 @@ const D3map = (props) => {
                 dd.properties.unemploy = (+current[dd.properties.name] - early[dd.properties.name]) / +early[dd.properties.name];
                 dd.properties.covid = covid_data[dd.properties.name]
             })
-            console.log("one", feature(us, us.objects.states).features)
 
             var r = [5, 2, 0, -2, -5]
             // var yscale = d3.scaleBand().domain(r).range([0, 300]).paddingInner(0).paddingOuter(0)
@@ -194,7 +191,6 @@ const D3map = (props) => {
     }, [props.barState])
 
     useEffect(() => {
-        console.log("trigger useffect")
         var promises = [];
         var files = [unemploy, covid];
         files.forEach(url => promises.push(d3.csv(url))); //🚧  store two promises
