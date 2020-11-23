@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
 
 import D3map from '../../components/Map/D3map.js';
-import BarChart from '../../components/Bar/BarChart';
+import BarChart from '../../components/BarChart/BarChart';
 import LineChart from '../../containers/Trend/Trend';
 
 import "react-datepicker/dist/react-datepicker.css";
