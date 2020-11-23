@@ -82,7 +82,6 @@ const BarChart = (props) => {
         } else if (filter == 'bottom') {
             unemploy_data = bottomten(unemploy_data);
         }
-        console.log(unemploy_data);
         // process covid_data
         var states_to_show = unemploy_data.map(d => d.state);
         var covid_data_temp = covid_data.map(d => { if (states_to_show.includes(d.state)) { return d; } });
@@ -92,15 +91,14 @@ const BarChart = (props) => {
                 covid_data.push(covid_data_temp[i]);
             };
         }
-        console.log("covid_data", covid_data)
         var x = d3.scaleBand();
         var y2 = d3.scaleLinear();
 
         x.domain(unemploy_data.map(d => d.state))
             .range([7, height - 10])
             .paddingInner(0.2);
-        console.log("draw width", width)
-        console.log("draw height", height)
+        // console.log("draw width", width)
+        // console.log("draw height", height)
 
         y2.domain([Math.min(0, d3.min(covid_data, d => d.value)), Math.max(0, d3.max(covid_data, d => d.value))])
             .range([0, width]);
@@ -253,7 +251,6 @@ const BarChart = (props) => {
             if (w < 250) {
                 w = 250;
             };
-            console.log("w", w)
             var margin = { top: 50, left: 50, bottom: 60, right: 50 },
                 width = w - margin.left - margin.right;
             bar_width = width / 16;
@@ -374,8 +371,7 @@ const BarChart = (props) => {
         } else if (filter == 'bottom') {
             unemploy_data = bottomten(unemploy_data);
         }
-        console.log(unemploy_data);
-        // process covid_data
+
         var states_to_show = unemploy_data.map(d => d.state);
         var covid_data_temp = covid_data.map(d => { if (states_to_show.includes(d.state)) { return d; } });
         var covid_data = [];
@@ -384,7 +380,6 @@ const BarChart = (props) => {
                 covid_data.push(covid_data_temp[i]);
             };
         }
-        console.log("covid_data", covid_data)
 
         var x = d3.scaleBand();
         var y2 = d3.scaleLinear();
@@ -481,7 +476,6 @@ const BarChart = (props) => {
 
     // redraw svg according to filter
     useEffect(() => {
-        console.log(filter);
         // construct promises
         var promises = [];
         var files = [unemploy_data, covid_data];
