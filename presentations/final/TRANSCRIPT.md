@@ -50,6 +50,9 @@ There is also a world map visualization of the global rate of unemployment that 
 - Users can easily explore the unemployment rate, market trends of the labor force and the jobs market datasets with a single click and find patterns, relations between these entities.
 - By showing different views at once, it is more informative and exploratory in nature to the user.
 - For example, if the user hovers a bar for the year 2020, the corresponding information is shown in the map below.
+- By hovering over the us state map, the increased COVID-19 confirmed cases will be shown.
+- In case of line chart if a user clicks on a particular state, the trend of the newly COVID-19 confirmed cases, the unemployment rate starting from Jan. 2019 till Aug. 2020 of a particular state will show in the line chart.
+- We used lollipop because we need to show the unemployment rate change together with the number of increased confirmed cases in a plot while the unemployment rate change could be negative. Additionally, by using a lollipop chart we can let the color of the lollipop candy indicate the (+/-) of the unemployment rate change, the color scale is the same as the map, so user won’t be confused. Moreover, Layout of the lollipop is sorted based on the unemployment rate change.
 
 Additionally, we tried to answer following questions based on our visualizations:
 - Is there a significant relationship between COVID-19 confirmed cases and the unemployment rate?
@@ -57,12 +60,9 @@ Additionally, we tried to answer following questions based on our visualizations
 - Which states are recovering from the impact of the COVID-19 and which states are still struggling?
 - Visualized how the employment situation of each state acting differently from January-December 2020.
 
-- Map: By hovering over the us state map, the increased COVID-19 confirmed cases will be shown.
-- Line chart: If a user clicks on a particular state, the trend of the newly COVID-19 confirmed cases, the unemployment rate starting from Jan. 2019 till Aug. 2020 of a particular state will show in the line chart.
-- Lollipop chart: We used lollipop because we need to show the unemployment rate change together with the number of increased confirmed cases in a plot while the unemployment rate change could be negative. Additionally, by using a lollipop chart we can let the color of the lollipop candy indicate the (+/-) of the unemployment rate change, the color scale is the same as the map, so user won’t be confused. Moreover, Layout of the lollipop is sorted based on the unemployment rate change.
 
 ## Slide 6, Explain your design process, rationale for the layout, story, choice of forms, how you optimized the visual queries and user interaction.
-[Write about the map and lollipop chart]
+
 - Simple and clean layout which is easy to understand.
 - Well-designed pages with good story flow.
 - Made use of frequently used charts like map, line chart, lollipop chart, etc. so that even users who are new to this domain of can easily understand the information.
@@ -70,24 +70,26 @@ Additionally, we tried to answer following questions based on our visualizations
 - This was done to grab the attention of the user initially and maintain the interest of the user long enough till they can explore novel and complex visualizations.
 
 For overall layout in data exploration page:
-Rationale for the layout:
+- Rationale for the layout:
 There are mainly three tabs in our website
-1. Overview: in this tab we  ...
-2. Data Exploration: all our interactive charts are put in this tab to let users better understand the relationship between COVID-19 confirmed cases and the unemployment rate change. 
-3. Unemployment Claims: in this tab, we further explore the number of unemployment claims in each state and try to answer the question: “Is the labor market recovering from the impact of the COVID-19?”
+1. Overview: In this tab we have shown an image stating the common words which were used in news & stories during pendamic. Timeline of the coronavirus. Additionally we have also shown line chart which states the unemployement rate before and after the COVID-19 Outbreak. It's impact on US labor market. Moreover we have also presented a rough idea of the US unemployment history between year 1995-2020.
+2. Data Exploration: All our interactive charts are put in this tab to let users better understand the relationship between COVID-19 confirmed cases and the unemployment rate change. 
+3. Unemployment Claims: In this tab, we further explore the number of unemployment claims in each state and try to answer the question: “Is the labor market recovering from the impact of the COVID-19?”
 
+## Slide 7,how you optimized the visual queries and user interaction.
 
-
-For line chart:
 Optimize visual queries:
-Input and parse the data only once after the page first rendered, initially, we show the numbers of US newly confirmed cases, US unemployment rate and number of job openings in the whole country.
-And we only filter out a particular row from data when 1. User clicks on a state in map 2. User picks a state in the drop down list. 
+- For line chart:
+Input and parse the data only once after the page first rendered, initially, we show the numbers of US newly confirmed cases, US unemployment rate and number of job openings in the whole country. Additionally, we only filterd out a particular row from data when 
+1. User clicks on a state in map 
+2. User picks a state in the drop down list. 
 And then the unemployment rate and newly confirmed cases trend of chosen state will be shown in the line chart.
 
-For lollipop chart: 
+- For lollipop chart: 
 We use lollipop instead of bar chart because we need to show the unemployment rate change together with the number of increased confirmed cases in a plot while the unemployment rate change could be negative. By using a lollipop chart, we can let the color of the lollipop candy indicate the +/- of the unemployment rate change, the color scale is the same as the map so user won’t be confused.
 
-For Map: When user hover over the map then the name of the state and the no of the increased rate is shown corresponding to that state.
+- For Map: 
+When user hover over the map then the name of the state and the no of the increased rate is shown corresponding to that state.
 
 ## Slide 8, Highlight what you have built and with d3 (see Demonstration for a list of required d3 features to include) and other tools including Bootstrap and framework features you used.
 
@@ -117,15 +119,7 @@ List of required d3 features to include:
 
 ## Slide 9, Explain what you would have done differently.
 
-If we could have more time, we would:
-Collect COVID related policies and announcements of each state, because we found out that policy such as “shelter in place” influences the unemployment rate and the number of jobless claims severely. However, collecting policy data is time consuming, so we couldn’t make it in this time frame.
-Add time series analysis to analyze the relationship between confirmed cases and unemployment rate, because we think that the influence of the COVID to the unemployment rate is not instant, there might exist some time delay.  
-
-The unemployment rate was also affected by the job categories, we could have collected data based on job category and can say which jobs didn’t got affected by COVID-case.
-Flights, travels.
-For ecommerce it was not affected.
-
-3-D maps so that it would provide more insights and would-be fancier and would attract more audience. 
+If we could have more time, we would have collected COVID related policies and announcements of each state, because we found out that policy such as “shelter in place” influences the unemployment rate and the number of jobless claims severely. However, collecting policy data is time consuming, so we couldn’t make it in this time frame. Additionally, we could have Added time series analysis to analyze the relationship between confirmed cases and unemployment rate, because we think that the influence of the COVID to the unemployment rate is not instant, there might exist some time delay. Moreover, the unemployment rate was also affected by the job categories, we could have collected data based on job category and can say which jobs didn’t got affected by COVID-case. For example, how ecommerece wasn't affected by COVID and how flights, travel plans, restaurants were affected. We could have also showed 3-D maps so that it would provide more insights and would-be fancier and would attract more audience. 
 
 ## Slide 10, Explain who did what. (We are not supposed to show individual contribution else we won't get marks)
 
