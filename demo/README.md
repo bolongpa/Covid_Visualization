@@ -39,13 +39,10 @@ Table 1: Table of minimum requirements, 1 of each category is required.
 
 In Table2, list all the charts and tables in your pages including minimum requirements labels when applicable.
 
-| Page name | Chart description | Libraries used | Requirement label |
-| --------- | ----------------- | -------------- | ----------------- |
-| Home page | main map          | d3, topojson   | map               |
-|           |                   |                |                   |
-|           |                   |                |                   |
-|           |                   |                |                   |
-|           |                   |                |                   |
-|           |                   |                |                   |
+| Page name                             | Chart description                         | Libraries used  | Requirement label |
+| ------------------------------------- | ----------------------------------------- | --------------- | ----------------- |
+| Home page - US Labor Market Overview  | word cloud                                |                 |                   |
+| Data Exploration                      | d3 map, d3 lollipop chart, d3 line chart  | d3, topojson    | responsive, interactive, animated |
+| Unemployment Claims                   | Mapbox map, donut charts                  |                 |                   |
 
 Table2: Table of visualizations
