@@ -73,7 +73,7 @@ For overall layout in data exploration page:
 - Rationale for the layout:
 There are mainly three tabs in our website
 1. Overview: In this tab we have shown an image stating the common words which were used in news & stories during pendamic. Timeline of the coronavirus. Additionally we have also shown line chart which states the unemployement rate before and after the COVID-19 Outbreak. It's impact on US labor market. Moreover we have also presented a rough idea of the US unemployment history between year 1995-2020.
-2. Data Exploration: All our interactive charts are put in this tab to let users better understand the relationship between COVID-19 confirmed cases and the unemployment rate change. 
+2. Data Exploration: All our interactive charts are put in this tab to let users better understand the relationship between COVID-19 confirmed cases and the unemployment rate change. We have also drawn maps and lollipop chart in this map which are interactive and alligned with each other. Additionally, we have also shown how when we select the stick of lollipop it chages which region has number of confirmed cases with the sorted unemployment change rate. We also have built a graph which gives the relation between pandemic and labor market.
 3. Unemployment Claims: In this tab, we further explore the number of unemployment claims in each state and try to answer the question: “Is the labor market recovering from the impact of the COVID-19?”
 
 ## Slide 7,how you optimized the visual queries and user interaction.
@@ -115,7 +115,6 @@ List of required d3 features to include:
 - Animated Chart.
 - Here, we use an animated bar chart which can be used to filter and sort the data according to our requirements.
 - We also make use of D3 Maps in our project.
-- Here, we show a proportional symbol map showing the share of military expenditure.
 
 ## Slide 9, Explain what you would have done differently.
 
@@ -123,12 +122,4 @@ If we could have more time, we would have collected COVID related policies and a
 
 ## Slide 10, Explain who did what. (We are not supposed to show individual contribution else we won't get marks)
 
-•           Amar Nath Jha D3: Bubble chart, Bar chart, Map, Line chart, Pie chart, Scatter Plot. Presentation: Making Presentation file using sozi. Team Project Homepage making: React, Bootstrap.
-•           Bolong Pan D3:Bubble chart, Bar chart, Line chart, Pie chart, Scatter Plot,D3 Layout. Presentation: Making Presentation file using sozi. Team Project Homepage making: React, Bootstrap.
-•           Che-Pai Kung D3:Line chart, Bar chart, Bubble chart, Map, D3 Layout. Presentation: Making Presentation file using sozi. Team Project Homepage making: React, Bootstrap.
-•           Yo Shuan Liu D3: 
-Setting up React framework and routings 
-Toolbar UI
-Infographic in the Overview tab
-Line chart in the Data Exploration tab
-Donut charts and conclusions in the Unemployment claims tab
+Amar and Bolong cleaned the data and converted the data into a suitable and required format for the visualization and identified the required fields for visualization. Che-Pai and Yo Shuan worked on setting up the code base for the visualization. Yo Shuan gave the overview of react to all the team members. Che-Pai and Bolong worked on world map, lollipop chart. Amar worked on data exploration and combined the datasets for finding out the relationship. Bolong used web-scrapping techniques to retreive data from web. Yo Shan worked on  Setting up React framework and routings, Toolbar UI, Infographic in the Overview tab, Line chart in the Data Exploration tab. Che-Pai worked on world maps, lollipop under data dashboard tab. Bolong worked on lollipop chart under data dashboard tab. Che-Pai and Bolong worked together to find the relationship between stick of lollipop and world. Yo Shan worked on Line chart, Donut charts and conclusions in the Unemployment claims tab. Amar and Bolong worked on Presentation, conclusions making Presentation file using sozi. Team Project Homepage making: React, Bootstrap. Che-Pai and Bolong designed thebgraph in data dashboard tab and found relationship between Pandemics and the Labor MArket - United States. Che-Pai, Bolong, Amar and Yo Shan worked on US Labor Market Overview Tab to make the introductory page. Team Project Homepage making: React, Bootstrap. Amar, Yo Shan, Che-Pai, Bolong did research on how others have worked on this topic. Explored John Hopkins webpage and 72 unemployement statistics. Amar, Bolong worked on finding the images for sozi presentation. Amar wrote the transcipts, presentations and paper. Amar, Bolong, Che-Pai and Yo Shan used Git repository and have worked with equal contributions and collaborated well with each other.
