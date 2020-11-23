@@ -81,8 +81,8 @@ There are mainly three tabs in our website
 Optimize visual queries:
 - For line chart:
 Input and parse the data only once after the page first rendered, initially, we show the numbers of US newly confirmed cases, US unemployment rate and number of job openings in the whole country. Additionally, we only filterd out a particular row from data when 
-1. User clicks on a state in map 
-2. User picks a state in the drop down list. 
+  1. User clicks on a state in map 
+  2. User picks a state in the drop down list. 
 And then the unemployment rate and newly confirmed cases trend of chosen state will be shown in the line chart.
 
 - For lollipop chart: 
