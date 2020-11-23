@@ -41,8 +41,8 @@ In Table2, list all the charts and tables in your pages including minimum requir
 
 | Page name                             | Chart description                         | Libraries used  | Requirement label |
 | ------------------------------------- | ----------------------------------------- | --------------- | ----------------- |
-| Home page - US Labor Market Overview  | word cloud                                |                 |                   |
-| Data Exploration                      | d3 map, d3 lollipop chart, d3 line chart  | d3, topojson    | responsive, interactive, animated |
-| Unemployment Claims                   | Mapbox map, donut charts                  |                 |                   |
+| Home page - US Labor Market Overview  | word cloud                                | d3-cloud        |                   |
+| Data Exploration                      | d3 map, d3 lollipop chart, d3 line chart  | d3, topojson    | responsive, interactive, animated, map |
+| Unemployment Claims                   | Mapbox map, donut charts                  | d3              | responsive, Mapbox,layout                 |
 
 Table2: Table of visualizations
