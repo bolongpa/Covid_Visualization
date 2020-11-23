@@ -38,59 +38,43 @@ In US Local Area Unemployment Statistics, there are several columns in the file 
 
 Additionally, in this project, we have mainly used JavaScript to build the website, including D3, react, adobe to plot the graphs. In addition, we have used Python to do web crawler, data collection and preprocessing.
 
-## Slide 4-5, Explain the research you have done, what others have done in the same topic, other topics that are relevant.
-The data visualization will connect the data with map. When user click the map, the information of that state will show up. Besides, the color of states will be painted based on the value of give category. In addition, line bar charts will also be used to compare the number of COVID-19 cases with the unemployment rate. Last, users can specify the time range, then the difference of unemployment will be returned as a sorted bar chart so that we can know which states suffer the most during that period.
- 
-What others have done?
-We found a line chart that visualizes the U.S. unemployment rate history since year 1929 with important events pointed out on the timeline, we will use the similar approach to visualize our data. There is also a world map visualization of the global rate of unemployment that is equipped with a slide bar that allows user to interact with the map and see the year-over-year trend of unemployment rate.
-Additionally, we also found how John Hopkins have visualized the data for COVID-19.
+## Slide 4, Explain the research you have done, what others have done in the same topic, other topics that are relevant.
 
-## Slide 6,Explain how your work is original.
+We found a line chart that visualizes [the U.S. unemployment rate history since year 1929](https://howmuch.net/articles/timeline-united-states-unemployment-history) with important events pointed out on the timeline, we will use the similiar approach to visualize our data.
+There is also a world map visualization of [the global rate of unemployment](https://ourworldindata.org/grapher/unemployment-rate?time=earliest..2017) that is equipped with a slide bar that allows user to interact with the map and see the year-over-year trend of unemployment rate.
+There is also a world map visualization of the global rate of unemployment that is equipped with a slide bar that allows user to interact with the map and see the year-over-year trend of unemployment rate. Additionally, we also found how John Hopkins have visualized the data for COVID-19 with multiple parameters such as global confirmed cases, global deaths, U.S. confirmed case and U.S. deaths.
 
-•      Made use of lollipop charts and maps together to show the multilevel, multidimensional visualization of information.
-•      Users can easily explore the unemployment rate, market trends of the labor force and the jobs market datasets with a single click and find patterns, relations between these entities.
-•      By showing different views at once, it is more informative and exploratory in nature to the user.
-•   For example, if the user hovers a bar for the year 2020, the corresponding information is shown in the map below.
+## Slide 5,Explain how your work is original.
 
-We tried to answer following questions based on our visualizations:
-Is there a significant relationship between COVID-19 confirmed cases and the unemployment rate?
-How this COVID-19 break out had its impact on the US labor market.
-Which states are recovering from the impact of the COVID-19 and which states are still struggling?
-Visualized how the employment situation of each state acting differently from January-December 2020.
+- Made use of lollipop charts and maps together to show the multilevel, multidimensional visualization of information.
+- Users can easily explore the unemployment rate, market trends of the labor force and the jobs market datasets with a single click and find patterns, relations between these entities.
+- By showing different views at once, it is more informative and exploratory in nature to the user.
+- For example, if the user hovers a bar for the year 2020, the corresponding information is shown in the map below.
 
+Additionally, we tried to answer following questions based on our visualizations:
+- Is there a significant relationship between COVID-19 confirmed cases and the unemployment rate?
+- How this COVID-19 break out had its impact on the US labor market.
+- Which states are recovering from the impact of the COVID-19 and which states are still struggling?
+- Visualized how the employment situation of each state acting differently from January-December 2020.
 
-Map: By hovering over the us state map, the increased COVID-19 confirmed cases will be shown.
-Line chart: If a user clicks on a particular state, the trend of the newly COVID-19 confirmed cases, the unemployment rate starting from Jan. 2019 till Aug. 2020 of a particular state will show in the line chart.
-Lollipop chart: We used lollipop because we need to show the unemployment rate change together with the number of increased confirmed cases in a plot while the unemployment rate change could be negative. Additionally, by using a lollipop chart we can let the color of the lollipop candy indicate the (+/-) of the unemployment rate change, the color scale is the same as the map, so user won’t be confused. Moreover, Layout of the lollipop is sorted based on the unemployment rate change.
+- Map: By hovering over the us state map, the increased COVID-19 confirmed cases will be shown.
+- Line chart: If a user clicks on a particular state, the trend of the newly COVID-19 confirmed cases, the unemployment rate starting from Jan. 2019 till Aug. 2020 of a particular state will show in the line chart.
+- Lollipop chart: We used lollipop because we need to show the unemployment rate change together with the number of increased confirmed cases in a plot while the unemployment rate change could be negative. Additionally, by using a lollipop chart we can let the color of the lollipop candy indicate the (+/-) of the unemployment rate change, the color scale is the same as the map, so user won’t be confused. Moreover, Layout of the lollipop is sorted based on the unemployment rate change.
 
-## Slide 7, Explain your design process, rationale for the layout, story, choice of forms, how you optimized the visual queries and user interaction.
+## Slide 6, Explain your design process, rationale for the layout, story, choice of forms, how you optimized the visual queries and user interaction.
 [Write about the map and lollipop chart]
-•           Simple and clean layout which is easy to understand.
-•           Well-designed pages with good story flow.
-•           Made use of frequently used charts like map, line chart, lollipop chart, etc. so that even users who are new to this domain of can easily understand the information.
-•           Most of the charts that were used are ones that are familiar and popular with the average user.
-•           This was done to grab the attention of the user initially and maintain the interest of the user long enough till they can explore novel and complex visualizations.
-
-
-* Affordance for interactive elements. 
-* Making use of Hover-and-click animations. 
-* Clean UI. 
-* Simple color palette that is very easy to see. 
-* Legible and readable text. 
-* Responsive and Interactive D3 charts. 
-* Animated Chart. 
-* Here, we use an animated bar chart which can be used to filter and sort the data according to our requirements. 
-* We also make use of D3 Maps in our project. 
-* Here, we show a proportional symbol map showing the share of military expenditure.
-
-
+- Simple and clean layout which is easy to understand.
+- Well-designed pages with good story flow.
+- Made use of frequently used charts like map, line chart, lollipop chart, etc. so that even users who are new to this domain of can easily understand the information.
+- Most of the charts that were used are ones that are familiar and popular with the average user.
+- This was done to grab the attention of the user initially and maintain the interest of the user long enough till they can explore novel and complex visualizations.
 
 For overall layout in data exploration page:
 Rationale for the layout:
 There are mainly three tabs in our website
-1. Overview: in this tab we  ... 
-2. Data Exploration: all our interactive charts are put in this tab to let users better understand the relationship between COVID-19 confirmed cases and the unemployment rate change.  
-3. Unemployment Claims: in this tab, we further explore the number of unemployment claims in each state and try to answer the question: “Is the labor market recovering from the impact of the COVID-19?” 
+1. Overview: in this tab we  ...
+2. Data Exploration: all our interactive charts are put in this tab to let users better understand the relationship between COVID-19 confirmed cases and the unemployment rate change. 
+3. Unemployment Claims: in this tab, we further explore the number of unemployment claims in each state and try to answer the question: “Is the labor market recovering from the impact of the COVID-19?”
 
 
 
@@ -107,8 +91,7 @@ For Map: When user hover over the map then the name of the state and the no of t
 
 ## Slide 8, Highlight what you have built and with d3 (see Demonstration for a list of required d3 features to include) and other tools including Bootstrap and framework features you used.
 
-use React to build single page application, d3 Bootstrap for responsive layout and also used Bootstrap for multiple buttons.
-
+Used React to build single page application, d3 Bootstrap for responsive layout and also used Bootstrap for multiple buttons.
 Tools and framework features you used:
 Technologies used-
 - HTML
@@ -118,6 +101,19 @@ Technologies used-
 - React
 - Bootstrap
 - AdobeXD
+
+List of required d3 features to include:
+
+- Affordance for interactive elements.
+- Making use of Hover-and-click animations.
+- Clean UI.
+- Simple color palette that is very easy to see.
+- Legible and readable text.
+- Responsive and Interactive D3 charts.
+- Animated Chart.
+- Here, we use an animated bar chart which can be used to filter and sort the data according to our requirements.
+- We also make use of D3 Maps in our project.
+- Here, we show a proportional symbol map showing the share of military expenditure.
 
 ## Slide 9, Explain what you would have done differently.
 
