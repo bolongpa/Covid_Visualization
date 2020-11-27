@@ -35,31 +35,31 @@ __🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.
 
 ## Proposal presentation
 
-- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for transcript of "Story and Goal"
-- [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for sozi slides
-- [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for transcript of "Features", "Dataset and Tool", "Data Preprocessing"
-- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for transcript of "Introduction", "Others Work and Example", "Timeline"
+- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for transcript of "Story and Goal".
+- [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for sozi slides.
+- [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for transcript of "Features", "Dataset and Tool", "Data Preprocessing".
+- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for transcript of "Introduction", "Others Work and Example", "Timeline".
 
 ## Final presentation
 
-- [Tommy Trojan](mailto:tommy@usc.edu) did this and that...
-- [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for sozi slides
+- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for transcript.
+- [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for sozi slides.
 - [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for the slide 6 and slide 7.
-- 
+- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for ******
 
 ## Paper
 
-- [Tommy Trojan](mailto:tommy@usc.edu) did this and that...
--
--
--
+- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for ******
+- [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for draft paragraph of lollipop chart and reviewing.
+- [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for ******
+- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for ******
 
 ## Demo
 
-- [Tommy Trojan](mailto:tommy@usc.edu) did this and that...
-- [Bolong Pan](mailto:bolongpa@usc.edu) made the lollipop chart and related functions
+- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for ******
+- [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for crawling and collecting data and making the lollipop chart and related functions.
 - [Che Pai Kung](mailto:chepaiku@usc.edu) made the map chart, word cloud, mapbox, lollipop chart and the interaction functions between each chart.
--
+- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for ******
 
 ### List of visualizations
 
@@ -82,8 +82,8 @@ In Table2, list all the charts and tables in your pages including minimum requir
 |Data Exploration|US map|d3,topojson-client|interactiva,responsive,layout,map|
 |Data Exploration|lollipop chart|d3,react-bootstrap|interactiva,responsive,animated|
 |Data Exploration|line chart|d3|responsive,animated|
-|Unemployment Claims|Mapbox map|d3|mapbox|
-|Unemployment Claims|Mapbox map|d3|layout,responsive|
+|Unemployment Claims|Mapbox map|d3, mapbox-gl|mapbox|
+|Unemployment Claims|Donut chart|d3|layout,responsive|
 
 
 Table2: Table of visualizations
