@@ -43,9 +43,9 @@ __🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.
 ## Final presentation
 
 - [Tommy Trojan](mailto:tommy@usc.edu) did this and that...
--
 - [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for sozi slides
--
+- [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for the slide 6 and slide 7.
+- 
 
 ## Paper
 
@@ -57,8 +57,8 @@ __🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.
 ## Demo
 
 - [Tommy Trojan](mailto:tommy@usc.edu) did this and that...
--
 - [Bolong Pan](mailto:bolongpa@usc.edu) made the lollipop chart and related functions
+- [Che Pai Kung](mailto:chepaiku@usc.edu) made the map chart, word cloud, mapbox, lollipop chart and the interaction functions between each chart.
 -
 
 ### List of visualizations
@@ -79,7 +79,11 @@ In Table2, list all the charts and tables in your pages including minimum requir
 | Page name                             | Chart description                         | Libraries used      | Requirement label |
 | ------------------------------------- | ----------------------------------------- | ------------------- | ----------------- |
 | Home page - US Labor Market Overview  | word cloud                                | d3, react-d3-cloud  |                   |
-| Data Exploration                      | d3 map, d3 lollipop chart, d3 line chart  | d3, react-bootstrap, topojson-client, react-datepicker  | responsive, interactive, animated, map |
-| Unemployment Claims                   | Mapbox map, donut charts                  | d3, mapbox-gl       | responsive, mapbox, layout    |
+|Data Exploration|US map|d3,topojson-client|interactiva,responsive,layout,map|
+|Data Exploration|lollipop chart|d3,react-bootstrap|interactiva,responsive,animated|
+|Data Exploration|line chart|d3|responsive,animated|
+|Unemployment Claims|Mapbox map|d3|mapbox|
+|Unemployment Claims|Mapbox map|d3|layout,responsive|
+
 
 Table2: Table of visualizations
