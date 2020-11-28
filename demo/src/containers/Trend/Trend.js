@@ -25,6 +25,14 @@ class LineChart extends Component {
         }
     }
 
+    componentDidMount() {
+        //this.updateWidth();
+        window.addEventListener("resize", this.updateWidth);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateWidth);
+    }
 
     state = {
         initial: true,
@@ -34,9 +42,18 @@ class LineChart extends Component {
         timeout: setTimeout(2000),
         first: null,
         last: null,
-        margin: { top: 20, right: 80, bottom: 20, left: 50 },
-        height: 500,
-        width: window.screen.width
+        margin: { top: 20, right: 80, bottom: 30, left: 50 },
+        height: 300,
+        width: window.innerWidth
+    }
+
+    updateWidth = () => {
+        this.setState({ width: window.innerWidth });
+        console.log(this.state.initial)
+        if (!this.state.initial) {
+            console.log("remove!")
+            this.draw();
+        }
     }
 
     lineChartDataHandler = () => {
@@ -89,6 +106,7 @@ class LineChart extends Component {
     }
 
     draw = () => {
+        d3.select(this.chartRef.current).selectAll('svg').remove();
         console.log("draw()", this.props.clickedState);
         var unemployData = this.state.unemployData;
         var covidData = this.state.covidData;
@@ -139,37 +157,38 @@ class LineChart extends Component {
             //.attr('width', this.state.width)
             .attr('width', "100%")
             .attr('height', this.state.height)
-            .attr('viewBox', [0, 0, this.state.width, this.state.height + 10])
             .append('g')
             .attr('transform', 'translate(' + this.state.margin.left + ', ' + this.state.margin.top + ')');
 
         svg.append("g")
-            .style("font-size", "1.2rem")
+            .style("font-size", "1rem")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
         svg.append("g")
-            .style("font-size", "1.1rem")
+            .style("font-size", "0.9rem")
             .attr("id", "yLeftAxis")
-            .attr("stroke", "#114C94")
+            .attr("color", "#114C94")
             .call(yLeftAxis)
             .append("text")
             .attr("y", -20)
             .attr("x", -10)
-            .attr("dy", "1.2rem")
+            .attr("dy", "1rem")
+            .attr("stroke", "#114C94")
             .style("text-anchor", "middle")
             .text("(%)");
 
         svg.append("g")
-            .style("font-size", "1.1rem")
+            .style("font-size", "0.9rem")
             .attr("id", "yRightAxis")
             .attr("transform", "translate( " + width + ", 0 )")
-            .attr("stroke", "#FF8C00")
+            .attr("color", "#FF8C00")
             .call(yRightAxis)
             .append("text")
-            .attr("y", -20)
+            .attr("y", -25)
             .attr("x", 10)
-            .attr("dy", "1.2rem")
+            .attr("dy", "1rem")
+            .attr("stroke", "#FF8C00")
             .style("text-anchor", "middle")
             .text("(k)");
 
@@ -209,9 +228,9 @@ class LineChart extends Component {
         svg.append("rect").attr("x", 60).attr("y", 50).attr("width", 10).attr("height", 5).style("fill", "#FF8C00");
         svg.append("rect").attr("x", 60).attr("y", 80).attr("width", 10).attr("height", 5).style("fill", "#114C94");
         svg.append("rect").attr("x", 60).attr("y", 110).attr("width", 10).attr("height", 5).style("fill", "#A174A9").attr("class", "hiringLegend");
-        svg.append("text").attr("x", 80).attr("y", 55).text("COVID newly confirmed cases (k)").style("font-size", "1.2rem").attr("alignment-baseline", "middle");
-        svg.append("text").attr("x", 80).attr("y", 85).text("Unemployment Rate (%)").style("font-size", "1.2rem").attr("alignment-baseline", "middle");
-        svg.append("text").attr("x", 80).attr("y", 115).text("Nationwide Hiring Rate (%)").style("font-size", "1.2rem").attr("alignment-baseline", "middle").attr("class", "hiringLegend");
+        svg.append("text").attr("x", 80).attr("y", 55).text("COVID newly confirmed cases (k)").style("font-size", "1rem").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 80).attr("y", 85).text("Unemployment Rate (%)").style("font-size", "1rem").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 80).attr("y", 115).text("Nationwide Hiring Rate (%)").style("font-size", "1rem").attr("alignment-baseline", "middle").attr("class", "hiringLegend");
 
     }
 
@@ -341,7 +360,7 @@ class LineChart extends Component {
                         <option key="Wyoming" value="Wyoming">Wyoming</option>
                     </select>
                 </div>
-                <div ref={this.chartRef} />
+                <div style={{ "width": this.state.width, "height": this.state.height }} ref={this.chartRef} />
 
             </div>
         );
