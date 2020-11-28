@@ -59,7 +59,7 @@ class DataExploration extends Component {
                     console.log(x);
                     self.setState({ endDate: x });
                     j++;
-                }, 1000 * j);
+                }, 2000 * j);
             })(arr[j]);
         }
     }
