@@ -45,7 +45,7 @@ __🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.
 - [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for transcript.
 - [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for sozi slides.
 - [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for the slide 6 and slide 7.
-- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for ******
+- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for slide 9.
 
 ## Paper
 
@@ -59,7 +59,7 @@ __🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.
 - [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for ******
 - [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for crawling and collecting data and making the lollipop chart and related functions.
 - [Che Pai Kung](mailto:chepaiku@usc.edu) made the map chart, word cloud, mapbox, lollipop chart and the interaction functions between each chart.
-- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for ******
+- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) set up the react framework and UI, drew the infographic in the "Overview" tab, the line chart and the donut charts, and descriptions in the "Unemployment Claims" tab.
 
 ### List of visualizations
 
