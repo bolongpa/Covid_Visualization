@@ -1,0 +1,68 @@
+.Headline {
+    display: flex;                  /* establish flex container */
+    flex-direction: row;            /* default value; can be omitted */
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Title {
+    display: inline;
+}
+
+.Panel{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.Btn {
+    border-radius: 3px;
+    border-color: #4682B4;
+    background-color: white;
+    display: inline-block;
+    cursor: pointer;
+    color: #4682B4;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.Btn:hover {
+    color: #484848;
+    background-color: rgba(176, 224, 230, 0.7);
+    border-color: #B0E0E6;
+}
+
+.PlayBtn{
+    width: 2rem;
+    display: inline-block;
+    border: 1px solid #4682B4;
+    border-radius: 3px;
+    background: none;
+    color: #4682B4;
+    cursor: pointer;
+    margin-left: 20px;
+    box-sizing: border-box;
+}
+
+.PlayBtn:hover {
+    color: #484848;
+    background-color: rgba(176, 224, 230, 0.7);
+    border-color: #B0E0E6;
+}
+
+.RightBtn {
+    display: flex;  
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.Label{
+    color: #484848;
+    font-size: 1.2rem;
+    display: inline;
+    margin: 1rem;
+    margin-right: 0.5rem;
+}

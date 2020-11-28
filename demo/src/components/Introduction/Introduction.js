@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 //import { Container, Row, Col } from 'react-bootstrap';
 
 import classes from './Introduction.module.css';
-import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-import MapBox from '../../../containers/MapBox/MapBox';
-import WCloud from "../../WordCloud/WordCloud"
-import infoGraph from "../../../assets/images/Unemployment2020.png";
+import WCloud from "../WordCloud/WordCloud"
+import infoGraph from "../../assets/images/Unemployment2020.png";
 
 class Introduction extends Component {
 

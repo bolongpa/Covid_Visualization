@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
+import { Container, Row, Col, Alert, Badge, Button } from 'react-bootstrap';
+import { FaPlay } from 'react-icons/fa';
 
 import D3map from '../../components/Map/D3map.js';
 import BarChart from '../../components/BarChart/BarChart';
 import LineChart from '../Trend/Trend';
 
+import classes from './DataExploration.module.css';
 import "react-datepicker/dist/react-datepicker.css";
-import { Container, Row, Col, Alert, Badge, Button } from 'react-bootstrap';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 // input data for bar chart
@@ -16,6 +18,7 @@ import { wait, waitFor } from '@testing-library/react';
 
 class DataExploration extends Component {
     state = {
+        showIntro: true,
         startDate: new Date("2020/1/22"),
         endDate: new Date("2020/7/22"),
 
@@ -93,10 +96,17 @@ class DataExploration extends Component {
         });
 
     }
+
     barStateHover = (value) => {
         this.setState({
             barState: value
         });
+    }
+
+    showIntroHandler = () => {
+        this.setState({
+            showIntro: !this.state.showIntro
+        })
     }
 
 
@@ -105,33 +115,37 @@ class DataExploration extends Component {
             <React.Fragment>
                 {/* <p> Introduction here</p> */}
                 <Container fluid>
-                    <Alert variant="dark">
+                    <div className={classes.Headline}>
+                        <h2 className={classes.Title}>Explore Unemployment and Pandemic Data Even More!</h2>
+                        {this.state.showIntro ? null : <button className={classes.Btn} onClick={this.showIntroHandler}>Show Intro</button>}
 
-                        <h3>In this section, you can explore the unemployment rate and covid pandemic more!</h3>
+                    </div>
+
+                    <Alert variant="light" show={this.state.showIntro}>
                         <p>For better understanding of the relationship between unemployment rate and number of covid cases, you can pick the period you are interested and see the change of unemployment rate during that time. When hovering over the state, the increase number of covid of that period will also show up.</p>
                         <p>Currently, we only have employment data till 2020 August.</p>
                         <hr />
                         <p>The Lollipop chart shows the COVID-19 confirmed case increase number and the candy color corresponds to the unemployment rate change in the selected period. Two buttons are provided to explore the top ten states and the bottom ten.</p>
 
                         <Row >
-
-
-                            <Col xs='auto'>Start Month:</Col>
-                            <Col xs="2">
-                                <DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2019/1/1")} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
-                            </Col>
-
-                            <Col xs='auto'>End Month:</Col>
-                            <Col xs="2">
-                                <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
-                            </Col>
-                            <h3>
-                                <Badge variant="info" onClick={this.animation}>
-                                    see transitions between months
-                    </Badge></h3>
-
+                            <div className={classes.RightBtn}>
+                                <button className={classes.Btn} onClick={this.showIntroHandler}>Hide Intro</button>
+                            </div>
                         </Row>
                     </Alert>
+
+                    <Row>
+                        <div className={classes.Panel}>
+                            <p className={classes.Label}>Start Month:</p>
+                            <DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2019/1/1")} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
+                            <p className={classes.Label}>End Month:</p>
+                            <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
+                            <button className={classes.PlayBtn} onClick={this.animation}>
+                                <FaPlay />
+                            </button>
+                        </div>
+                    </Row>
+
                     <Row>
                         <Col xs="8">
                             <D3map

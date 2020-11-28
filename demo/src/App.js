@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import Claims from './components/Claims/Claims';
 import DataExploration from './containers/DataExploration/DataExploration';
-import Introduction from './components/Content/Introduction/Introduction';
+import Introduction from './components/Introduction/Introduction';
 
 function App() {
   return (
