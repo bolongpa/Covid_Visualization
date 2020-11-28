@@ -1,11 +1,11 @@
 .LineChart{
     color: #484848;
-    margin-top: 3rem;
-    margin-bottom: 5rem;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
 }
 
 .Title {
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 @media (max-width: 1450px) {
