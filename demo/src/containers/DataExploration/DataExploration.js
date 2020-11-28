@@ -113,7 +113,6 @@ class DataExploration extends Component {
     render() {
         return (
             <React.Fragment>
-                {/* <p> Introduction here</p> */}
                 <Container fluid>
                     <div className={classes.Headline}>
                         <h2 className={classes.Title}>Explore Unemployment and Pandemic Data Even More!</h2>

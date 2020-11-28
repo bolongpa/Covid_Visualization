@@ -116,6 +116,7 @@ const D3map = (props) => {
                 .attr("height", 8)
                 .attr("fill", d => colorscale(d))
 
+            var nameOutsideMap = ['Hawaii', 'Connecticut', 'Rhode Island', 'Massachusetts'];
             svg.append("g")
                 .attr("width", 900)
                 .attr('class', 'countries')
@@ -135,8 +136,8 @@ const D3map = (props) => {
                 })
                 .on("mouseover", function (e, d) {
                     d3.select(this).attr("fill-opacity", 1)
-                    // console.log(d)
-                    d3.select("text#" + d.properties.name.replace(" ", "")).attr("display", "block")
+                    //console.log(d)
+                    d3.select("text#" + d.properties.name.replace(" ", "")).attr("display", "block").attr("fill", d => !nameOutsideMap.includes(d.properties.name) && Math.abs(d.properties.unemploy) > 1.9 ? "#B0E0E6" : "black")
 
                 }
                 )
@@ -147,14 +148,14 @@ const D3map = (props) => {
                 .attr("d", path)
                 .append("title")
 
-
+            var moveOutside = ['Florida', 'New Jersey'];
             const text_select = svg.append('g')
                 .selectAll("text")
                 .data(feature(us, us.objects.states).features)
                 .enter()
                 .append("text")
                 .attr("id", d => d.properties.name.replace(" ", ""))
-                .attr("text-anchor", "middle")
+                .attr("text-anchor", d => moveOutside.includes(d.properties.name) ? "start" : "middle")
                 .attr('transform', d => `translate(${path.centroid(d)})`)
                 .attr("display", "none")
                 .on("click", function (e, d) {
