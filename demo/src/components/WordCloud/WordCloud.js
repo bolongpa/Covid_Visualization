@@ -30,8 +30,8 @@ const WCloud = (props) => {
             <WordCloud
                 data={data}
                 fontSizeMapper={fontSizeMapper}
-                height={500}
-                width={900}
+                height={700}
+                width={1200}
                 padding={1} />
         </div>
     </React.Fragment>
