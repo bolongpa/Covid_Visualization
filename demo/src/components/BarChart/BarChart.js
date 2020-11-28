@@ -206,7 +206,7 @@ const BarChart = (props) => {
             .attr('x', width * 0.9)
             .attr('y', height + 35)
             .attr('id', 'ylabel')
-            .append('tspan').text('COVID-19 Confirmed').attr('font-size', width / 20); //.attr('fill', '#fac150')
+            .append('tspan').text('Incr. Confirmed Cases').attr('font-size', width / 20); //.attr('fill', '#fac150')
 
         function topten(data) {
             return data.sort(function (a, b) { return d3.descending(a.value, b.value) }).slice(0, 10);
