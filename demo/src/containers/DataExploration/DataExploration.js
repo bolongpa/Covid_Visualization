@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 
 import D3map from '../../components/Map/D3map.js';
 import BarChart from '../../components/BarChart/BarChart';
-import LineChart from '../../containers/Trend/Trend';
+import LineChart from '../Trend/Trend';
 
 import "react-datepicker/dist/react-datepicker.css";
 import { Container, Row, Col, Alert, Badge, Button } from 'react-bootstrap';
@@ -14,7 +14,7 @@ import unemploy_data from "../../assets/data/unemployment.csv";
 import covid_data from "../../assets/data/time_series_covid19_confirmed_US.csv";
 import { wait, waitFor } from '@testing-library/react';
 
-class Map extends Component {
+class DataExploration extends Component {
     state = {
         startDate: new Date("2020/1/22"),
         endDate: new Date("2020/7/22"),
@@ -31,7 +31,7 @@ class Map extends Component {
         },
 
         clickedState: "United States", // initial state: user hasn't clicked on anything on the map, so the line chart would show stat. of the whole U.S.
-        barState:null
+        barState: null
     }
 
 
@@ -93,9 +93,9 @@ class Map extends Component {
         });
 
     }
-    barStateHover = (value) =>{
+    barStateHover = (value) => {
         this.setState({
-            barState:value
+            barState: value
         });
     }
 
@@ -126,8 +126,8 @@ class Map extends Component {
                                 <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
                             </Col>
                             <h3>
-                            <Badge variant="info" onClick={this.animation}>
-                                see transitions between months
+                                <Badge variant="info" onClick={this.animation}>
+                                    see transitions between months
                     </Badge></h3>
 
                         </Row>
@@ -145,7 +145,7 @@ class Map extends Component {
                         {/* {console.log(this.state.startDate.getMonth())} */}
 
                         <Col xs={7} md={4}>
-                        <BarChart
+                            <BarChart
                                 start={this.state.startDate}
                                 end={this.state.endDate}
                                 unemploy_data={this.state.unemploy_data}
@@ -174,4 +174,4 @@ class Map extends Component {
     }
 }
 
-export default Map;
+export default DataExploration;

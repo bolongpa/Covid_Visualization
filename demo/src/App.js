@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
 import MultiCharts from './containers/MultiCharts/MultiCharts';
 import Claims from './components/Claims/Claims';
-import Map from './containers/Map/Map';
+import DataExploration from './containers/DataExploration/DataExploration';
 import Introduction from './components/Content/Introduction/Introduction';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <Switch>
           <Route path="/demoPlayground" component={MultiCharts} />
           <Route path="/claims" component={Claims} />
-          <Route path="/map" component={Map} />
+          <Route path="/dataExploration" component={DataExploration} />
           <Route path="/" exact component={Introduction} />
         </Switch>
       </Layout>
