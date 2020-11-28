@@ -134,15 +134,21 @@ class DataExploration extends Component {
                     </Alert>
 
                     <Row>
-                        <div className={classes.Panel}>
-                            <p className={classes.Label}>Start Month:</p>
-                            <DatePicker selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2019/1/1")} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
-                            <p className={classes.Label}>End Month:</p>
-                            <DatePicker selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
-                            <button className={classes.PlayBtn} onClick={this.animation}>
-                                <FaPlay />
-                            </button>
-                        </div>
+                        <Col md="5">
+                            <div className={classes.Panel}>
+                                <p className={classes.Label}>Start Month:</p>
+                                <DatePicker className={classes.DatePicker} selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2019/1/1")} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
+                                <p className={classes.Label}>End Month:</p>
+                                <DatePicker className={classes.DatePicker} selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
+                            </div>
+                        </Col>
+                        <Col md="5">
+                            <div style={{ marginTop: "1.3rem" }}>
+                                <button className={classes.PlayBtn} onClick={this.animation}>
+                                    <FaPlay />
+                                </button>
+                            </div>
+                        </Col>
                     </Row>
 
                     <Row>
@@ -179,8 +185,8 @@ class DataExploration extends Component {
                                 updateStateHandler={this.updateStateHandler} />
                         </Col>
                     </Row>
-                </Container>
-            </React.Fragment>
+                </Container >
+            </React.Fragment >
 
 
         );
