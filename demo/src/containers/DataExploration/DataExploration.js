@@ -116,19 +116,20 @@ class DataExploration extends Component {
                 <Container fluid>
                     <div className={classes.Headline}>
                         <h2 className={classes.Title}>Explore Unemployment and Pandemic Data Even More!</h2>
-                        {this.state.showIntro ? null : <button className={classes.Btn} onClick={this.showIntroHandler}>Show Intro</button>}
+                        {this.state.showIntro ? null : <button className={classes.Btn} onClick={this.showIntroHandler}>Show Tips</button>}
 
                     </div>
 
                     <Alert variant="light" show={this.state.showIntro}>
-                        <p>For better understanding of the relationship between unemployment rate and number of covid cases, you can pick the period you are interested and see the change of unemployment rate during that time. When hovering over the state, the increase number of covid of that period will also show up.</p>
-                        <p>Currently, we only have employment data till 2020 August.</p>
-                        <hr />
-                        <p>The Lollipop chart shows the COVID-19 confirmed case increase number and the candy color corresponds to the unemployment rate change in the selected period. Two buttons are provided to explore the top ten states and the bottom ten.</p>
-
+                        <p>Pick a period you are interested in and see the change of the unemployment rate during that time. <br />
+                        Hover over the state to see the increased number of COVID-19 confirmed cases of that period.<br />
+                            <hr />
+                        The candy color of the lollipop chart corresponds to the unemployment rate change in the selected period. <br />
+                        Click on the "Top 10" and "Bottom 10" buttons to get the 10 states with highest/lowest unemployment rate.</p>
+                        <p>The scope of the data in this page covers until 2020 August.</p>
                         <Row >
                             <div className={classes.RightBtn}>
-                                <button className={classes.Btn} onClick={this.showIntroHandler}>Hide Intro</button>
+                                <button className={classes.Btn} onClick={this.showIntroHandler}>Hide Tips</button>
                             </div>
                         </Row>
                     </Alert>
