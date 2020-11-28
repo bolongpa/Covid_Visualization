@@ -17,6 +17,9 @@ var _s1 = d3.format(",.2s")
 var offset = new Set(["25", "10", "09", "44"])
 var prevBarState = null
 
+var nameOutsideMap = ['Hawaii', 'Connecticut', 'Rhode Island', 'Massachusetts'];
+var moveOutside = ['Florida', 'New Jersey'];
+
 const D3map = (props) => {
     const svgRef = useRef()
     start = props.startMonth
@@ -116,7 +119,6 @@ const D3map = (props) => {
                 .attr("height", 8)
                 .attr("fill", d => colorscale(d))
 
-            var nameOutsideMap = ['Hawaii', 'Connecticut', 'Rhode Island', 'Massachusetts'];
             svg.append("g")
                 .attr("width", 900)
                 .attr('class', 'countries')
@@ -148,7 +150,6 @@ const D3map = (props) => {
                 .attr("d", path)
                 .append("title")
 
-            var moveOutside = ['Florida', 'New Jersey'];
             const text_select = svg.append('g')
                 .selectAll("text")
                 .data(feature(us, us.objects.states).features)
@@ -182,7 +183,7 @@ const D3map = (props) => {
     useEffect(() => {
 
         if (props.barState != null) {
-            d3.select("text#" + props.barState).attr("display", "block")
+            d3.select("text#" + props.barState).attr("display", "block").attr("fill", d => !nameOutsideMap.includes(d.properties.name) && Math.abs(d.properties.unemploy) > 1.9 ? "#B0E0E6" : "black")
             d3.select("path#" + props.barState).attr("fill-opacity", 1)
             prevBarState = props.barState
         } else {
