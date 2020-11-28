@@ -539,7 +539,7 @@ const BarChart = (props) => {
 
     return (
         <React.Fragment>
-            <h3 className={classes.Title}>{"No. of Confirmed Cases Sorted By Unemployment Rate Change"}</h3>
+            <h3 className={classes.Title}>{"Increased Confirmed Cases"} <br /> {"of Each State Sorted by"} <br /> {"Unemployment Rate Change"}</h3>
             <div className={classes.BarChart}>
 
                 <button className={classes.Btn} onClick={() => props.switchFilterHandler("top")}>Top 10</button>

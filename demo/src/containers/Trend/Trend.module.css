@@ -1,6 +1,6 @@
 .LineChart{
     color: #484848;
-    margin-top: 5rem;
+    margin-top: 3rem;
     margin-bottom: 5rem;
 }
 
@@ -10,7 +10,7 @@
 
 @media (max-width: 1450px) {
     .Title {
-        font-size: 1.7rem;
+        font-size: 1.6rem;
     }
 }
 
