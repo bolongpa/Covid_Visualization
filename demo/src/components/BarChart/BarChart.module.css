@@ -4,6 +4,27 @@
 
 .Title {
     font-size: 2rem;
+    color: #484848;
+}
+
+.Btn {
+    border-radius: 3px;
+    border: 1px solid #4682B4;
+    background-color: white;
+    display: inline-block;
+    cursor: pointer;
+    color: #4682B4;
+    font-weight: bold;
+    padding: 5px;
+    margin: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.Btn:hover {
+    color: #484848;
+    background-color: rgba(176, 224, 230, 0.7);
+    border-color: #B0E0E6;
 }
 
 @media (max-width: 1450px) {

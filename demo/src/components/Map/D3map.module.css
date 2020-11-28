@@ -1,5 +1,6 @@
 .Title {
     font-size: 2rem;
+    color: #484848;
 }
 
 @media (max-width: 1450px) {

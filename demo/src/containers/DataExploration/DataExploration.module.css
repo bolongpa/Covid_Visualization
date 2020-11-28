@@ -17,7 +17,7 @@
 
 .Btn {
     border-radius: 3px;
-    border-color: #4682B4;
+    border: 1px solid #4682B4;
     background-color: white;
     display: inline-block;
     cursor: pointer;
@@ -36,7 +36,7 @@
 }
 
 .PlayBtn{
-    width: 2rem;
+    width: 2.1rem;
     display: inline-block;
     border: 1px solid #4682B4;
     border-radius: 3px;
@@ -45,6 +45,7 @@
     cursor: pointer;
     margin-left: 20px;
     box-sizing: border-box;
+    padding-bottom: 3px;
 }
 
 .PlayBtn:hover {

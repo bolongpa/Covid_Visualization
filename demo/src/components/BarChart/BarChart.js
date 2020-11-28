@@ -542,8 +542,8 @@ const BarChart = (props) => {
             <h3 className={classes.Title}>{"No. of Confirmed Cases Sorted By Unemployment Rate Change"}</h3>
             <div className={classes.BarChart}>
 
-                <Button variant="outline-primary" onClick={() => props.switchFilterHandler("top")}>Top 10</Button>
-                <Button variant="outline-primary" onClick={() => props.switchFilterHandler("bottom")}>Bottom 10</Button>
+                <button className={classes.Btn} onClick={() => props.switchFilterHandler("top")}>Top 10</button>
+                <button className={classes.Btn} onClick={() => props.switchFilterHandler("bottom")}>Bottom 10</button>
 
                 <div ref={chartRef} style={{ width: "400", display: 'flex', flexDirection: 'col', alignItems: 'center', justifyContent: 'left' }} />
             </div>
