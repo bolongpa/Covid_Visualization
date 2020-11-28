@@ -205,7 +205,7 @@ class LineChart extends Component {
             .attr("d", line)
             .attr("fill", "none")
             .attr("stroke", "#114C94")
-            .attr("stroke-width", 3)
+            .attr("stroke-width", 2)
             .attr("id", "line");
 
         svg.append("path")
@@ -213,7 +213,7 @@ class LineChart extends Component {
             .attr("d", hiringLine)
             .attr("fill", "none")
             .attr("stroke", "#A174A9")
-            .attr("stroke-width", 3)
+            .attr("stroke-width", 2)
             .attr("id", "hiringLine");
 
         svg.append("path")
@@ -221,7 +221,7 @@ class LineChart extends Component {
             .attr("d", covidLine)
             .attr("fill", "none")
             .attr("stroke", "#FF8C00")
-            .attr("stroke-width", 3)
+            .attr("stroke-width", 2)
             .attr("id", "covidLine");
 
         // Handmade legend
