@@ -49,7 +49,7 @@ Our project is about the confirmed cases of COVID-19, the unemployment rate over
 
 ## Paper
 
-- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for introduction, data, approach, conclution and references.
+- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for introduction, data, approach, conclusion and references.
 - [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for draft paragraph of lollipop chart and setting the report into Overleaf.
 - [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for draft for map and mapbox and reviewing.
 - [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for draft for line chart and reviewing.
