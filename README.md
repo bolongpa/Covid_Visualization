@@ -29,7 +29,7 @@ __🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.
 
 ## Project Summary
 
----
+Our project is about the confirmed cases of COVID-19, the unemployment rate over the pandemic month, the number of job openings and which states lost the greatest number of jobs (were affected the most during the pandemic). Our project aims to provide an overview on how the COVID-19 affected the U.S. labor market, and whether or not it is recovering from the impact of COVID-19. We implemented multiple kinds of D3 charts as well as Mapbox to explain the relation between the two datasets, which is all embedded in React frame.
 
 ## Contributions
 
