@@ -26,7 +26,6 @@
     color: #4682B4;
     font-weight: bold;
     padding: 5px;
-    margin-left: 5px;
     font-size: 1rem;
     box-sizing: border-box;
 }
@@ -68,4 +67,35 @@
     display: inline;
     margin: 1rem;
     margin-right: 0.5rem;
+}
+
+.DatePicker {
+    width: 200px;
+}
+
+@media (max-width: 1450px) {
+    .Label {
+        font-size: 1rem;
+    }
+    .DatePicker {
+        width: 180px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .Label {
+        font-size: 0.9rem;
+    }
+    .DatePicker {
+        width: 150px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .Label {
+        font-size: 0.9rem;
+    }
+    .DatePicker {
+        width: 100px;
+    }
 }

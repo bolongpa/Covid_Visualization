@@ -134,22 +134,25 @@ class DataExploration extends Component {
                         </Row>
                     </Alert>
 
-                    <Row>
-                        <Col md="5">
-                            <div className={classes.Panel}>
-                                <p className={classes.Label}>Start Month:</p>
-                                <DatePicker className={classes.DatePicker} selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2019/1/1")} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
-                                <p className={classes.Label}>End Month:</p>
-                                <DatePicker className={classes.DatePicker} selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
-                            </div>
+                    <Row className="align-items-center" md={13} style={{ height: "100px" }}>
+                        <Col sm={1.5}>
+                            <p className={classes.Label} style={{ alignItems: "center" }}>Start Month:</p>
                         </Col>
-                        <Col md="5">
-                            <div style={{ marginTop: "1.3rem" }}>
-                                <button className={classes.PlayBtn} onClick={this.animation}>
-                                    <FaPlay />
-                                </button>
-                            </div>
+                        <Col sm={2}>
+                            <DatePicker className={classes.DatePicker} selected={this.state.startDate} onChange={date => this.setState({ startDate: date })} minDate={new Date("2019/1/1")} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
                         </Col>
+                        <Col sm={1.5}>
+                            <p className={classes.Label}>End Month:</p>
+                        </Col>
+                        <Col sm={2}>
+                            <DatePicker className={classes.DatePicker} selected={this.state.endDate} onChange={date => this.setState({ endDate: date })} minDate={this.state.startDate} maxDate={new Date("2020/9/1")} dateFormat="MM/yyyy" showMonthYearPicker />
+                        </Col>
+                        <Col sm={1}>
+                            <button className={classes.PlayBtn} onClick={this.animation}>
+                                <FaPlay />
+                            </button>
+                        </Col>
+                        <Col sm={4}></Col>
                     </Row>
 
                     <Row>
