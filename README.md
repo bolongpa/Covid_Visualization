@@ -49,14 +49,14 @@ __🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.
 
 ## Paper
 
-- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for ******
+- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for instruction, data, approach, conclution and references.
 - [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for draft paragraph of lollipop chart and setting the report into Overleaf.
-- [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for ******
-- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for ******
+- [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for draft for map and mapbox and reviewing.
+- [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for draft for line chart and reviewing.
 
 ## Demo
 
-- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for ******
+- [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for data pre-processing, brainstorm and layout of pages.
 - [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for crawling and collecting data and making the lollipop chart and related functions.
 - [Che Pai Kung](mailto:chepaiku@usc.edu) made the map chart, word cloud, mapbox, lollipop chart and the interaction functions between each chart.
 - [Yo Shuan Liu](mailto:yoshuanl@usc.edu) set up the react framework and UI, drew the infographic in the "Overview" tab, the line chart and the donut charts, and descriptions in the "Unemployment Claims" tab.
