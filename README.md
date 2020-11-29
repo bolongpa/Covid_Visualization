@@ -23,7 +23,7 @@ __📄  Paper__ [Overleaf read only link](https://www.overleaf.com/read/wcfjvtjf
 
 __🎥  Video__ [Transcript](video/TRANSCRIPT.md) | [YouTube link](https://www.youtube.com/watch?v=op_lVUtDX3g&feature=youtu.be)
 
-__🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.edu/dsci-554/projects/<team-name-slug>)
+__🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](http://pdms.usc.edu/dsci-554-projects/project-ninjav/)
 
 ---
 
