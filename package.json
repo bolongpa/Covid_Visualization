@@ -10,7 +10,6 @@
   },
   "author": "",
   "dependencies": {
-    "react-icons": "^4.1.0",
     "sozi-export": "^20.4.23"
   },
   "repository": {
