@@ -50,7 +50,7 @@ __🚢  Demo__ [Transcript](video/TRANSCRIPT.md) | [Demo link](https://pdms.usc.
 ## Paper
 
 - [Amar Nath Jha](mailto:jhaa@usc.edu) is responsible for ******
-- [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for draft paragraph of lollipop chart and reviewing.
+- [Bolong Pan](mailto:bolongpa@usc.edu) is responsible for draft paragraph of lollipop chart and setting the report into Overleaf.
 - [Che Pai Kung](mailto:chepaiku@usc.edu) is responsible for ******
 - [Yo Shuan Liu](mailto:yoshuanl@usc.edu) is responsible for ******
 
