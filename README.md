@@ -2,8 +2,6 @@
 
 ## Team
 
-Team name: NinjaV
-
 Team members:
 
 - Amar Nath Jha <jhaa@usc.edu>
@@ -14,8 +12,6 @@ Team members:
 ---
 
 ## Artifacts
-
-__🍿  Proposal presentation__ [Transcript](presentations/proposal/TRANSCRIPT.md) | [PDF](presentations/proposal/presentation.pdf)
 
 __🍿  Final presentation__ [Transcript](presentations/final/TRANSCRIPT.md) | [PDF](presentations/final/presentation.pdf)
 
@@ -61,29 +57,3 @@ Our project is about the confirmed cases of COVID-19, the unemployment rate over
 - [Che Pai Kung](mailto:chepaiku@usc.edu) made the map chart, word cloud, mapbox, lollipop chart and the interaction functions between each chart.
 - [Yo Shuan Liu](mailto:yoshuanl@usc.edu) set up the react framework and UI, drew the infographic in the "Overview" tab, the line chart and the donut charts, and descriptions in the "Unemployment Claims" tab.
 
-### List of visualizations
-
-| Requirement                            | Label        |
-| -------------------------------------- | ------------ |
-| responsive d3 chart                    | responsive   |
-| interactive d3 chart                   | interactive  |
-| d3 chart with an animated transition   | animated     |
-| d3 layout                              | layout       |
-| d3 map                                 | map          |
-| Mapbox map                             | mapbox       |
-
-Table 1: Table of minimum requirements, 1 of each category is required.
-
-In Table2, list all the charts and tables in your pages including minimum requirements labels when applicable.
-
-| Page name                             | Chart description                         | Libraries used      | Requirement label |
-| ------------------------------------- | ----------------------------------------- | ------------------- | ----------------- |
-| Home page - US Labor Market Overview  | word cloud                                | d3, react-d3-cloud  |                   |
-|Data Exploration|US map|d3,topojson-client|interactiva,responsive,layout,map|
-|Data Exploration|lollipop chart|d3,react-bootstrap|interactiva,responsive,animated|
-|Data Exploration|line chart|d3|responsive,animated|
-|Unemployment Claims|Mapbox map|d3, mapbox-gl|mapbox|
-|Unemployment Claims|Donut chart|d3|layout,responsive|
-
-
-Table2: Table of visualizations
